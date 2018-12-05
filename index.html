@@ -358,8 +358,12 @@
             <h2 id="1-变量与常量"><a href="#1-变量与常量" class="headerlink" title="1.变量与常量"></a>1.变量与常量</h2><h3 id="1-变量"><a href="#1-变量" class="headerlink" title="1.变量"></a>1.变量</h3><p>&emsp;顾名思义，变量就是值可以变化的量。它是用于标识数据的存储单元，可用于数据存储和运算。<br>&emsp;变量定义的一般格式如下：<br></p>
 <p><pre><code>&lt;数据类型&gt;&lt;数据标识符(取个名字)&gt;=&lt;值&gt;<br>如:double x = 3.1415;<br></code></pre><br>&emsp;变量赋值后可以修改变量的值，格式如下：  </p>
 <p><pre><code>&lt;变量标识符(变量的名字)&gt;=&lt;值&gt;<br>如:x = 6.666;<br></code></pre><br>&emsp;注意:在java中的变量，都需要先声明再赋值！</p>
-<h3 id="2-常量"><a href="#2-常量" class="headerlink" title="2.常量"></a>2.常量</h3><p>&ensp;</p>
-
+<h3 id="2-常量"><a href="#2-常量" class="headerlink" title="2.常量"></a>2.常量</h3><p>&ensp;常量有字面常量和符号常量两种。</p>
+<h4 id="1-符号常量"><a href="#1-符号常量" class="headerlink" title="1.符号常量"></a>1.符号常量</h4><p>&ensp;符号常量指用标识符表示的常量。定义的一般格式如下：</p>
+<p><pre><code><final>&lt;数据类型&gt;&lt;符号常量标识符&gt;=&lt;常量值&gt;;<br>例如：<br>final double PI = 3.1415926;<br>final String name = “Tom”;<br></final></code></pre><br>&emsp;常量一旦赋值不能修改!</p>
+<h4 id="2-字面量-直接量"><a href="#2-字面量-直接量" class="headerlink" title="2.字面量(直接量)"></a>2.字面量(直接量)</h4><p>&emsp;字面量就是直接给值 不声明变量储存例如int a = 0;a = a + 3; a 是一个int型变量 3是字面量,又String s = “字符串”;s是变量”字符串”是一个字面量。</p>
+<h2 id="2-数据类型"><a href="#2-数据类型" class="headerlink" title="2.数据类型"></a>2.数据类型</h2><h3 id="1-基本数据类型"><a href="#1-基本数据类型" class="headerlink" title="1.基本数据类型"></a>1.基本数据类型</h3><p>&emsp;基本数据类型：基本数据类型时不能简化的、内置的数据类型、由编程语言本身定义，它表示了真实的数字、字符和整数。<br>&emsp;在java中有8种基本数据类型，分别是:<br>&emsp;&emsp;<strong>1.byte</strong>:Java中用户表示最小数据单位，在内存中占8位(bit)，即一个字节，取值范围-128~127，默认值0。<br>&emsp;&emsp;<strong>2.short</strong>：短整形，在内存中占16位，即2个字节，取值范围-32768~32717，默认值0。<br>&emsp;&emsp;<strong>3.int</strong>：整形，在内存中占32位，即4个字节，取值范围-2147483648~2147483647，默认值0。<br>&emsp;&emsp;<strong>4.long</strong>:长整形，在内存中占有64位，即8个字节，取值范围-2^63~2^63-1，默认值0L。<br>&emsp;&emsp;<strong>5.float</strong>：浮点型，在内存中占32位，即四个字节，用于存储带小数点的数字(与double的区别在于float类型有效小数点只有6~7位)，默认值0.0。<br>&emsp;&emsp;<strong>6.double</strong>：双精度浮点型，用于存储带有小数点的数字，在内存中占有64位，即8个字节，默认值0.0。<br>&emsp;&emsp;<strong>7.char</strong>：字符型，用于存储单个字符，占16位，即2个字节，取值范围0~65536，默认值为空。<br>&emsp;&emsp;<strong>8.boolean</strong>：布尔类型，占一个字节，用户判断真或假(仅有两个值，即true、false)，默认值false。</p>
+<h3 id="2-引用数据类型"><a href="#2-引用数据类型" class="headerlink" title="2.引用数据类型"></a>2.引用数据类型</h3>
           
         
       
