@@ -385,13 +385,22 @@
 <h2 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h2><p>&emsp;包括：<strong>&amp;，|，!，^，&amp;&amp;，||。</strong><br>&emsp;注意区别:＆既是位运算符也是逻辑运算符，＆＆只是逻辑运算符，＆与＆＆同时作为逻辑运算符时＆＆是短路的(截断功能)，而＆并不短路。<br>    例如:<br>        int a=6;int b=8;int c=10;int d=12;<br>        boolean x=++a&gt;b++&amp;&amp;c++&gt;d–;<br>&emsp;上面代码的结果：<br>a=7   b=9  c=10  d=12   x=flase  </p>
 <h2 id="算数运算符-1"><a href="#算数运算符-1" class="headerlink" title="算数运算符"></a>算数运算符</h2><p>&emsp;算数运算符也称三目运算符。一般形式为：<br><strong>表达式1？表达式2：表达式3；</strong><br>    例如:<br>        int x=2 ;int y=3;<br>        int salary=((x ==y)?2000:200);<br>&emsp;上面代码中因为x==y不成立，所以salary的最终值为200。  </p>
 <h2 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h2><p>&emsp;按位取反〜，〜01010101=10101010。(1变0 0变1)<br>&emsp;按位与&amp;，11111001&amp;10001111=1000100。(同为1时为1 )<br>&emsp;按位或|，11111001|10001111=11111111。（只要有一个为1就为1）<br>&emsp;按位异或^，11111001^10001111=01110110。（相同为0 不同为1）<br>&emsp;左移&lt;&lt;，10101011&lt;&lt;2=10101100。<br>&emsp;带符号右移&gt;&gt;，10101011&gt;&gt;2=11101010。<br>&emsp;无符号右移&gt;&gt;&gt;，10101011&gt;&gt;2=00101010。    </p>
-<h2 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h2><h2 id=""><a href="#" class="headerlink" title=" "></a><img src="/images/javabase/运算符.png" alt="运算符优先级"> </h2><h1 id="流程控制语句"><a href="#流程控制语句" class="headerlink" title="流程控制语句"></a>流程控制语句</h1><p>&emsp;流程控制语句主要包括有：</p>
+<h2 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h2><p><img src="/images/javabase/运算符.png" alt="运算符优先级">    </p>
+<h1 id="流程控制语句"><a href="#流程控制语句" class="headerlink" title="流程控制语句"></a>流程控制语句</h1><p>&emsp;流程控制语句主要包括有：</p>
 <ul>
 <li>条件语句。</li>
 <li>循环语句。</li>
-<li>其他。<h2 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h2><h3 id="else-if"><a href="#else-if" class="headerlink" title="else-if"></a>else-if</h3><h3 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h3><h2 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h2><h3 id="while"><a href="#while" class="headerlink" title="while"></a>while</h3><h3 id="do-while"><a href="#do-while" class="headerlink" title="do-while"></a>do-while</h3><h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3></li>
+<li>其他。  </li>
 </ul>
-
+<h2 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h2><h3 id="else-if"><a href="#else-if" class="headerlink" title="else-if"></a>else-if</h3><pre><code>if (条件表达式){
+      语句1；
+}else if(条件表达式）    {
+      语句2；
+} else{
+    …..
+}
+</code></pre><p>&emsp;条件表达式的值为 boolean 值。可以有多个else if<br>条件表达式结果为true则执行其后{}的代码，否则判断下一个条件，如果所有的条件都不成立则执行else。<br>If语句可以嵌套。<br>    例如：<br>    class MaxOfThree {<br>        public static void main(String args[]) {<br>            int a = 5;<br>            int b = 6;<br>            int c = 7;<br>            if (a &gt; b) {<br>                if (a &gt; c) {<br>                    System.out.println(“三个数中最大的是：” + a);<br>                } else if (a &gt; b) {<br>                    System.out.println(“三个数中最大的是:” + c);<br>                }<br>            } else if (b &gt; c) {<br>                System.out.println(“三个数中最大的是:” + b);<br>            } else {<br>                System.out.println(“三个数中最大的是:” + c);<br>            }<br>        }<br>    }</p>
+<h3 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h3><h2 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h2><h3 id="while"><a href="#while" class="headerlink" title="while"></a>while</h3><h3 id="do-while"><a href="#do-while" class="headerlink" title="do-while"></a>do-while</h3><h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3>
           
         
       
