@@ -357,228 +357,76 @@
           
             <h1 id="变量与常量"><a href="#变量与常量" class="headerlink" title="变量与常量"></a>变量与常量</h1><h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>&emsp;顾名思义，变量就是值可以变化的量。它是用于标识数据的存储单元，可用于数据存储和运算。 </p>
 <h3 id="变量的定义"><a href="#变量的定义" class="headerlink" title="变量的定义"></a>变量的定义</h3><p>&emsp;变量定义的一般格式如下：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;数据类型&gt;&lt;数据标识符(取个名字)&gt;=&lt;值&gt;</span><br><span class="line">如:double x = 3.1415;</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;变量赋值后可以修改变量的值，格式如下：  </p>
-<pre><code><变量标识符(变量的名字)>=<值>  
-如:x = 6.666;
-</值></变量标识符(变量的名字)></code></pre>
-&emsp;注意:在java中的变量，都需要先声明再赋值！
-### 变量的作用域 ###
-* 所谓的作用域就是在变量在什么时候是可见在什么是不可见的！
-* 作用域决定变量“可见性”与“存在时间”。
-* 作用域的范围：只作用于从声明开始到所在的{}结束。
-## 变量 ##
-&ensp;常量有字面常量和符号常量两种。
-### 符号常量 ###
-&ensp;符号常量指用标识符表示的常量。定义的一般格式如下：
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;final&gt;&lt;数据类型&gt;&lt;符号常量标识符&gt;=&lt;常量值&gt;;</span><br><span class="line">例如：</span><br><span class="line">final double PI = 3.1415926; </span><br><span class="line">final String name = &quot;Tom&quot;;</span><br></pre></td></tr></table></figure>
-
-&emsp;常量一旦赋值不能修改!
-### 字面量(直接量) ###
-&emsp;字面量就是直接给值 不声明变量储存例如int a = 0;a = a + 3; a 是一个int型变量 3是字面量,又String s = "字符串";s是变量"字符串"是一个字面量。
----
-# 数据类型 #
-## 基本数据类型##
-&emsp;基本数据类型：基本数据类型时不能简化的、内置的数据类型、由编程语言本身定义，它表示了真实的数字、字符和整数。  
-
-&emsp;在java中有8种基本数据类型，分别是:  
-&emsp;&emsp;**1.byte**:Java中用户表示最小数据单位，在内存中占8位(bit)，即一个字节，取值范围-128~127，默认值0。  
-&emsp;&emsp;**2.short**：短整形，在内存中占16位，即2个字节，取值范围-32768~32717，默认值0。  
-&emsp;&emsp;**3.int**：整形，在内存中占32位，即4个字节，取值范围-2147483648~2147483647，默认值0。  
-&emsp;&emsp;**4.long**:长整形，在内存中占有64位，即8个字节，取值范围-2^63~2^63-1，默认值0L。  
-&emsp;&emsp;**5.float**：浮点型，在内存中占32位，即四个字节，用于存储带小数点的数字(与double的区别在于float类型有效小数点只有6~7位)，默认值0.0。  
-&emsp;&emsp;**6.double**：双精度浮点型，用于存储带有小数点的数字，在内存中占有64位，即8个字节，默认值0.0。  
-&emsp;&emsp;**7.char**：字符型，用于存储单个字符，占16位，即2个字节，取值范围0~65536，默认值为空。  
-&emsp;&emsp;**8.boolean**：布尔类型，占一个字节，用户判断真或假(仅有两个值，即true、false)，默认值false。  
-
-&emsp;基本数据类型的存储原理：所有的基本数据类型不存在“引用”的概念，基本数据类型都是直接存储在内存中的内存栈上的，数据本身的值就是存储在栈空间里面，而Java语言里面八种数据类型是这种存储模型；
-## 引用数据类型 ##
-&emsp;引用数据类型：Java语言本身不支持C++中的结构（struct）或联合（union）数据类型，它的复合数据类型一般都是通过类或接口进行构造，类提供了捆绑数据和方法的方式，同时可以针对程序外部进行信息隐藏。
-
-&emsp;引用类型的存储原理:引用类型继承于Object类（也是引用类型）都是按照Java里面存储对象的内存模型来进行数据存储的，使用Java内存堆和内存栈来进行这种类型的数据存储，简单地讲，“引用”是存储在有序的内存栈上的，而对象本身的值存储在内存堆上的；
-
-&emsp;**区别:基本数据类型和引用类型的区别主要在于基本数据类型是分配在栈上的，而引用类型是分配在堆上的（[不明白栈与堆的概念,点击这里](url)）。**
-## 类型转换 ##
-### 自动类型转换 ###
-&emsp;自动类型转换：低优先级的数据自动会转换为高优先级的数据。
-![优先顺序](/images/javabase/priority.png)  
-&emsp;如果一下两个条件都能满足，那么将一种类型的数据赋值给另一种数据变量时，将执行自动类型转换：  
-&emsp;&emsp;1. 两种类型兼容。  
-&emsp;&emsp;2. 目标数据类型的取值范围比源数据类型的取值范围大。  
-&emsp;当满足以上两个条件时，自动的“加宽转换”就可以进行。  
-```
-例如：将一个byte值赋值给int类型的变量
-    byte a = 10;
-    int x= a;
-```  
-&emsp;对于加宽转换，数字类型，包括整数和浮点类型都是彼此兼容的，但是，数字类型和字符类型或布尔类型是不兼容的。字符类型和布尔类型也是互相不兼容的。  
-
-### 强制类型转换 ###
-&emsp;强制类型转换：优先级高的数据转换为优先级低的数据。  
-&emsp;当需要将int型的值赋给一个byte型的变量时该怎么办？此时，只有采取被称为“变窄转换”的转换方式。因为你肯定要将源数据类型的值变小才能适合目标数据类型。
-  在这种情况下，就必须进行强制类型转换。所谓的强制类型转换是一种显式的类型变换方式，其通用格式:(target-type) value
-   其中，目标类型（target-type）指定了要将指定值所转换成的类型。
-    例如，下面的程序段将int型强制转换成byte型。
-    int a;
-    byte b;
-    b = (byte) a;
-&emsp;当把一个浮点值赋给整数类型时，将发生一种
-不同的类型转换：截断。即当把浮点值赋给整数
-类型时，它的小数部分将会被舍去。  
-&emsp;例如，如果将值1.23赋给一个整数，其结果只是1，
-0.23被舍弃。当然，如果浮点值太大而不能适合
-目标整数类型，那么它的值将会因为对目标类型
-值域取模而减少。  
-
-# 运算符 # 
-## 赋值运算符 ##
-&emsp;包括：**=，+=，-=，*=，/=，%=。**  
-    例如:
-        int a=2;
-        a= a*b;  
-        a*=b; 
-        a%=b;  
-        a = a%b;
-## 算数运算符 ##
-&emsp;包括：**+，-，*，/，%，++，--**等，要强调的是前缀++和后缀++的区别。  
-    后缀++：变量首先进行操作在自身进行加。
-    例如: int a=2;     int b=a++;   (a=3,b=2)
-    前缀++：变量自身首先加然后再进行操作。
-    例如: int a=2;     int b=++a;   (a=3,b=3)
-## 关系运算符 ##
-&emsp;包括：**==，！=，<，<=，>，>=**，完成比较运算，结果为布尔类型值。  
-    例如：        
-        int a = 10;
-        int b = 3;
-        boolean f = a > b;
-&emsp;比较a和b的值，结果为true，即f的值为true。  
-## 逻辑运算符 ##
-&emsp;包括：**&，|，!，^，&&，||。**  
-&emsp;注意区别:＆既是位运算符也是逻辑运算符，＆＆只是逻辑运算符，＆与＆＆同时作为逻辑运算符时＆＆是短路的(截断功能)，而＆并不短路。 
-    例如:
-        int a=6;int b=8;int c=10;int d=12;
-        boolean x=++a>b++&&c++>d--;
-&emsp;上面代码的结果：
-a=7   b=9  c=10  d=12   x=flase  
-## 算数运算符 ##
-&emsp;算数运算符也称三目运算符。一般形式为：
-**表达式1？表达式2：表达式3；**
-    例如:
-        int x=2 ;int y=3;
-        int salary=((x ==y)?2000:200);
-&emsp;上面代码中因为x==y不成立，所以salary的最终值为200。  
-## 位运算符 ##
-&emsp;按位取反〜，〜01010101=10101010。(1变0 0变1)  
-&emsp;按位与&，11111001&10001111=1000100。(同为1时为1 )  
-&emsp;按位或|，11111001|10001111=11111111。（只要有一个为1就为1）  
-&emsp;按位异或^，11111001^10001111=01110110。（相同为0 不同为1）  
-&emsp;左移<<，10101011<<2=10101100。 &emsp;带符号右移="">>，10101011>>2=11101010。  
-&emsp;无符号右移>>>，10101011>>2=00101010。    
-## 运算符优先级 ##
-![运算符优先级](/images/javabase/运算符.png)    
-
-# 流程控制语句 #
-&emsp;流程控制语句主要包括有：
-* 条件语句。
-* 循环语句。
-* 其他。  
-
-## 条件语句 ##
-### else-if ###
-    if (条件表达式){
-          语句1；
-    }else if(条件表达式）    {
-          语句2；
-    } else{
-        …..
-    }
-&emsp;条件表达式的值为 boolean 值。可以有多个else if
-条件表达式结果为true则执行其后{}的代码，否则判断下一个条件，如果所有的条件都不成立则执行else。
-If语句可以嵌套。
-<pre><code>例如：
-class MaxOfThree {
-    public static void main(String args[]) {
-        int a = 5;
-        int b = 6;
-        int c = 7;
-        if (a > b) {
-            if (a > c) {
-                System.out.println("三个数中最大的是：" + a);
-            } else if (a > b) {
-                System.out.println("三个数中最大的是:" + c);
-            }
-        } else if (b > c) {
-            System.out.println("三个数中最大的是:" + b);
-        } else {
-            System.out.println("三个数中最大的是:" + c);
-        }
-    }
-}
-</code></pre>
-### switch ###
-<pre><code>switch(表达式){
-    case '常量值 1': 
+<p>&emsp;变量赋值后可以修改变量的值，格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;变量标识符(变量的名字)&gt;=&lt;值&gt;  </span><br><span class="line">如:x = 6.666;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;注意:在java中的变量，都需要先声明再赋值！</p>
+<h3 id="变量的作用域"><a href="#变量的作用域" class="headerlink" title="变量的作用域"></a>变量的作用域</h3><ul>
+<li>所谓的作用域就是在变量在什么时候是可见在什么是不可见的！</li>
+<li>作用域决定变量“可见性”与“存在时间”。</li>
+<li>作用域的范围：只作用于从声明开始到所在的{}结束。<h2 id="变量-1"><a href="#变量-1" class="headerlink" title="变量"></a>变量</h2>&ensp;常量有字面常量和符号常量两种。<h3 id="符号常量"><a href="#符号常量" class="headerlink" title="符号常量"></a>符号常量</h3>&ensp;符号常量指用标识符表示的常量。定义的一般格式如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;final&gt;&lt;数据类型&gt;&lt;符号常量标识符&gt;=&lt;常量值&gt;;</span><br><span class="line">例如：</span><br><span class="line">final double PI = 3.1415926; </span><br><span class="line">final String name = &quot;Tom&quot;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>&emsp;常量一旦赋值不能修改!  </p>
+<h3 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h3><p>&emsp;字面量就是直接给值 不声明变量储存例如int a = 0;a = a + 3; a 是一个int型变量 3是字面量,又String s = “字符串”;s是变量”字符串”是一个字面量。</p>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h2><p>&emsp;基本数据类型：基本数据类型时不能简化的、内置的数据类型、由编程语言本身定义，它表示了真实的数字、字符和整数。  </p>
+<p>&emsp;在java中有8种基本数据类型，分别是:<br>&emsp;&emsp;<strong>1.byte</strong>:Java中用户表示最小数据单位，在内存中占8位(bit)，即一个字节，取值范围-128~127，默认值0。<br>&emsp;&emsp;<strong>2.short</strong>：短整形，在内存中占16位，即2个字节，取值范围-32768~32717，默认值0。<br>&emsp;&emsp;<strong>3.int</strong>：整形，在内存中占32位，即4个字节，取值范围-2147483648~2147483647，默认值0。<br>&emsp;&emsp;<strong>4.long</strong>:长整形，在内存中占有64位，即8个字节，取值范围-2^63~2^63-1，默认值0L。<br>&emsp;&emsp;<strong>5.float</strong>：浮点型，在内存中占32位，即四个字节，用于存储带小数点的数字(与double的区别在于float类型有效小数点只有6~7位)，默认值0.0。<br>&emsp;&emsp;<strong>6.double</strong>：双精度浮点型，用于存储带有小数点的数字，在内存中占有64位，即8个字节，默认值0.0。<br>&emsp;&emsp;<strong>7.char</strong>：字符型，用于存储单个字符，占16位，即2个字节，取值范围0~65536，默认值为空。<br>&emsp;&emsp;<strong>8.boolean</strong>：布尔类型，占一个字节，用户判断真或假(仅有两个值，即true、false)，默认值false。  </p>
+<p>&emsp;基本数据类型的存储原理：所有的基本数据类型不存在“引用”的概念，基本数据类型都是直接存储在内存中的内存栈上的，数据本身的值就是存储在栈空间里面，而Java语言里面八种数据类型是这种存储模型；</p>
+<h2 id="引用数据类型"><a href="#引用数据类型" class="headerlink" title="引用数据类型"></a>引用数据类型</h2><p>&emsp;引用数据类型：Java语言本身不支持C++中的结构（struct）或联合（union）数据类型，它的复合数据类型一般都是通过类或接口进行构造，类提供了捆绑数据和方法的方式，同时可以针对程序外部进行信息隐藏。</p>
+<p>&emsp;引用类型的存储原理:引用类型继承于Object类（也是引用类型）都是按照Java里面存储对象的内存模型来进行数据存储的，使用Java内存堆和内存栈来进行这种类型的数据存储，简单地讲，“引用”是存储在有序的内存栈上的，而对象本身的值存储在内存堆上的；</p>
+<p>&emsp;<strong>区别:基本数据类型和引用类型的区别主要在于基本数据类型是分配在栈上的，而引用类型是分配在堆上的（<a href="url">不明白栈与堆的概念,点击这里</a>）。</strong></p>
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><h3 id="自动类型转换"><a href="#自动类型转换" class="headerlink" title="自动类型转换"></a>自动类型转换</h3><p>&emsp;自动类型转换：低优先级的数据自动会转换为高优先级的数据。<br><img src="/images/javabase/priority.png" alt="优先顺序"><br>&emsp;如果一下两个条件都能满足，那么将一种类型的数据赋值给另一种数据变量时，将执行自动类型转换：<br>&emsp;&emsp;1. 两种类型兼容。<br>&emsp;&emsp;2. 目标数据类型的取值范围比源数据类型的取值范围大。<br>&emsp;当满足以上两个条件时，自动的“加宽转换”就可以进行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例如：将一个byte值赋值给int类型的变量</span><br><span class="line">	byte a = 10;</span><br><span class="line">	int x= a;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;对于加宽转换，数字类型，包括整数和浮点类型都是彼此兼容的，但是，数字类型和字符类型或布尔类型是不兼容的。字符类型和布尔类型也是互相不兼容的。  </p>
+<h3 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h3><p>&emsp;强制类型转换：优先级高的数据转换为优先级低的数据。<br>&emsp;当需要将int型的值赋给一个byte型的变量时该怎么办？此时，只有采取被称为“变窄转换”的转换方式。因为你肯定要将源数据类型的值变小才能适合目标数据类型。<br>  在这种情况下，就必须进行强制类型转换。所谓的强制类型转换是一种显式的类型变换方式，其通用格式:(target-type) value<br>   其中，目标类型（target-type）指定了要将指定值所转换成的类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">例如，下面的程序段将int型强制转换成byte型。</span><br><span class="line">int a;</span><br><span class="line">byte b;</span><br><span class="line">b = (byte) a;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;当把一个浮点值赋给整数类型时，将发生一种<br>不同的类型转换：截断。即当把浮点值赋给整数<br>类型时，它的小数部分将会被舍去。<br>&emsp;例如，如果将值1.23赋给一个整数，其结果只是1，<br>0.23被舍弃。当然，如果浮点值太大而不能适合<br>目标整数类型，那么它的值将会因为对目标类型<br>值域取模而减少。  </p>
+<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><h2 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h2><p>&emsp;包括：<strong>=，+=，-=，*=，/=，%=。</strong><br>    例如:<br>        int a=2;<br>        a= a<em>b;<br>        a</em>=b;<br>        a%=b;<br>        a = a%b;</p>
+<h2 id="算数运算符"><a href="#算数运算符" class="headerlink" title="算数运算符"></a>算数运算符</h2><p>&emsp;包括：<strong>+，-，*，/，%，++，—</strong>等，要强调的是前缀++和后缀++的区别。<br>    后缀++：变量首先进行操作在自身进行加。<br>    例如: int a=2;     int b=a++;   (a=3,b=2)<br>    前缀++：变量自身首先加然后再进行操作。<br>    例如: int a=2;     int b=++a;   (a=3,b=3)</p>
+<h2 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h2><p>&emsp;包括：<strong>==，！=，&lt;，&lt;=，&gt;，&gt;=</strong>，完成比较运算，结果为布尔类型值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">例如：		</span><br><span class="line">	int a = 10;</span><br><span class="line">	int b = 3;</span><br><span class="line">	boolean f = a &gt; b;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;比较a和b的值，结果为true，即f的值为true。  </p>
+<h2 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h2><p>&emsp;包括：<strong>&amp;，|，!，^，&amp;&amp;，||。</strong><br>&emsp;注意区别:＆既是位运算符也是逻辑运算符，＆＆只是逻辑运算符，＆与＆＆同时作为逻辑运算符时＆＆是短路的(截断功能)，而＆并不短路。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例如:</span><br><span class="line">	int a=6;int b=8;int c=10;int d=12;</span><br><span class="line">	boolean x=++a&gt;b++&amp;&amp;c++&gt;d--;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;上面代码的结果：<br>a=7   b=9  c=10  d=12   x=flase  </p>
+<h2 id="算数运算符-1"><a href="#算数运算符-1" class="headerlink" title="算数运算符"></a>算数运算符</h2><p>&emsp;算数运算符也称三目运算符。一般形式为：<br><strong>表达式1？表达式2：表达式3；</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例如:</span><br><span class="line">	int x=2 ;int y=3;</span><br><span class="line">	int salary=((x ==y)?2000:200);</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;上面代码中因为x==y不成立，所以salary的最终值为200。 </p>
+<h2 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h2><p>&emsp;按位取反〜，〜01010101=10101010。(1变0 0变1)<br>&emsp;按位与&amp;，11111001&amp;10001111=1000100。(同为1时为1 )<br>&emsp;按位或|，11111001|10001111=11111111。（只要有一个为1就为1）<br>&emsp;按位异或^，11111001^10001111=01110110。（相同为0 不同为1）<br>&emsp;左移&lt;&lt;，10101011&lt;<2=10101100。 &emsp;带符号右移="">&gt;，10101011&gt;&gt;2=11101010。<br>&emsp;无符号右移&gt;&gt;&gt;，10101011&gt;&gt;2=00101010。    </2=10101100。></p>
+<h2 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h2><p><img src="/images/javabase/运算符.png" alt="运算符优先级">    </p>
+<h1 id="流程控制语句"><a href="#流程控制语句" class="headerlink" title="流程控制语句"></a>流程控制语句</h1><p>&emsp;流程控制语句主要包括有：</p>
+<ul>
+<li>条件语句。</li>
+<li>循环语句。</li>
+<li>其他。  </li>
+</ul>
+<h2 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h2><h3 id="else-if"><a href="#else-if" class="headerlink" title="else-if"></a>else-if</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (条件表达式)&#123;</span><br><span class="line">  	语句1；</span><br><span class="line">&#125;else if(条件表达式）	&#123;</span><br><span class="line">  	语句2；</span><br><span class="line">&#125; else&#123;</span><br><span class="line">	…..</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;条件表达式的值为 boolean 值。可以有多个else if<br>条件表达式结果为true则执行其后{}的代码，否则判断下一个条件，如果所有的条件都不成立则执行else。<br>If语句可以嵌套。  </p>
+<h3 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h3><pre><code>switch(表达式){
+    case &#39;常量值 1&#39;: 
       语句(组);
       break;
-    case '常量值 2': 
+    case &#39;常量值 2&#39;: 
       语句(组);
       break; 
-    case '常量值 N': 
+    case &#39;常量值 N&#39;: 
       语句(组);
       break;
     default:
       语句(组);
 }
-</code></pre>  
-&emsp;switch 语句有如下规则：switch 语句中的变量类型可以是： byte、short、int 或者 char。从SE 7开始，switch 支持字符串类型当变量的值与 case 语句的值相等时，那么 case 语句之后的语句开始执行，直到 break 语句出现才会跳出 switch 语句。case 语句不必须要包含 break 语句。如果没有 break 语句出现，程序会继续执行下一条 case 语句，直到出现 break 语句。switch 语句可以包含一个 default 分支，default 在没有 case 语句的值和变量值相等的时候执行。    
-<pre><code>public class SwitchOp
-{
-  public static void main(String args[])
-    {
-      float a=9; 
-      float b=3; 
-      float result;
-      char op='+';
-      switch(op)
-      {
-          case '+':    result=a+b;break;
-          case '-':    result=a-b;break;
-          case '*':    result=a*b;break;
-          case '/':    result=a/b;break;
-          default:    result=0;
-      }
-      System.out.println("result="+result);
-    }
-}
-
-</code></pre>
-## 循环语句 ##
-### while ###
-<pre><code>While(condition){//先判断后执行
-    System.out.println(num);
-}
-</code></pre>
-&emsp;判断控制表达式condition的值，当其是真时，while语句重复执行一个语句或语句块。其中条件condition可以是任何布尔表达式。只要条件表达式为真，循环体就被执行。当条件condition为假时，程序控制就传递到循环后面紧跟的语句行。若只有单个语句需要重复，大括号可以省略。  
-### do-while ###
-<pre><code>do {//先执行，后判断
-    System.out.println(num);
-} while (condition );
-</code></pre>
-&emsp;先执行循环体，然后再计算条件表达式condition 。如果表达式为真，则循环继续。否则，循环结束。对所有的Java循环都一样，条件condition必须是一个布尔表达式。
-### for ###
-<pre><code>for语句的执行过程
-for(int i=0;i<5;i++){ 3="" 5="" system.out.println(“this="" is="" “+i);="" }="" 双重循环="" for(int="" i="0;i<5;i++){" “="" +i);="" 输出5次="" j="0;j<3;j++){" “+j);="" 输出="" *="" 次="" <="" code=""></5;i++){></code></pre>
-&emsp;for（语句块 1 ；语句块 2；语句块 3）{}。  执行顺序 ：   
-&emsp;1）执行一次 语句块 1。   
-&emsp;2）执行语句块 2 ，若返回 true 则进入循环体；否则中断for循环。  
-&emsp;3）执行完循环体后，进行语句块 3 的操作。  
-&emsp;4）重复2，3。  
-## 其他语句 ##
-* label:{语句块} ：用于给程序块取名字。  
-* break ：语句在循环中用于立即从当前循环终止执行，结束当前循环的执行。
-* continue ：语句则是从其调用处跳至循环的开始处，结束本次循环，继续执行下一次循环， 循环体中continue 语句之后的语句将不再执行。
-<pre><code>//break
-int n;
-for(n=1;n</code></pre></，10101011<<2=10101100。></，<=，>
+</code></pre><p>&emsp;switch 语句有如下规则：switch 语句中的变量类型可以是： byte、short、int 或者 char。从SE 7开始，switch 支持字符串类型当变量的值与 case 语句的值相等时，那么 case 语句之后的语句开始执行，直到 break 语句出现才会跳出 switch 语句。case 语句不必须要包含 break 语句。如果没有 break 语句出现，程序会继续执行下一条 case 语句，直到出现 break 语句。switch 语句可以包含一个 default 分支，default 在没有 case 语句的值和变量值相等的时候执行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class SwitchOp</span><br><span class="line">&#123;</span><br><span class="line">  public static void main(String args[])</span><br><span class="line">    &#123;</span><br><span class="line">	  float a=9; </span><br><span class="line">	  float b=3; </span><br><span class="line">	  float result;</span><br><span class="line">	  char op=&apos;+&apos;;</span><br><span class="line">	  switch(op)</span><br><span class="line">	  &#123;</span><br><span class="line">	  	case &apos;+&apos;:	result=a+b;break;</span><br><span class="line">	  	case &apos;-&apos;:	result=a-b;break;</span><br><span class="line">	  	case &apos;*&apos;:	result=a*b;break;</span><br><span class="line">	  	case &apos;/&apos;:	result=a/b;break;</span><br><span class="line">	  	default:	result=0;</span><br><span class="line">	  &#125;</span><br><span class="line">	  System.out.println(&quot;result=&quot;+result);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h2><h3 id="while"><a href="#while" class="headerlink" title="while"></a>while</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">While(condition)&#123;//先判断后执行</span><br><span class="line">	System.out.println(num);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;判断控制表达式condition的值，当其是真时，while语句重复执行一个语句或语句块。其中条件condition可以是任何布尔表达式。只要条件表达式为真，循环体就被执行。当条件condition为假时，程序控制就传递到循环后面紧跟的语句行。若只有单个语句需要重复，大括号可以省略。  </p>
+<h3 id="do-while"><a href="#do-while" class="headerlink" title="do-while"></a>do-while</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">do &#123;//先执行，后判断</span><br><span class="line">	System.out.println(num);</span><br><span class="line">&#125; while (condition );</span><br></pre></td></tr></table></figure>
+<p>&emsp;先执行循环体，然后再计算条件表达式condition 。如果表达式为真，则循环继续。否则，循环结束。对所有的Java循环都一样，条件condition必须是一个布尔表达式。</p>
+<h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">for语句的执行过程</span><br><span class="line">for(int i=0;i&lt;5;i++)&#123;</span><br><span class="line">	System.out.println(“this is “+i);</span><br><span class="line">&#125;</span><br><span class="line">//双重循环</span><br><span class="line">for(int i=0;i&lt;5;i++)&#123;</span><br><span class="line">	System.out.println(“this is “ +i);//输出5次</span><br><span class="line">	for(int j=0;j&lt;3;j++)&#123;</span><br><span class="line">		 System.out.println(“this is “+j);//输出 3 * 5 次</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;for（语句块 1 ；语句块 2；语句块 3）{}。  执行顺序 ：<br>&emsp;1）执行一次 语句块 1。<br>&emsp;2）执行语句块 2 ，若返回 true 则进入循环体；否则中断for循环。<br>&emsp;3）执行完循环体后，进行语句块 3 的操作。<br>&emsp;4）重复2，3。  </p>
+<h2 id="其他语句"><a href="#其他语句" class="headerlink" title="其他语句"></a>其他语句</h2><ul>
+<li>label:{语句块} ：用于给程序块取名字。  </li>
+<li>break ：语句在循环中用于立即从当前循环终止执行，结束当前循环的执行。</li>
+<li>continue ：语句则是从其调用处跳至循环的开始处，结束本次循环，继续执行下一次循环， 循环体中continue 语句之后的语句将不再执行。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//break</span><br><span class="line">int n;</span><br><span class="line">for(n=1;n&lt;=10;n++)	&#123;</span><br><span class="line">	if (n%2==0) break;//中断for循环</span><br><span class="line">	System.out.println(&quot;n=&quot;+n);</span><br><span class="line">&#125;</span><br><span class="line">//continue</span><br><span class="line">int n;</span><br><span class="line">for(n=1;n&lt;=10;n++)&#123;</span><br><span class="line">	if (n%2==0) continue;</span><br><span class="line">//中断此次循环体以后的代码段，进入语句块2</span><br><span class="line">	System.out.println(&quot;n=&quot;+n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><h2 id="一维数组的定义"><a href="#一维数组的定义" class="headerlink" title="一维数组的定义"></a>一维数组的定义</h2><p>&emsp;数组的声明有多种方式：<br>&emsp;数组类型   数组名[]；<br>&emsp;数组类型[]  数组名；<br>&emsp;数组类型可为Java中的任何数据类型。但是数组名，必须符合标识符定义规则。 “[]”指明该变量是一个数组类型的变量，可放到数组名后面，也可放到数组名前。<br>    例如:<br>        int[]  arr;<br>        int  arr[]; </p>
+<h2 id="一维数组的初始化"><a href="#一维数组的初始化" class="headerlink" title="一维数组的初始化"></a>一维数组的初始化</h2><p>&emsp;使用new分配内存空间，并按照数组的类型，为每一个数组元素建立默任值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int arr[];arr=new int[10];</span><br><span class="line">或</span><br><span class="line">int  arr[]=new int[10];</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;也可以使用常量初始化：int[] arr = {1,2,3,4};<br>&emsp;[]中的10表示数组的长度，即这个数组最多存放元素的个数。定义初始化数组的时候必须确定数组的长度。  </p>
+<h2 id="一维数据的引用"><a href="#一维数据的引用" class="headerlink" title="一维数据的引用"></a>一维数据的引用</h2><p>&emsp;数组元素的引用格式为： 数组名[下标]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a[]=new int[10]；</span><br><span class="line">int b=a[0]+a[9];</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;数组下标范围从0到9。数组下标的最小值为0，最大值为数组的长度-1，如果下标超出了范围，程序运行时将报数组越界错误：<br>java.lang.ArrayIndexOutOfBoundsException </p>
+<h2 id="一维数组的使用"><a href="#一维数组的使用" class="headerlink" title="一维数组的使用"></a>一维数组的使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Qiuhe&#123;</span><br><span class="line">	public static void main(String args[])&#123;</span><br><span class="line">	 int a[]=&#123;5,8,2,4,1,9,78&#125;;</span><br><span class="line">	 int min=num[0];</span><br><span class="line">	 for(int i=1;i&lt;num.length;i++)&#123;</span><br><span class="line">		 if (min&gt;num[i])</span><br><span class="line">		   min=num[i];</span><br><span class="line">	 &#125;</span><br><span class="line">	 System.out.println(&quot;The min is:&quot;+min);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
