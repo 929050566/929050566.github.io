@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。 成员变量和局部变量的初始化成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。我们简单用下列代码测试">
+<meta name="description" content="初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。 成员变量成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。我们简单用下列代码测试一下，不同的数据类">
 <meta name="keywords" content="JavaSE">
 <meta property="og:type" content="article">
 <meta property="og:title" content="类的初始化">
 <meta property="og:url" content="http://yoursite.com/2018/12/05/类的初始化顺序/index.html">
 <meta property="og:site_name" content="个人博客">
-<meta property="og:description" content="初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。 成员变量和局部变量的初始化成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。我们简单用下列代码测试">
+<meta property="og:description" content="初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。 成员变量成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。我们简单用下列代码测试一下，不同的数据类">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-09T13:12:49.628Z">
+<meta property="og:image" content="https://929050566.github.io/images/init/result.PNG">
+<meta property="og:updated_time" content="2018-12-09T14:17:21.488Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="类的初始化">
-<meta name="twitter:description" content="初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。 成员变量和局部变量的初始化成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。我们简单用下列代码测试">
+<meta name="twitter:description" content="初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。 成员变量成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。我们简单用下列代码测试一下，不同的数据类">
+<meta name="twitter:image" content="https://929050566.github.io/images/init/result.PNG">
 
 
 
@@ -364,7 +366,7 @@
 
       
         <p>初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。</p>
-<h1 id="成员变量和局部变量的初始化"><a href="#成员变量和局部变量的初始化" class="headerlink" title="成员变量和局部变量的初始化"></a>成员变量和局部变量的初始化</h1><p>成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。<br>我们简单用下列代码测试一下，不同的数据类型的默认初始化值是什么。</p>
+<h1 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h1><p>成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。<br>我们简单用下列代码测试一下，不同的数据类型的默认初始化值是什么。</p>
 <pre><code>import java.util.List;
 
 public class Test {
@@ -394,7 +396,7 @@ public class Test {
         System.out.println((short) (t.c));
     }
 }
-</code></pre><p>可以得出一下结果：<br>！<a href="/images/init/result.PNG">程序运行结果</a><br>我们可以得出结论，基本数据类型的默认初始化的值为：</p>
+</code></pre><p>可以得出一下结果：<br><img src="https://929050566.github.io/images/init/result.PNG" alt="程序运行结果"><br>我们可以得出结论，基本数据类型的默认初始化的值为：</p>
 <ul>
 <li>short=0</li>
 <li>int=0</li>
@@ -402,7 +404,16 @@ public class Test {
 <li>float=0.0</li>
 <li>double=0.0</li>
 <li>boolean=false</li>
-<li>char=(char)0<br>复杂数据类型默认初始值为：null。</li>
+<li>char=(char)0  </li>
+</ul>
+<p>复杂数据类型默认初始值为：null。</p>
+<h1 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h1><p>布局变量：在被使用之前就必须给它赋值，要不然程序编译就会报错！</p>
+<h1 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h1><p>类的初始化顺序是：<br>1、父类静态变量<br>2、父类静态代码块<br>3、子类静态变量<br>4、子类静态代码块<br>5、父类非静态变量<br>6、父类非静态代码块<br>7、父类构造器<br>8、子类非静态变量<br>9、子类非静态代码块<br>10、子类构造器<br>Java程序初始化一般遵循四个原则:  </p>
+<ul>
+<li>先属性后方法</li>
+<li>先静态后非静态</li>
+<li>先声明后赋值</li>
+<li>先父类后子类</li>
 </ul>
 
       
@@ -433,10 +444,6 @@ public class Test {
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/12/04/我的新帖子/" rel="next" title="我的新帖子">
-                <i class="fa fa-chevron-left"></i> 我的新帖子
-              </a>
             
           </div>
 
@@ -530,7 +537,7 @@ public class Test {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -541,7 +548,7 @@ public class Test {
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -552,7 +559,7 @@ public class Test {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -585,7 +592,7 @@ public class Test {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#成员变量和局部变量的初始化"><span class="nav-number">1.</span> <span class="nav-text">成员变量和局部变量的初始化</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#成员变量"><span class="nav-number">1.</span> <span class="nav-text">成员变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#局部变量"><span class="nav-number">2.</span> <span class="nav-text">局部变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化顺序"><span class="nav-number">3.</span> <span class="nav-text">初始化顺序</span></a></li></ol></div>
             
 
           </div>

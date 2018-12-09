@@ -262,6 +262,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/09/单例设计模式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张豪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/09/单例设计模式/" itemprop="url">单例设计模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-09T22:19:42+08:00">
+                2018-12-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/09/单例设计模式/" class="leancloud_visitors" data-flag-title="单例设计模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>单例设计模式有很多种实现方式，但是不同的实现方式的效果自然也不同。但是绝大多数实现方式都要满足三要素：  </p>
+<ul>
+<li>私有的构造方法。</li>
+<li>私有的静态的本类类型引用变量。</li>
+<li>公共的静态的获得实例的方法。<br>下面我就例举集中单例模式的实现方式。<h1 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h1>话不多说，直接上代码。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class SinglePattern1 &#123;</span><br><span class="line">	//私有静态变量</span><br><span class="line">	private static SinglePattern1 single;</span><br><span class="line">	//私有构造方法</span><br><span class="line">	private SinglePattern1() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	//公共静态的获取实例的方法</span><br><span class="line">	public static SinglePattern1 getInstance() &#123;</span><br><span class="line">		if (single == null)</span><br><span class="line">			single = new SinglePattern1();</span><br><span class="line">		return single;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>优点：节省资源<br>缺点：多线程下单例容易被破坏</p>
+<h1 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class SinglePattern2 &#123;</span><br><span class="line">	//私有静态变量</span><br><span class="line">	private static SinglePattern2 single = new SinglePattern2();</span><br><span class="line">	//私有构造方法</span><br><span class="line">	private SinglePattern2() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	//公共静态的获取实例的方法</span><br><span class="line">	public static SinglePattern2 getInstance() &#123;</span><br><span class="line">		return single;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>顾名思义，饿汉模式，在类被加载的时候，实例就被创建出来了，虽然防止了多线程创建多个实例，但是它浪费了资源。</p>
+<h1 id="同步方法"><a href="#同步方法" class="headerlink" title="同步方法"></a>同步方法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class SinglePattern3 &#123;</span><br><span class="line">	//私有静态变量</span><br><span class="line">	private static SinglePattern3 single;</span><br><span class="line">	//私有构造方法</span><br><span class="line">	private SinglePattern3() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	//公共静态的获取实例的方法</span><br><span class="line">	public synchronized static SinglePattern3 getInstance() &#123;</span><br><span class="line">		if (single == null)</span><br><span class="line">			single = new SinglePattern3();</span><br><span class="line">		return single;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/07/MyBatis之DQL/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -898,7 +1060,7 @@
 <h2 id="引用数据类型"><a href="#引用数据类型" class="headerlink" title="引用数据类型"></a>引用数据类型</h2><p>&emsp;引用数据类型：Java语言本身不支持C++中的结构（struct）或联合（union）数据类型，它的复合数据类型一般都是通过类或接口进行构造，类提供了捆绑数据和方法的方式，同时可以针对程序外部进行信息隐藏。</p>
 <p>&emsp;引用类型的存储原理:引用类型继承于Object类（也是引用类型）都是按照Java里面存储对象的内存模型来进行数据存储的，使用Java内存堆和内存栈来进行这种类型的数据存储，简单地讲，“引用”是存储在有序的内存栈上的，而对象本身的值存储在内存堆上的；</p>
 <p>&emsp;<strong>区别:基本数据类型和引用类型的区别主要在于基本数据类型是分配在栈上的，而引用类型是分配在堆上的（<a href="url">不明白栈与堆的概念,点击这里</a>）。</strong></p>
-<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><h3 id="自动类型转换"><a href="#自动类型转换" class="headerlink" title="自动类型转换"></a>自动类型转换</h3><p>&emsp;自动类型转换：低优先级的数据自动会转换为高优先级的数据。<br><img src="/images/javabase/priority.png" alt="优先顺序"><br>&emsp;如果一下两个条件都能满足，那么将一种类型的数据赋值给另一种数据变量时，将执行自动类型转换：<br>&emsp;&emsp;1. 两种类型兼容。<br>&emsp;&emsp;2. 目标数据类型的取值范围比源数据类型的取值范围大。<br>&emsp;当满足以上两个条件时，自动的“加宽转换”就可以进行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例如：将一个byte值赋值给int类型的变量</span><br><span class="line">	byte a = 10;</span><br><span class="line">	int x= a;</span><br></pre></td></tr></table></figure></p>
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><h3 id="自动类型转换"><a href="#自动类型转换" class="headerlink" title="自动类型转换"></a>自动类型转换</h3><p>&emsp;自动类型转换：低优先级的数据自动会转换为高优先级的数据。<br><img src="https://929050566.github.io/images/javabase/priority.png" alt="优先顺序"><br>&emsp;如果一下两个条件都能满足，那么将一种类型的数据赋值给另一种数据变量时，将执行自动类型转换：<br>&emsp;&emsp;1. 两种类型兼容。<br>&emsp;&emsp;2. 目标数据类型的取值范围比源数据类型的取值范围大。<br>&emsp;当满足以上两个条件时，自动的“加宽转换”就可以进行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例如：将一个byte值赋值给int类型的变量</span><br><span class="line">	byte a = 10;</span><br><span class="line">	int x= a;</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;对于加宽转换，数字类型，包括整数和浮点类型都是彼此兼容的，但是，数字类型和字符类型或布尔类型是不兼容的。字符类型和布尔类型也是互相不兼容的。  </p>
 <h3 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h3><p>&emsp;强制类型转换：优先级高的数据转换为优先级低的数据。<br>&emsp;当需要将int型的值赋给一个byte型的变量时该怎么办？此时，只有采取被称为“变窄转换”的转换方式。因为你肯定要将源数据类型的值变小才能适合目标数据类型。<br>  在这种情况下，就必须进行强制类型转换。所谓的强制类型转换是一种显式的类型变换方式，其通用格式:(target-type) value<br>   其中，目标类型（target-type）指定了要将指定值所转换成的类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">例如，下面的程序段将int型强制转换成byte型。</span><br><span class="line">int a;</span><br><span class="line">byte b;</span><br><span class="line">b = (byte) a;</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;当把一个浮点值赋给整数类型时，将发生一种<br>不同的类型转换：截断。即当把浮点值赋给整数<br>类型时，它的小数部分将会被舍去。<br>&emsp;例如，如果将值1.23赋给一个整数，其结果只是1，<br>0.23被舍弃。当然，如果浮点值太大而不能适合<br>目标整数类型，那么它的值将会因为对目标类型<br>值域取模而减少。  </p>
@@ -1104,7 +1266,7 @@
         
           
             <p>初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。</p>
-<h1 id="成员变量和局部变量的初始化"><a href="#成员变量和局部变量的初始化" class="headerlink" title="成员变量和局部变量的初始化"></a>成员变量和局部变量的初始化</h1><p>成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。<br>我们简单用下列代码测试一下，不同的数据类型的默认初始化值是什么。</p>
+<h1 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h1><p>成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。<br>我们简单用下列代码测试一下，不同的数据类型的默认初始化值是什么。</p>
 <pre><code>import java.util.List;
 
 public class Test {
@@ -1134,7 +1296,7 @@ public class Test {
         System.out.println((short) (t.c));
     }
 }
-</code></pre><p>可以得出一下结果：<br>！<a href="/images/init/result.PNG">程序运行结果</a><br>我们可以得出结论，基本数据类型的默认初始化的值为：</p>
+</code></pre><p>可以得出一下结果：<br><img src="https://929050566.github.io/images/init/result.PNG" alt="程序运行结果"><br>我们可以得出结论，基本数据类型的默认初始化的值为：</p>
 <ul>
 <li>short=0</li>
 <li>int=0</li>
@@ -1142,277 +1304,17 @@ public class Test {
 <li>float=0.0</li>
 <li>double=0.0</li>
 <li>boolean=false</li>
-<li>char=(char)0<br>复杂数据类型默认初始值为：null。</li>
+<li>char=(char)0  </li>
 </ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/04/我的新帖子/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="张豪">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/04/我的新帖子/" itemprop="url">我的新帖子</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-04T22:08:46+08:00">
-                2018-12-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/12/04/我的新帖子/" class="leancloud_visitors" data-flag-title="我的新帖子">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/04/hello-world/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="张豪">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/04/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-04T20:43:27+08:00">
-                2018-12-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/12/04/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p>复杂数据类型默认初始值为：null。</p>
+<h1 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h1><p>布局变量：在被使用之前就必须给它赋值，要不然程序编译就会报错！</p>
+<h1 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h1><p>类的初始化顺序是：<br>1、父类静态变量<br>2、父类静态代码块<br>3、子类静态变量<br>4、子类静态代码块<br>5、父类非静态变量<br>6、父类非静态代码块<br>7、父类构造器<br>8、子类非静态变量<br>9、子类非静态代码块<br>10、子类构造器<br>Java程序初始化一般遵循四个原则:  </p>
+<ul>
+<li>先属性后方法</li>
+<li>先静态后非静态</li>
+<li>先声明后赋值</li>
+<li>先父类后子类</li>
+</ul>
 
           
         
@@ -1496,7 +1398,7 @@ public class Test {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1507,7 +1409,7 @@ public class Test {
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1518,7 +1420,7 @@ public class Test {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
