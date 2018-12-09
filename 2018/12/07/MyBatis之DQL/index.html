@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="个人博客">
 <meta property="og:description" content="DQL配置上一篇文章我们讲了Mybatis的使用以及DML语句的配置，这篇文章我们讲解一下DQL语句的配置。 查询出表的全部信息首先我们配置映射文件 &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;!DOCTYPE mapper      PUBLIC &amp;quot;-//mybatis.org//DTD Ma">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-07T09:09:00.920Z">
+<meta property="og:updated_time" content="2018-12-09T12:35:00.760Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MyBatis之DQL">
 <meta name="twitter:description" content="DQL配置上一篇文章我们讲了Mybatis的使用以及DML语句的配置，这篇文章我们讲解一下DQL语句的配置。 查询出表的全部信息首先我们配置映射文件 &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;!DOCTYPE mapper      PUBLIC &amp;quot;-//mybatis.org//DTD Ma">
@@ -387,7 +387,7 @@
         &lt;result property=&quot;groupid&quot; column=&quot;group_id&quot;/&gt;
     &lt;/resultMap&gt;
 &lt;/mapper&gt;
-</code></pre><p>当表中的属性字段和数据库中的属性的名字相同的时候，你可以再select便签中直接加上parameterType属性，<br>属性的值为对应的pojo全路径名，或者是全路径名对应的别名。<br>当表中的属性字段和数据库中的属性的名字不相同的时候，这时候我们就要配置resultMap属性的，通过id属性来建立联系。resultMap中的id子标签对应的是主键表属性，result对应的是普通表属性。property是类属性名，column对应的是表属性名。在这里我们还可以写上javaType属性，它是说明属性的数据类型是什么，可以提高效率。<br>在这里我们可以用使用SqlSession的getMapper()方法来返回一个被SqlSession装饰过的接口。在通过返回的这个类调用它的方法。</p>
+</code></pre><p>当表中的属性字段和数据库中的属性的名字相同的时候，你可以再select便签中直接加上parameterType属性，<br>属性的值为对应的pojo全路径名，或者是全路径名对应的别名。<br>当表中的属性字段和数据库中的属性的名字不相同的时候，这时候我们就要配置resultMap标签，通过id属性来建立联系。resultMap中的id子标签对应的是主键表属性，result对应的是普通表属性。property是类属性名，column对应的是表属性名。在这里我们还可以写上javaType属性，它是说明属性的数据类型是什么，可以提高效率。<br>在这里我们可以用使用SqlSession的getMapper()方法来返回一个被SqlSession代理过的接口。在通过返回的这个类调用它的方法。</p>
 
       
     </div>
