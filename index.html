@@ -262,6 +262,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/07/MyBatis之DQL/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张豪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/07/MyBatis之DQL/" itemprop="url">MyBatis之DQL</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-07T16:51:00+08:00">
+                2018-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/框架/" itemprop="url" rel="index">
+                    <span itemprop="name">框架</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/07/MyBatis之DQL/" class="leancloud_visitors" data-flag-title="MyBatis之DQL">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="DQL配置"><a href="#DQL配置" class="headerlink" title="DQL配置"></a>DQL配置</h1><p><a href="https://929050566.github.io/2018/12/06/MyBatis/" target="_blank" rel="noopener">上一篇文章</a>我们讲了Mybatis的使用以及DML语句的配置，这篇文章我们讲解一下DQL语句的配置。</p>
+<h2 id="查询出表的全部信息"><a href="#查询出表的全部信息" class="headerlink" title="查询出表的全部信息"></a>查询出表的全部信息</h2><p>首先我们配置映射文件</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE mapper 
+    PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+    &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+
+&lt;mapper  namespace=&quot;com.aowin.testmybatis.student.mapper.StudentMapper&quot; &gt;
+
+    &lt;!-- 查询出全部的学生信息 --&gt;
+    &lt;select id=&quot;selectAllStudents&quot; resultMap=&quot;student_Map&quot; resultType=&quot;Students&quot;&gt;
+        select student_id,student_name,student_sex,student_birthday,group_id 
+        from students
+    &lt;/select&gt;
+
+    &lt;!-- 配置类和表的映射关系 --&gt;
+    &lt;resultMap type=&quot;com.aowin.testmybatis.student.pojo.Students&quot; id=&quot;student_Map&quot;&gt;
+        &lt;id property=&quot;studentid&quot; column=&quot;student_id&quot; javaType=&quot;java.lang.Integer&quot;/&gt;    
+        &lt;result property=&quot;studentname&quot; column=&quot;student_name&quot;/&gt;
+        &lt;result property=&quot;studentsex&quot; column=&quot;student_sex&quot;/&gt;
+        &lt;result property=&quot;studentbirthday&quot; column=&quot;student_birthday&quot;/&gt;
+        &lt;result property=&quot;groupid&quot; column=&quot;group_id&quot;/&gt;
+    &lt;/resultMap&gt;
+&lt;/mapper&gt;
+</code></pre><p>当表中的属性字段和数据库中的属性的名字相同的时候，你可以再select便签中直接加上parameterType属性，<br>属性的值为对应的pojo全路径名，或者是全路径名对应的别名。<br>当表中的属性字段和数据库中的属性的名字不相同的时候，这时候我们就要配置resultMap属性的，通过id属性来建立联系。resultMap中的id子标签对应的是主键表属性，result对应的是普通表属性。property是类属性名，column对应的是表属性名。在这里我们还可以写上javaType属性，它是说明属性的数据类型是什么，可以提高效率。<br>在这里我们可以用使用SqlSession的getMapper()方法来返回一个被SqlSession装饰过的接口。在通过返回的这个类调用它的方法。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/07/MybatisSqlSessionFactory工具类/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -366,7 +543,7 @@
       
         
           
-            <p>MyBatis的核心接口是SqlSession,它有insert(),update(),delete(),selectOne(),selectList(),selectMap(),getMapper()等核心方法。一般我们运用MyBatis框的时候，都会编写一个工具来获取SqlSession,并且我们可以将SqlSession和线程绑定，这样我们可以达到节省资源的目的。<br>要获取SqlSession我们需要用SqlSessionFacotry的openSqlSession()方法，得到SqlSessionFactory我们要用到SqlSessionFactoryBulider的build()方法。并且我们的工具类需要两个核心方法，一个活的SqlSession一个关闭资源。下面代码已经做详细注释，又不懂的地方可以在留言板块留言，作者会及时回复！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 获取SqlSession工具类</span><br><span class="line"> * @author haozai</span><br><span class="line"> * @date 2018年12月6日 上午9:39:56</span><br><span class="line"> */</span><br><span class="line">public class MybatisSqlSessionFactory &#123;</span><br><span class="line">	</span><br><span class="line">	//通过工厂类得到SqlSession</span><br><span class="line">	private static SqlSessionFactory factory;</span><br><span class="line">	//用于sqlSession和线程绑定</span><br><span class="line">	private static ThreadLocal&lt;SqlSession&gt; tl = new ThreadLocal&lt;&gt;();</span><br><span class="line">	</span><br><span class="line">	static &#123;</span><br><span class="line">		//因为我们的工厂类一般只需要得到一次就够了，所以我们将得到工厂类的代码放在静态代码块中</span><br><span class="line">		buildSqlSessionFactory();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	protected MybatisSqlSessionFactory() &#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	private static void buildSqlSessionFactory() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			//build我们的mybatisconfig.xml配置文件</span><br><span class="line">			factory = new SqlSessionFactoryBuilder().</span><br><span class="line">					build(Resources.getResourceAsReader(&quot;mybatisconfig.xml&quot;));</span><br><span class="line">		&#125; catch (IOException e) &#123;</span><br><span class="line">			// TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	/**</span><br><span class="line">	 * 获取SqlSession的实例 默认自动提交事务</span><br><span class="line">	 * @return SqlSession对象</span><br><span class="line">	 */</span><br><span class="line">	public static SqlSession getSqlSession() &#123;</span><br><span class="line">		SqlSession ss = tl.get();</span><br><span class="line">		if(ss == null) &#123;</span><br><span class="line">			if(factory == null) &#123;</span><br><span class="line">				//如果工厂丢失 则再创建一个</span><br><span class="line">				buildSqlSessionFactory();</span><br><span class="line">			&#125;</span><br><span class="line">			ss = factory.openSession(true);</span><br><span class="line">			tl.set(ss);</span><br><span class="line">		&#125;</span><br><span class="line">		return ss;</span><br><span class="line">	&#125;</span><br><span class="line">	/**</span><br><span class="line">	 * 获取SqlSession的实例 自己设定是否自动提交事务</span><br><span class="line">	 * @param falg:是否自动提交事务 false:否 true:是</span><br><span class="line">	 * @return SqlSession对象</span><br><span class="line">	 */</span><br><span class="line">	public static SqlSession getSqlSession(boolean flag) &#123;</span><br><span class="line">		SqlSession ss = tl.get();</span><br><span class="line">		if(ss == null) &#123;</span><br><span class="line">			if(factory == null) &#123;</span><br><span class="line">				//如果工厂丢失 则再创建一个</span><br><span class="line">				buildSqlSessionFactory();</span><br><span class="line">			&#125;</span><br><span class="line">			ss = factory.openSession(flag);</span><br><span class="line">			tl.set(ss);</span><br><span class="line">		&#125;</span><br><span class="line">		return ss;</span><br><span class="line">	&#125;	</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * SqlSession的资源释放</span><br><span class="line">	 * @param ss</span><br><span class="line">	 */</span><br><span class="line">	public static void closeSqlSession() &#123;</span><br><span class="line">		SqlSession ss = tl.get();</span><br><span class="line">		if(ss != null) &#123;</span><br><span class="line">			tl.remove();</span><br><span class="line">			ss.close();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+            <p><a href="https://929050566.github.io/2018/12/06/MyBatis/" target="_blank" rel="noopener">上一篇文章</a>剩下的MyBatis的核心接口是SqlSession,它有insert(),update(),delete(),selectOne(),selectList(),selectMap(),getMapper()等核心方法。一般我们运用MyBatis框的时候，都会编写一个工具来获取SqlSession,并且我们可以将SqlSession和线程绑定，这样我们可以达到节省资源的目的。<br>要获取SqlSession我们需要用SqlSessionFacotry的openSqlSession()方法，得到SqlSessionFactory我们要用到SqlSessionFactoryBulider的build()方法。并且我们的工具类需要两个核心方法，一个活的SqlSession一个关闭资源。下面代码已经做详细注释，又不懂的地方可以在留言板块留言，作者会及时回复！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 获取SqlSession工具类</span><br><span class="line"> * @author haozai</span><br><span class="line"> * @date 2018年12月6日 上午9:39:56</span><br><span class="line"> */</span><br><span class="line">public class MybatisSqlSessionFactory &#123;</span><br><span class="line">	</span><br><span class="line">	//通过工厂类得到SqlSession</span><br><span class="line">	private static SqlSessionFactory factory;</span><br><span class="line">	//用于sqlSession和线程绑定</span><br><span class="line">	private static ThreadLocal&lt;SqlSession&gt; tl = new ThreadLocal&lt;&gt;();</span><br><span class="line">	</span><br><span class="line">	static &#123;</span><br><span class="line">		//因为我们的工厂类一般只需要得到一次就够了，所以我们将得到工厂类的代码放在静态代码块中</span><br><span class="line">		buildSqlSessionFactory();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	protected MybatisSqlSessionFactory() &#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	private static void buildSqlSessionFactory() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			//build我们的mybatisconfig.xml配置文件</span><br><span class="line">			factory = new SqlSessionFactoryBuilder().</span><br><span class="line">					build(Resources.getResourceAsReader(&quot;mybatisconfig.xml&quot;));</span><br><span class="line">		&#125; catch (IOException e) &#123;</span><br><span class="line">			// TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	/**</span><br><span class="line">	 * 获取SqlSession的实例 默认自动提交事务</span><br><span class="line">	 * @return SqlSession对象</span><br><span class="line">	 */</span><br><span class="line">	public static SqlSession getSqlSession() &#123;</span><br><span class="line">		SqlSession ss = tl.get();</span><br><span class="line">		if(ss == null) &#123;</span><br><span class="line">			if(factory == null) &#123;</span><br><span class="line">				//如果工厂丢失 则再创建一个</span><br><span class="line">				buildSqlSessionFactory();</span><br><span class="line">			&#125;</span><br><span class="line">			ss = factory.openSession(true);</span><br><span class="line">			tl.set(ss);</span><br><span class="line">		&#125;</span><br><span class="line">		return ss;</span><br><span class="line">	&#125;</span><br><span class="line">	/**</span><br><span class="line">	 * 获取SqlSession的实例 自己设定是否自动提交事务</span><br><span class="line">	 * @param falg:是否自动提交事务 false:否 true:是</span><br><span class="line">	 * @return SqlSession对象</span><br><span class="line">	 */</span><br><span class="line">	public static SqlSession getSqlSession(boolean flag) &#123;</span><br><span class="line">		SqlSession ss = tl.get();</span><br><span class="line">		if(ss == null) &#123;</span><br><span class="line">			if(factory == null) &#123;</span><br><span class="line">				//如果工厂丢失 则再创建一个</span><br><span class="line">				buildSqlSessionFactory();</span><br><span class="line">			&#125;</span><br><span class="line">			ss = factory.openSession(flag);</span><br><span class="line">			tl.set(ss);</span><br><span class="line">		&#125;</span><br><span class="line">		return ss;</span><br><span class="line">	&#125;	</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * SqlSession的资源释放</span><br><span class="line">	 * @param ss</span><br><span class="line">	 */</span><br><span class="line">	public static void closeSqlSession() &#123;</span><br><span class="line">		SqlSession ss = tl.get();</span><br><span class="line">		if(ss != null) &#123;</span><br><span class="line">			tl.remove();</span><br><span class="line">			ss.close();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -550,7 +727,7 @@
 <h2 id="创建配置文件"><a href="#创建配置文件" class="headerlink" title="创建配置文件"></a>创建配置文件</h2><p>所有的配置文件建议都放在resource目录下！</p>
 <h3 id="创建DB配置文件"><a href="#创建DB配置文件" class="headerlink" title="创建DB配置文件"></a>创建DB配置文件</h3><p>因为要访问数据库需要配置数据库连接的基本信息，我们这里以mysql为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">driver=com.mysql.jdbc.Driver</span><br><span class="line">url=jdbc:mysql://localhost:3306/testmybatis?useUnicode=true&amp;characterEncoding=utf8</span><br><span class="line">username=root</span><br><span class="line">password=123</span><br></pre></td></tr></table></figure></p>
 <h3 id="创建mybatisconfig-xml"><a href="#创建mybatisconfig-xml" class="headerlink" title="创建mybatisconfig.xml"></a>创建mybatisconfig.xml</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE configuration</span><br><span class="line">	PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span><br><span class="line">	&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">	&lt;!-- 获取数据库连接基本信息,添加数据库配置文件的路径 --&gt;</span><br><span class="line">	&lt;properties resource=&quot;database.properties&quot;&gt;&lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- pojo的类型进行别名设置 --&gt;</span><br><span class="line">    &lt;typeAliases&gt;</span><br><span class="line">        &lt;typeAlias type=&quot;com.aowin.testmybatis.student.pojo.Students&quot; alias=&quot;Students&quot;/&gt;</span><br><span class="line">    &lt;/typeAliases&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- 搭建数据库连接池 --&gt;</span><br><span class="line">	&lt;environments default=&quot;mysql&quot;&gt;</span><br><span class="line">		&lt;environment id=&quot;mysql&quot;&gt;&lt;!-- 数据库类型 --&gt;</span><br><span class="line">			&lt;transactionManager type=&quot;JDBC&quot; /&gt;&lt;!-- 事务驱动，一般固定是JDBC --&gt;</span><br><span class="line">			&lt;dataSource type=&quot;POOLED&quot;&gt;&lt;!-- 连接池 --&gt;</span><br><span class="line">				&lt;property name=&quot;driver&quot; value=&quot;$&#123;driver&#125;&quot; /&gt;</span><br><span class="line">				&lt;property name=&quot;url&quot; value=&quot;$&#123;url&#125;&quot; /&gt;</span><br><span class="line">				&lt;property name=&quot;username&quot; value=&quot;$&#123;username&#125;&quot; /&gt;</span><br><span class="line">				&lt;property name=&quot;password&quot; value=&quot;$&#123;password&#125;&quot; /&gt;</span><br><span class="line">				&lt;!-- 配置最大连接数 --&gt;</span><br><span class="line">				&lt;property name=&quot;poolMaximumActiveConnections&quot; value=&quot;80&quot; /&gt;</span><br><span class="line">				&lt;!-- 配置核心连接数 --&gt;</span><br><span class="line">				&lt;property name=&quot;poolMaximumIdleConnections&quot; value=&quot;20&quot; /&gt;</span><br><span class="line">			&lt;/dataSource&gt;</span><br><span class="line">		&lt;/environment&gt;</span><br><span class="line">	&lt;/environments&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- 加载映射文件 --&gt;</span><br><span class="line">	&lt;mappers&gt;</span><br><span class="line">		&lt;mapper resource=&quot;com/aowin/testmybatis/student/pojo/Students.xml&quot;&gt;&lt;/mapper&gt;</span><br><span class="line">	&lt;/mappers&gt;</span><br><span class="line">	</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="DAO层的编写"><a href="#DAO层的编写" class="headerlink" title="DAO层的编写"></a>DAO层的编写</h2><p>这样我们所有的配置文件都写好了，只需要修改DAO层了。在这里我们就不将所有配置的方法都实现了，例举个别的方法，程序里面会写上比较详细的注释。<br>程序里面包含了一个工具类：<a href="">MybatisSqlSessionFactory</a>，在这里就不做详细讲解，它的作用就是得到SqlSession这个核心对象，以及关闭SqlSession。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">public class StudentDAOImpl implements StudentDAO &#123;</span><br><span class="line"></span><br><span class="line">	private Logger log = Logger.getLogger(this.getClass());</span><br><span class="line">	private SqlSession ss;</span><br><span class="line"></span><br><span class="line">	public StudentDAOImpl() &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean insertStduent(Students s) &#123;</span><br><span class="line">		log.info(&quot;调用业务逻辑方法:insertStduent(Students s)&quot;);</span><br><span class="line">		boolean result = false;</span><br><span class="line">		SqlSession ss = MybatisSqlSessionFactory.getSqlSession();</span><br><span class="line">		try &#123;</span><br><span class="line">			int i = ss.insert(&quot;insertstudent&quot;, s);</span><br><span class="line">			if (i &gt; 0) &#123;</span><br><span class="line">				result = true;</span><br><span class="line">				log.info(&quot;添加学生信息成功&quot; + s);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			log.warn(&quot;添加学生信息失败：&quot; + e);</span><br><span class="line">		&#125; finally &#123;</span><br><span class="line">			if (ss != null)</span><br><span class="line">				ss.close();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean deleteStudent(Integer studentid) &#123;</span><br><span class="line">		boolean result = false;</span><br><span class="line">		SqlSession ss = MybatisSqlSessionFactory.getSqlSession(false);</span><br><span class="line">		try &#123;</span><br><span class="line">			int i = ss.delete(&quot;deletestudent&quot;);</span><br><span class="line">			if (i &gt; 0) &#123;</span><br><span class="line">				ss.commit();</span><br><span class="line">				result = true;</span><br><span class="line">				log.info(&quot;学生信息删除成功！&quot;);</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				ss.rollback();</span><br><span class="line">				log.info(&quot;学生信息删除失败！&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			log.warn(&quot;学生信息删除失败：&quot; + e);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean updateStudnet(Students s) &#123;</span><br><span class="line">		log.info(&quot;调用业务逻辑方法:updateStudnet(Students s)&quot;);</span><br><span class="line">		boolean result = false;</span><br><span class="line">		SqlSession ss = MybatisSqlSessionFactory.getSqlSession();</span><br><span class="line">		try &#123;</span><br><span class="line">			int i = ss.update(&quot;updatestudentdy&quot;, s);</span><br><span class="line">			if (i &gt; 0) &#123;</span><br><span class="line">				log.info(&quot;修改学生信息成功&quot; + s);</span><br><span class="line">				result = true;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			log.info(&quot;修改学生信息失败：&quot; + e);</span><br><span class="line">		&#125;</span><br><span class="line">		MybatisSqlSessionFactory.closeSqlSession();</span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public int insertStudents(List&lt;Students&gt; list) &#123;</span><br><span class="line">		log.info(&quot;调用业务逻辑方法:insertStduent(Students s)&quot;);</span><br><span class="line">		int i = 0;</span><br><span class="line">		SqlSession ss = MybatisSqlSessionFactory.getSqlSession(false);</span><br><span class="line">		try &#123;</span><br><span class="line">			i = ss.insert(&quot;insertstudents&quot;, list);</span><br><span class="line">			if (i == list.size()) &#123;</span><br><span class="line">				ss.commit();</span><br><span class="line">				log.info(&quot;添加学生信息成功&quot; + list);</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				ss.rollback();</span><br><span class="line">				log.info(&quot;添加学生信息失败，数据回滚！&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			log.warn(&quot;添加学生信息失败：&quot; + e);</span><br><span class="line">		&#125; finally &#123;</span><br><span class="line">			if (ss != null)</span><br><span class="line">				ss.close();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public int deleteStudents(List&lt;Integer&gt; list) &#123;</span><br><span class="line">		log.info(&quot;调用业务逻辑方法:deleteStudents(List&lt;Integer&gt; list)&quot;);</span><br><span class="line">		int result = 0;</span><br><span class="line">		SqlSession ss = MybatisSqlSessionFactory.getSqlSession(false);</span><br><span class="line">		try &#123;</span><br><span class="line">			int i = ss.delete(&quot;deletestudents&quot;, list);</span><br><span class="line">			if (i == list.size()) &#123;</span><br><span class="line">				ss.commit();</span><br><span class="line">				result = i;</span><br><span class="line">				log.info(i + &quot;行学生信息成功被删除！&quot;);</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				ss.rollback();</span><br><span class="line">				log.info(&quot;学生信息删除失败,数据回滚！&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			log.warn(&quot;学生信息删除失败：&quot; + e);</span><br><span class="line">		&#125;</span><br><span class="line">		MybatisSqlSessionFactory.closeSqlSession();</span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="DAO层的编写"><a href="#DAO层的编写" class="headerlink" title="DAO层的编写"></a>DAO层的编写</h2><p>这样我们所有的配置文件都写好了，只需要修改DAO层了。在这里我们就不将所有配置的方法都实现了，例举个别的方法，程序里面会写上比较详细的注释。<br>程序里面包含了一个工具类：<a href="https://929050566.github.io/2018/12/07/MybatisSqlSessionFactory%E5%B7%A5%E5%85%B7%E7%B1%BB/" target="_blank" rel="noopener">MybatisSqlSessionFactory</a>，在这里就不做详细讲解，它的作用就是得到SqlSession这个核心对象，以及关闭SqlSession。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">public class StudentDAOImpl implements StudentDAO &#123;</span><br><span class="line"></span><br><span class="line">	private Logger log = Logger.getLogger(this.getClass());</span><br><span class="line">	private SqlSession ss;</span><br><span class="line"></span><br><span class="line">	public StudentDAOImpl() &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean insertStduent(Students s) &#123;</span><br><span class="line">		log.info(&quot;调用业务逻辑方法:insertStduent(Students s)&quot;);</span><br><span class="line">		boolean result = false;</span><br><span class="line">		SqlSession ss = MybatisSqlSessionFactory.getSqlSession();</span><br><span class="line">		try &#123;</span><br><span class="line">			int i = ss.insert(&quot;insertstudent&quot;, s);</span><br><span class="line">			if (i &gt; 0) &#123;</span><br><span class="line">				result = true;</span><br><span class="line">				log.info(&quot;添加学生信息成功&quot; + s);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			log.warn(&quot;添加学生信息失败：&quot; + e);</span><br><span class="line">		&#125; finally &#123;</span><br><span class="line">			if (ss != null)</span><br><span class="line">				ss.close();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean deleteStudent(Integer studentid) &#123;</span><br><span class="line">		boolean result = false;</span><br><span class="line">		SqlSession ss = MybatisSqlSessionFactory.getSqlSession(false);</span><br><span class="line">		try &#123;</span><br><span class="line">			int i = ss.delete(&quot;deletestudent&quot;);</span><br><span class="line">			if (i &gt; 0) &#123;</span><br><span class="line">				ss.commit();</span><br><span class="line">				result = true;</span><br><span class="line">				log.info(&quot;学生信息删除成功！&quot;);</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				ss.rollback();</span><br><span class="line">				log.info(&quot;学生信息删除失败！&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			log.warn(&quot;学生信息删除失败：&quot; + e);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean updateStudnet(Students s) &#123;</span><br><span class="line">		log.info(&quot;调用业务逻辑方法:updateStudnet(Students s)&quot;);</span><br><span class="line">		boolean result = false;</span><br><span class="line">		SqlSession ss = MybatisSqlSessionFactory.getSqlSession();</span><br><span class="line">		try &#123;</span><br><span class="line">			int i = ss.update(&quot;updatestudentdy&quot;, s);</span><br><span class="line">			if (i &gt; 0) &#123;</span><br><span class="line">				log.info(&quot;修改学生信息成功&quot; + s);</span><br><span class="line">				result = true;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			log.info(&quot;修改学生信息失败：&quot; + e);</span><br><span class="line">		&#125;</span><br><span class="line">		MybatisSqlSessionFactory.closeSqlSession();</span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public int insertStudents(List&lt;Students&gt; list) &#123;</span><br><span class="line">		log.info(&quot;调用业务逻辑方法:insertStduent(Students s)&quot;);</span><br><span class="line">		int i = 0;</span><br><span class="line">		SqlSession ss = MybatisSqlSessionFactory.getSqlSession(false);</span><br><span class="line">		try &#123;</span><br><span class="line">			i = ss.insert(&quot;insertstudents&quot;, list);</span><br><span class="line">			if (i == list.size()) &#123;</span><br><span class="line">				ss.commit();</span><br><span class="line">				log.info(&quot;添加学生信息成功&quot; + list);</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				ss.rollback();</span><br><span class="line">				log.info(&quot;添加学生信息失败，数据回滚！&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			log.warn(&quot;添加学生信息失败：&quot; + e);</span><br><span class="line">		&#125; finally &#123;</span><br><span class="line">			if (ss != null)</span><br><span class="line">				ss.close();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public int deleteStudents(List&lt;Integer&gt; list) &#123;</span><br><span class="line">		log.info(&quot;调用业务逻辑方法:deleteStudents(List&lt;Integer&gt; list)&quot;);</span><br><span class="line">		int result = 0;</span><br><span class="line">		SqlSession ss = MybatisSqlSessionFactory.getSqlSession(false);</span><br><span class="line">		try &#123;</span><br><span class="line">			int i = ss.delete(&quot;deletestudents&quot;, list);</span><br><span class="line">			if (i == list.size()) &#123;</span><br><span class="line">				ss.commit();</span><br><span class="line">				result = i;</span><br><span class="line">				log.info(i + &quot;行学生信息成功被删除！&quot;);</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				ss.rollback();</span><br><span class="line">				log.info(&quot;学生信息删除失败,数据回滚！&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			log.warn(&quot;学生信息删除失败：&quot; + e);</span><br><span class="line">		&#125;</span><br><span class="line">		MybatisSqlSessionFactory.closeSqlSession();</span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -1271,7 +1448,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1330,10 +1507,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1356,12 +1530,6 @@
 
 
 
-<span id="busuanzi_container_site_pv">
-    本站总访问量<span id="busuanzi_value_site_pv"></span>次
-</span>
-<span id="busuanzi_container_site_uv">
-  本站访客数<span id="busuanzi_value_site_uv"></span>人次
-</span>
 
 
 
