@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="个人博客">
 <meta property="og:description" content="mybatis 一个参数直接传递假设只有一个参数的，我们可以采取直接传递的方式，这种方式的前提是我们需要定义好参数的类型。映射配置文件中：1234567&amp;lt;select id=&amp;quot;selectStudentById&amp;quot; parameterType=&amp;quot;int&amp;quot; resultMap=&amp;quot;student_Map&amp;quot;&amp;gt;	select	stude">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-11T08:44:24.476Z">
+<meta property="og:updated_time" content="2018-12-11T08:50:41.580Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mybatis的三种传参方式">
 <meta name="twitter:description" content="mybatis 一个参数直接传递假设只有一个参数的，我们可以采取直接传递的方式，这种方式的前提是我们需要定义好参数的类型。映射配置文件中：1234567&amp;lt;select id=&amp;quot;selectStudentById&amp;quot; parameterType=&amp;quot;int&amp;quot; resultMap=&amp;quot;student_Map&amp;quot;&amp;gt;	select	stude">
@@ -258,7 +258,7 @@
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张豪">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar2.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -355,29 +355,21 @@
       
         <p><a href="https://929050566.github.io/2018/12/06/MyBatis/" target="_blank" rel="noopener">mybatis</a></p>
 <h1 id="一个参数直接传递"><a href="#一个参数直接传递" class="headerlink" title="一个参数直接传递"></a>一个参数直接传递</h1><p>假设只有一个参数的，我们可以采取直接传递的方式，这种方式的前提是我们需要定义好参数的类型。<br>映射配置文件中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;selectStudentById&quot; parameterType=&quot;int&quot; resultMap=&quot;student_Map&quot;&gt;</span><br><span class="line">	select</span><br><span class="line">	student_id,student_name,student_sex,student_birthday,group_id</span><br><span class="line">	from</span><br><span class="line">	students</span><br><span class="line">	where student_id = #&#123;studentid&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure></p>
-<p>在Mapper接口中:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 通过studentid查询学生信息</span><br><span class="line"> * @param studentid学生id</span><br><span class="line"> * @return 学生信息</span><br><span class="line"> */</span><br><span class="line">public Students selectStudentById(Integer studentid);</span><br><span class="line">```  </span><br><span class="line">通过这种配置方式。在调用selectStudentById方法时，就可以直接传递参数。程序会识别并匹配到查询的sql语句中。</span><br><span class="line"># 通过@Param #</span><br><span class="line">如果有多个参数，显然直接传递参数是行不通的。此时我们可以用到配置@Param注解方式和Map方式。我们先介绍Map方式。  </span><br><span class="line">在映射配置文件中:</span><br></pre></td></tr></table></figure></p>
-<!-- 分页查询 -->
-<p><select id="selectStudentsPage" resultmap="student_Map"><br>    select<br>    student_id,student_name,student_sex,student_birthday,group_id<br>    from<br>    students<br>    limit #{offset},#{pageSize}
-</select><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">很显然这里配置的是mysql下的分页查询的语句。我们在Mapper接口中：</span><br></pre></td></tr></table></figure></p>
-<p>/**</p>
-<ul>
-<li>用limit做分页</li>
-<li>@param offset 第几页</li>
-<li>@param pageSize 一页多少行</li>
-<li>@return student集合<br>*/<br>public List<students> selectStudentsPage(@Param(value=”offset”)int offset,@Param(value=”pageSize”)int pageSize);<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">这样编写接口，在调用时按照对应的方式传递参数，程序就会识别并匹配到sql语句中。</span><br><span class="line"># 通过map传递参数 #</span><br><span class="line">传递多个参数的第二种方式就是通过Map来传递了(推荐使用)</span><br><span class="line">在映射配置文件中：</span><br></pre></td></tr></table></figure>
-</students></li>
-</ul>
-<!-- 分页查询 -->
-<p><select id="selectStudentsPage" resultmap="student_Map"><br>    select<br>    student_id,student_name,student_sex,student_birthday,group_id<br>    from<br>    students<br>    limit #{offset},#{pageSize}
-</select><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">映射配置文件和前面是相同的，在接口中：</span><br></pre></td></tr></table></figure></p>
-<p>/**</p>
-<ul>
-<li>用limit做分页</li>
-<li>@param map 分页条件</li>
-<li>@return student集合<br>*/<br>public List<students> selectStudentsPage(Map<string,object> map);<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在方法调用的时候:</span><br></pre></td></tr></table></figure>
-</string,object></students></li>
-</ul>
-<p>public List<students> getStudents3(int pages, int pageSize) {<br>    log.info(“调用业务逻辑方法getStudents3(int pages, int pageSize)”);<br>    SqlSession ss  = MybatisSqlSessionFactory.getSqlSession();<br>    List<students> list = new ArrayList&lt;&gt;();<br>    //创建一个HasoMap实例<br>    Map<string, object=""> map = new HashMap&lt;&gt;();<br>    //offset对应映射配置文件中的offset<br>    map.put(“offset”, (pages-1)*pageSize);<br>    //pageSize对应配置文件中的pageSize<br>    map.put(“pageSize”, pageSize);<br>    try {<br>        StudentMapper sm = ss.getMapper(StudentMapper.class);<br>        list = sm.selectStudentsPage(map);<br>        log.info(“成功查询出”+list.size()+”条数据，数据内容为:”+list);<br>    } catch (Exception e) {<br>        log.warn(“查询失败”);<br>    }<br>    MybatisSqlSessionFactory.closeSqlSession();<br>    return list;<br>}<br>```<br>可以看到，我们在调用方法的时候并不是直接传递参数，而是将参数封装到map中。map的key对应的是映射配置文件中的参数名，value对应的就是参数值了。这样子我们就可以使程序识别我们的多个参数。</string,></students></students></p>
+<p>在Mapper接口中:  </p>
+<pre><code>/**
+ * 通过studentid查询学生信息
+ * @param studentid学生id
+ * @return 学生信息
+ */
+public Students selectStudentById(Integer studentid);
+</code></pre><p>通过这种配置方式。在调用selectStudentById方法时，就可以直接传递参数。程序会识别并匹配到查询的sql语句中。</p>
+<h1 id="通过-Param"><a href="#通过-Param" class="headerlink" title="通过@Param"></a>通过@Param</h1><p>如果有多个参数，显然直接传递参数是行不通的。此时我们可以用到配置@Param注解方式和Map方式。我们先介绍@Param方式。<br>在映射配置文件中:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 分页查询 --&gt;</span><br><span class="line">&lt;select id=&quot;selectStudentsPage&quot; resultMap=&quot;student_Map&quot;&gt;</span><br><span class="line">	select</span><br><span class="line">	student_id,student_name,student_sex,student_birthday,group_id</span><br><span class="line">	from</span><br><span class="line">	students</span><br><span class="line">	limit #&#123;offset&#125;,#&#123;pageSize&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure></p>
+<p>很显然这里配置的是mysql下的分页查询的语句。我们在Mapper接口中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 用limit做分页</span><br><span class="line"> * @param offset 第几页</span><br><span class="line"> * @param pageSize 一页多少行</span><br><span class="line"> * @return student集合</span><br><span class="line"> */</span><br><span class="line">public List&lt;Students&gt; selectStudentsPage(@Param(value=&quot;offset&quot;)int offset,@Param(value=&quot;pageSize&quot;)int pageSize);</span><br></pre></td></tr></table></figure></p>
+<p>这样编写接口，在调用时按照对应的方式传递参数，程序就会识别并匹配到sql语句中。</p>
+<h1 id="通过map传递参数"><a href="#通过map传递参数" class="headerlink" title="通过map传递参数"></a>通过map传递参数</h1><p>传递多个参数的第二种方式就是通过Map来传递了(推荐使用)<br>在映射配置文件中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 分页查询 --&gt;</span><br><span class="line">&lt;select id=&quot;selectStudentsPage&quot; resultMap=&quot;student_Map&quot;&gt;</span><br><span class="line">	select</span><br><span class="line">	student_id,student_name,student_sex,student_birthday,group_id</span><br><span class="line">	from</span><br><span class="line">	students</span><br><span class="line">	limit #&#123;offset&#125;,#&#123;pageSize&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure></p>
+<p>映射配置文件和前面是相同的，在接口中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 用limit做分页</span><br><span class="line"> * @param map 分页条件</span><br><span class="line"> * @return student集合</span><br><span class="line"> */</span><br><span class="line">public List&lt;Students&gt; selectStudentsPage(Map&lt;String,Object&gt; map);</span><br></pre></td></tr></table></figure></p>
+<p>在方法调用的时候:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;Students&gt; getStudents3(int pages, int pageSize) &#123;</span><br><span class="line">	log.info(&quot;调用业务逻辑方法getStudents3(int pages, int pageSize)&quot;);</span><br><span class="line">	SqlSession ss  = MybatisSqlSessionFactory.getSqlSession();</span><br><span class="line">	List&lt;Students&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">	//创建一个HasoMap实例</span><br><span class="line">	Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">	//offset对应映射配置文件中的offset</span><br><span class="line">	map.put(&quot;offset&quot;, (pages-1)*pageSize);</span><br><span class="line">	//pageSize对应配置文件中的pageSize</span><br><span class="line">	map.put(&quot;pageSize&quot;, pageSize);</span><br><span class="line">	try &#123;</span><br><span class="line">		StudentMapper sm = ss.getMapper(StudentMapper.class);</span><br><span class="line">		list = sm.selectStudentsPage(map);</span><br><span class="line">		log.info(&quot;成功查询出&quot;+list.size()+&quot;条数据，数据内容为:&quot;+list);</span><br><span class="line">	&#125; catch (Exception e) &#123;</span><br><span class="line">		log.warn(&quot;查询失败&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	MybatisSqlSessionFactory.closeSqlSession();</span><br><span class="line">	return list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，我们在调用方法的时候并不是直接传递参数，而是将参数封装到map中。map的key对应的是映射配置文件中的参数名，value对应的就是参数值了。这样子我们就可以使程序识别我们的多个参数。</p>
 
       
     </div>
@@ -491,7 +483,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="张豪">
+              <img class="site-author-image" itemprop="image" src="/images/avatar2.png" alt="张豪">
             
               <p class="site-author-name" itemprop="name">张豪</p>
               <p class="site-description motion-element" itemprop="description">纵有疾风起，人生不言弃。</p>
@@ -559,7 +551,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一个参数直接传递"><span class="nav-number">1.</span> <span class="nav-text">一个参数直接传递</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一个参数直接传递"><span class="nav-number">1.</span> <span class="nav-text">一个参数直接传递</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过-Param"><span class="nav-number">2.</span> <span class="nav-text">通过@Param</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过map传递参数"><span class="nav-number">3.</span> <span class="nav-text">通过map传递参数</span></a></li></ol></div>
             
 
           </div>
