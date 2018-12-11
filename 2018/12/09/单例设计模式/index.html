@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="单例设计模式有很多种实现方式，但是不同的实现方式的效果自然也不同。但是绝大多数实现方式都要满足三要素：    私有的构造方法。 私有的静态的本类类型引用变量。 公共的静态的获得实例的方法。下面我就例举集中单例模式的实现方式。懒汉式话不多说，直接上代码。123456789101112131415public class SinglePattern1 &amp;#123;	//私有静态变量	private s">
+<meta name="description" content="单例设计模式有很多种实现方式，但是不同的实现方式的效果自然也不同。但是绝大多数实现方式都要满足三要素：    私有的构造方法。 私有的静态的本类类型引用变量。 公共的静态的获得实例的方法。    下面我就例举其中几个单例模式的实现方式。 懒汉式话不多说，直接上代码。123456789101112131415public class SinglePattern1 &amp;#123;	//私有静态变量	pr">
 <meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="单例设计模式">
 <meta property="og:url" content="http://yoursite.com/2018/12/09/单例设计模式/index.html">
 <meta property="og:site_name" content="个人博客">
-<meta property="og:description" content="单例设计模式有很多种实现方式，但是不同的实现方式的效果自然也不同。但是绝大多数实现方式都要满足三要素：    私有的构造方法。 私有的静态的本类类型引用变量。 公共的静态的获得实例的方法。下面我就例举集中单例模式的实现方式。懒汉式话不多说，直接上代码。123456789101112131415public class SinglePattern1 &amp;#123;	//私有静态变量	private s">
+<meta property="og:description" content="单例设计模式有很多种实现方式，但是不同的实现方式的效果自然也不同。但是绝大多数实现方式都要满足三要素：    私有的构造方法。 私有的静态的本类类型引用变量。 公共的静态的获得实例的方法。    下面我就例举其中几个单例模式的实现方式。 懒汉式话不多说，直接上代码。123456789101112131415public class SinglePattern1 &amp;#123;	//私有静态变量	pr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-09T14:34:35.726Z">
+<meta property="og:updated_time" content="2018-12-11T07:30:39.311Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单例设计模式">
-<meta name="twitter:description" content="单例设计模式有很多种实现方式，但是不同的实现方式的效果自然也不同。但是绝大多数实现方式都要满足三要素：    私有的构造方法。 私有的静态的本类类型引用变量。 公共的静态的获得实例的方法。下面我就例举集中单例模式的实现方式。懒汉式话不多说，直接上代码。123456789101112131415public class SinglePattern1 &amp;#123;	//私有静态变量	private s">
+<meta name="twitter:description" content="单例设计模式有很多种实现方式，但是不同的实现方式的效果自然也不同。但是绝大多数实现方式都要满足三要素：    私有的构造方法。 私有的静态的本类类型引用变量。 公共的静态的获得实例的方法。    下面我就例举其中几个单例模式的实现方式。 懒汉式话不多说，直接上代码。123456789101112131415public class SinglePattern1 &amp;#123;	//私有静态变量	pr">
 
 
 
@@ -179,16 +179,6 @@
 
   
     <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-resources">
-          <a href="/resources" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-download"></i> <br>
-            
-            资源
-          </a>
-        </li>
       
         
         <li class="menu-item menu-item-home">
@@ -367,13 +357,20 @@
 <ul>
 <li>私有的构造方法。</li>
 <li>私有的静态的本类类型引用变量。</li>
-<li>公共的静态的获得实例的方法。<br>下面我就例举集中单例模式的实现方式。<h1 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h1>话不多说，直接上代码。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class SinglePattern1 &#123;</span><br><span class="line">	//私有静态变量</span><br><span class="line">	private static SinglePattern1 single;</span><br><span class="line">	//私有构造方法</span><br><span class="line">	private SinglePattern1() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	//公共静态的获取实例的方法</span><br><span class="line">	public static SinglePattern1 getInstance() &#123;</span><br><span class="line">		if (single == null)</span><br><span class="line">			single = new SinglePattern1();</span><br><span class="line">		return single;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>公共的静态的获得实例的方法。  </li>
 </ul>
-<p>优点：节省资源<br>缺点：多线程下单例容易被破坏</p>
+<p>下面我就例举其中几个单例模式的实现方式。</p>
+<h1 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h1><p>话不多说，直接上代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class SinglePattern1 &#123;</span><br><span class="line">	//私有静态变量</span><br><span class="line">	private static SinglePattern1 single;</span><br><span class="line">	//私有构造方法</span><br><span class="line">	private SinglePattern1() &#123;</span><br><span class="line">		// TODO Augenerated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	//公共静态的to-获取实例的方法</span><br><span class="line">	public static SinglePattern1 getInstance() &#123;</span><br><span class="line">		if (single == null)</span><br><span class="line">			single = new SinglePattern1();</span><br><span class="line">		return single;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>该方式在第一次需要用到该对象的时候，才new了一个对象出来，故称为懒汉。<br>优点：节省资源<br>缺点：多线程下单例容易被破坏</p>
 <h1 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class SinglePattern2 &#123;</span><br><span class="line">	//私有静态变量</span><br><span class="line">	private static SinglePattern2 single = new SinglePattern2();</span><br><span class="line">	//私有构造方法</span><br><span class="line">	private SinglePattern2() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	//公共静态的获取实例的方法</span><br><span class="line">	public static SinglePattern2 getInstance() &#123;</span><br><span class="line">		return single;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>顾名思义，饿汉模式，在类被加载的时候，实例就被创建出来了，虽然防止了多线程创建多个实例，但是它浪费了资源。</p>
+<p>顾名思义，饿汉模式，在类被加载的时候，实例就被创建出来了。<br>优点:多线程下是安全的<br>缺点:造成了资源的浪费</p>
 <h1 id="同步方法"><a href="#同步方法" class="headerlink" title="同步方法"></a>同步方法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class SinglePattern3 &#123;</span><br><span class="line">	//私有静态变量</span><br><span class="line">	private static SinglePattern3 single;</span><br><span class="line">	//私有构造方法</span><br><span class="line">	private SinglePattern3() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	//公共静态的获取实例的方法</span><br><span class="line">	public synchronized static SinglePattern3 getInstance() &#123;</span><br><span class="line">		if (single == null)</span><br><span class="line">			single = new SinglePattern3();</span><br><span class="line">		return single;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在获得实例的方法上加上synchronized关键字，形成同步方法。<br>优点:多线程下是安全的。<br>缺点:同步方法，在多线程下，效率很低。</p>
+<h1 id="双重检测加锁法"><a href="#双重检测加锁法" class="headerlink" title="双重检测加锁法"></a>双重检测加锁法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class SinglePattern4 &#123;</span><br><span class="line">	//私有静态变量</span><br><span class="line">	private static SinglePattern4 single;</span><br><span class="line">	//私有构造方法</span><br><span class="line">	private SinglePattern4() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	//公共静态的获取实例的方法</span><br><span class="line">	public  static SinglePattern4 getInstance() &#123;</span><br><span class="line">		//双重检测加锁法</span><br><span class="line">		if (single == null)</span><br><span class="line">			synchronized (SinglePattern4.class) &#123;</span><br><span class="line">				if(single == null) &#123;</span><br><span class="line">					single = new SinglePattern4();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		return single;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>两个非空的if判断加同步代码块约束构成了双重检测加锁法。<br>优点:多线程下安全。效率更高<br>缺点:使用了同步代码块，效率依旧受到了影响。<br>并且这种方法在多线程下并不一定完全安全，具体内容可以参考<a href="">双重检查加锁法的安全性</a>。  </p>
+<h1 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class SinglePattern4 &#123;</span><br><span class="line">	//私有静态变量</span><br><span class="line">	private static SinglePattern4 single;</span><br><span class="line">	//私有构造方法</span><br><span class="line">	private SinglePattern4() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	//私有静态内部类</span><br><span class="line">	private static class inner&#123;</span><br><span class="line">		private static SinglePattern4 instance = new SinglePattern4();</span><br><span class="line">	&#125;</span><br><span class="line">	//公共静态的获取实例的方法</span><br><span class="line">	public  static SinglePattern4 getInstance() &#123;</span><br><span class="line">		return inner.instance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>优点：兼顾了懒汉模式的内存优化（使用时才初始化）以及饿汉模式的安全性（不会被反射入侵）。<br>缺点：需要两个类去做到这一点，虽然不会创建静态内部类的对象，但是其 Class 对象还是会被创建，而且是属于永久带的对象。创建的单例，一旦在后期被销毁，不能重新创建。</p>
+
       
     </div>
     
@@ -412,6 +409,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/10/Mybatis的三种传参方式/" rel="prev" title="Mybatis的三种传参方式">
+                Mybatis的三种传参方式 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -495,7 +496,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -506,7 +507,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -517,7 +518,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -550,7 +551,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#懒汉式"><span class="nav-number">1.</span> <span class="nav-text">懒汉式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#饿汉式"><span class="nav-number">2.</span> <span class="nav-text">饿汉式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#同步方法"><span class="nav-number">3.</span> <span class="nav-text">同步方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#懒汉式"><span class="nav-number">1.</span> <span class="nav-text">懒汉式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#饿汉式"><span class="nav-number">2.</span> <span class="nav-text">饿汉式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#同步方法"><span class="nav-number">3.</span> <span class="nav-text">同步方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#双重检测加锁法"><span class="nav-number">4.</span> <span class="nav-text">双重检测加锁法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态内部类"><span class="nav-number">5.</span> <span class="nav-text">静态内部类</span></a></li></ol></div>
             
 
           </div>
