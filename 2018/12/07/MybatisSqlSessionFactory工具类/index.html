@@ -104,7 +104,7 @@
 <meta name="keywords" content="MyBatis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MybatisSqlSessionFactory工具类">
-<meta property="og:url" content="https://929050566.github.io/2018/12/07/MybatisSqlSessionFactory工具类/index.html">
+<meta property="og:url" content="https://a929050566.coding.me/2018/12/07/MybatisSqlSessionFactory工具类/index.html">
 <meta property="og:site_name" content="个人博客">
 <meta property="og:description" content="上一篇文章剩下的MyBatis的核心接口是SqlSession。它的方法有：12345678910111213141.数据更新insert() update() delete()2.数据查询selectOne() selectList() selectMap()3.事务处理commit() rollback()4.Mapper接口使用getMapper()5.管理操作close() clearCa">
 <meta property="og:locale" content="zh-Hans">
@@ -141,7 +141,7 @@
 
 
 
-  <link rel="canonical" href="https://929050566.github.io/2018/12/07/MybatisSqlSessionFactory工具类/">
+  <link rel="canonical" href="https://a929050566.coding.me/2018/12/07/MybatisSqlSessionFactory工具类/">
 
 
 
@@ -274,7 +274,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://929050566.github.io/2018/12/07/MybatisSqlSessionFactory工具类/">
+    <link itemprop="mainEntityOfPage" href="https://a929050566.coding.me/2018/12/07/MybatisSqlSessionFactory工具类/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张豪">
@@ -405,7 +405,7 @@
       
 
       
-        <p><a href="https://929050566.github.io/2018/12/06/MyBatis/">上一篇文章</a>剩下的MyBatis的核心接口是SqlSession。它的方法有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1.数据更新</span><br><span class="line">insert() update() delete()</span><br><span class="line">2.数据查询</span><br><span class="line">selectOne() selectList() selectMap()</span><br><span class="line">3.事务处理</span><br><span class="line">commit() rollback()</span><br><span class="line">4.Mapper接口使用</span><br><span class="line">getMapper()</span><br><span class="line">5.管理操作</span><br><span class="line">close() clearCache()     </span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">一般我们运用MyBatis框的时候，都会编写一个工具来获取SqlSession,并且我们可以将SqlSession和线程绑定，这样我们可以达到节省资源的目的。  </span><br><span class="line">要获取SqlSession我们需要用SqlSessionFacotry的openSqlSession()方法，得到SqlSessionFactory我们要用到SqlSessionFactoryBulider的build()方法。并且我们的工具类需要两个核心方法，一个获得SqlSession，一个关闭资源。下面代码已经做详细注释，有不懂的地方可以在留言板块留言，作者会及时回复！</span><br></pre></td></tr></table></figure></p>
+        <p><a href="https://929050566.github.io/2018/12/06/MyBatis/" target="_blank" rel="noopener">上一篇文章</a>剩下的MyBatis的核心接口是SqlSession。它的方法有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1.数据更新</span><br><span class="line">insert() update() delete()</span><br><span class="line">2.数据查询</span><br><span class="line">selectOne() selectList() selectMap()</span><br><span class="line">3.事务处理</span><br><span class="line">commit() rollback()</span><br><span class="line">4.Mapper接口使用</span><br><span class="line">getMapper()</span><br><span class="line">5.管理操作</span><br><span class="line">close() clearCache()     </span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">一般我们运用MyBatis框的时候，都会编写一个工具来获取SqlSession,并且我们可以将SqlSession和线程绑定，这样我们可以达到节省资源的目的。  </span><br><span class="line">要获取SqlSession我们需要用SqlSessionFacotry的openSqlSession()方法，得到SqlSessionFactory我们要用到SqlSessionFactoryBulider的build()方法。并且我们的工具类需要两个核心方法，一个获得SqlSession，一个关闭资源。下面代码已经做详细注释，有不懂的地方可以在留言板块留言，作者会及时回复！</span><br></pre></td></tr></table></figure></p>
 <p>/**</p>
 <ul>
 <li>获取SqlSession工具类</li>
