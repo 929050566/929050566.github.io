@@ -108,7 +108,7 @@
 <meta property="og:site_name" content="个人博客">
 <meta property="og:description" content="MyBatis是什么&amp;emsp;MyBatis 是支持普通 SQL 查询，存储过程和高级映射的优秀持久层框架，它是一个轻量级ORM应用框架。MyBatis使用简单的XML或注解用于配置和原始映射，将接口和java的POJOs(普通的java对象)映射成数据中的记录。它保留了SQL语句并且使SQL语句和应用程序分离。&amp;emsp;MyBatis是一个半自动的框架，之所以称它为半自动，是用为它需要手动配">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-09T12:38:13.241Z">
+<meta property="og:updated_time" content="2018-12-13T08:27:01.486Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MyBatis">
 <meta name="twitter:description" content="MyBatis是什么&amp;emsp;MyBatis 是支持普通 SQL 查询，存储过程和高级映射的优秀持久层框架，它是一个轻量级ORM应用框架。MyBatis使用简单的XML或注解用于配置和原始映射，将接口和java的POJOs(普通的java对象)映射成数据中的记录。它保留了SQL语句并且使SQL语句和应用程序分离。&amp;emsp;MyBatis是一个半自动的框架，之所以称它为半自动，是用为它需要手动配">
@@ -368,7 +368,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4,291字
+                  4,290字
                 </span>
               
 
@@ -405,7 +405,7 @@
       
 
       
-        <h1 id="MyBatis是什么"><a href="#MyBatis是什么" class="headerlink" title="MyBatis是什么"></a>MyBatis是什么</h1><p>&emsp;MyBatis 是支持普通 SQL 查询，存储过程和高级映射的优秀持久层框架，它是一个轻量级ORM应用框架。MyBatis使用简单的XML或注解用于配置和原始映射，将接口和java的POJOs(普通的java对象)映射成数据中的记录。它保留了SQL语句并且使SQL语句和应用程序分离。<br>&emsp;MyBatis是一个半自动的框架，之所以称它为半自动，是用为它需要手动配置POJO,SQL和映射关系，不像Hibernate只需要提供POJO和映射关系即可。<br>&emsp;Mybatis需要提供的映射文件包含了一下三个部分：sql，映射规则，pojo。在Mybatis里面你需要自己编写sql，虽然比Hibernate配置多，但是Mybatis可以配置动态sql，解决了hibernate表名根据时间变化，不同条件下列不一样的问题，同时你也可以对sql进行优化，通过配置决定你的sql映射规则，也能支持存储过程，所以对于一些复杂和需要优化性能的sql查询它就更加方便。Mybatis几乎可以做到jdbc所有能做到的事情。</p>
+        <h1 id="MyBatis是什么"><a href="#MyBatis是什么" class="headerlink" title="MyBatis是什么"></a>MyBatis是什么</h1><p>&emsp;MyBatis 是支持普通 SQL 查询，存储过程和高级映射的优秀持久层框架，它是一个轻量级ORM应用框架。MyBatis使用简单的XML或注解用于配置和原始映射，将接口和java的POJOs(普通的java对象)映射成数据中的记录。它保留了SQL语句并且使SQL语句和应用程序分离。<br>&emsp;MyBatis是一个半自动的框架，之所以称它为半自动，是用为它需要手动配置POJO,SQL和映射关系，不像Hibernate只需要提供POJO和映射关系即可。<br>&emsp;Mybatis需要提供的映射文件包含了一下三个部分：sql，映射规则，pojo。在Mybatis里面你需要自己编写sql，虽然比Hibernate配置多，但是Mybatis可以配置动态sql，解决了hibernate表名根据时间变化，不同条件下不一样的问题，同时你也可以对sql进行优化，通过配置决定你的sql映射规则，也能支持存储过程，所以对于一些复杂和需要优化性能的sql查询它就更加方便。Mybatis几乎可以做到jdbc所有能做到的事情。</p>
 <h1 id="MyBatis什么时候使用"><a href="#MyBatis什么时候使用" class="headerlink" title="MyBatis什么时候使用"></a>MyBatis什么时候使用</h1><p>&emsp;MyBaties的SQL语句是由你编写的，所有Mybaties更有利于SQL的优化。如果项目的数据量比较大，并且效率要求比较高，则建议使用MyBatis框架。</p>
 <h1 id="Mybatis如何使用"><a href="#Mybatis如何使用" class="headerlink" title="Mybatis如何使用"></a>Mybatis如何使用</h1><h2 id="导入jar包"><a href="#导入jar包" class="headerlink" title="导入jar包"></a>导入jar包</h2><p>&emsp;运用框架首先不必多说的就是要先导入框架所依赖jar包，<a href="http://www.mybatis.org/" target="_blank" rel="noopener">点击链接下载mybatis的jar包</a>。以为是数据持久层框架所以还需导入访问数据库所依赖的jar包。比如<a href="https://dev.mysql.com" target="_blank" rel="noopener">mysql.jar</a>。</p>
 <h2 id="创建数据库对象"><a href="#创建数据库对象" class="headerlink" title="创建数据库对象"></a>创建数据库对象</h2><p>&emsp;建立关系型映射之前，我们先需要建立表。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `students` (</span><br><span class="line">  `student_id` int(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `student_name` varchar(20) NOT NULL,</span><br><span class="line">  `student_sex` char(1) DEFAULT NULL,</span><br><span class="line">  `student_birthday` date DEFAULT NULL,</span><br><span class="line">  `group_id` varchar(20) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`student_id`)</span><br><span class="line">) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;</span><br></pre></td></tr></table></figure></p>
@@ -575,7 +575,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -664,7 +664,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">13.7k</span>
+    <span title="Site words total count">14.8k</span>
   
 </div>
 
