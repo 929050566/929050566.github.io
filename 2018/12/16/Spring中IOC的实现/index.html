@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+<meta name="baidu-site-verification" content="mrSaJ4uJ8z">
+<meta name="baidu-site-verification" content="owvyVcpZUx">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+  <style>
+      .pace .pace-progress {
+          background: #1E92FB; /*进度条颜色*/
+          height: 3px;
+      }
+      .pace .pace-progress-inner {
+           box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+      }
+      .pace .pace-activity {
+          border-top-color: #1E92FB;    /*上边框颜色*/
+          border-left-color: #1E92FB;    /*左边框颜色*/
+      }
+  </style>
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spring,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是IOCIOC(Inversion Of Control)的意思是控制反转，它的思想是从容器的角度出发，容器控制应用程序，由容器反向的向应用程序注入应用程序所需的外部资源，说白了就是把对象的控制权交给容器来管理。实现方式就是将new对象这个步骤交给容器来做，对象里面的属性的赋值也是交给容器来注入。这里大家肯定都想到了，IOC就是通过反射来实现的。这里我想强调一下，IOC和DI(Dependen">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring中IOC的实现">
+<meta property="og:url" content="https://a929050566.coding.me/2018/12/16/Spring中IOC的实现/index.html">
+<meta property="og:site_name" content="个人博客">
+<meta property="og:description" content="什么是IOCIOC(Inversion Of Control)的意思是控制反转，它的思想是从容器的角度出发，容器控制应用程序，由容器反向的向应用程序注入应用程序所需的外部资源，说白了就是把对象的控制权交给容器来管理。实现方式就是将new对象这个步骤交给容器来做，对象里面的属性的赋值也是交给容器来注入。这里大家肯定都想到了，IOC就是通过反射来实现的。这里我想强调一下，IOC和DI(Dependen">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://a929050566.coding.me/images/IOC/result0.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/IOC/result1.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/IOC/result2.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/IOC/autowire.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/IOC/result3.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/IOC/result4.png">
+<meta property="og:updated_time" content="2018-12-16T15:46:39.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring中IOC的实现">
+<meta name="twitter:description" content="什么是IOCIOC(Inversion Of Control)的意思是控制反转，它的思想是从容器的角度出发，容器控制应用程序，由容器反向的向应用程序注入应用程序所需的外部资源，说白了就是把对象的控制权交给容器来管理。实现方式就是将new对象这个步骤交给容器来做，对象里面的属性的赋值也是交给容器来注入。这里大家肯定都想到了，IOC就是通过反射来实现的。这里我想强调一下，IOC和DI(Dependen">
+<meta name="twitter:image" content="https://a929050566.coding.me/images/IOC/result0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://a929050566.coding.me/2018/12/16/Spring中IOC的实现/">
+
+
+
+
+
+  <title>Spring中IOC的实现 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">张豪</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://a929050566.coding.me/2018/12/16/Spring中IOC的实现/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张豪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar2.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring中IOC的实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-16T21:26:23+08:00">
+                2018-12-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/框架/" itemprop="url" rel="index">
+                    <span itemprop="name">框架</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/16/Spring中IOC的实现/" class="leancloud_visitors" data-flag-title="Spring中IOC的实现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,407字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么是IOC"><a href="#什么是IOC" class="headerlink" title="什么是IOC"></a>什么是IOC</h1><p>IOC(Inversion Of Control)的意思是控制反转，它的思想是从容器的角度出发，容器控制应用程序，由容器反向的向应用程序注入应用程序所需的外部资源，说白了就是把对象的控制权交给容器来管理。实现方式就是将new对象这个步骤交给容器来做，对象里面的属性的赋值也是交给容器来注入。这里大家肯定都想到了，IOC就是通过反射来实现的。<br>这里我想强调一下，IOC和DI(Dependence  Injection)是什么关系。本质上说他们描述的是一个事情，只是IOC是从程序的角度出发，将new对象这个事交给了容器，所以叫依赖注入。而DI则是从容器出发，将各种依赖通过容器注入，以达到解耦和的目的。</p>
+<h1 id="IOC的优缺点"><a href="#IOC的优缺点" class="headerlink" title="IOC的优缺点"></a>IOC的优缺点</h1><p>优点：<br>1、把对象的创建和依赖关系定义在了XML文件中，我们改变子类的实现变得异常简单。<br>2、控制反转减轻了对象之间的耦合度，减轻了对象之间的依赖关系，增加了系统的灵活性，可维护性，以及可移植性等等。</p>
+<p>缺点：<br>1、生成对象的方式变复杂了（事实上操作还是挺简单的），对于不习惯这种方式的人，会觉得有些别扭和不直观。<br>2、创建对象因为使用了反射技术，在效率上有些损耗。但相对于IOC提高的维护性和灵活性来说，这点损耗是微不足道的，除非某对象的生成对效率要求特别高。</p>
+<h1 id="Spring中IOC的实现"><a href="#Spring中IOC的实现" class="headerlink" title="Spring中IOC的实现"></a>Spring中IOC的实现</h1><p>Spring中实现IOC有五种注入方式</p>
+<h2 id="Setter注入"><a href="#Setter注入" class="headerlink" title="Setter注入"></a>Setter注入</h2><p>这种方式需要被注入的JavaBean的属性需要有set方法。<br>1、被注入类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">package com.aowin.testspring.di;</span><br><span class="line"></span><br><span class="line">import java.util.Date;</span><br><span class="line"></span><br><span class="line">import com.aowin.testspring.ioc.InterfaceA;</span><br><span class="line"></span><br><span class="line">public class ClassB &#123;</span><br><span class="line"></span><br><span class="line">	private Integer userid;</span><br><span class="line">	private String username;</span><br><span class="line">	private Date birthday;</span><br><span class="line">	private InterfaceA ia;</span><br><span class="line">	</span><br><span class="line">	public ClassB() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public ClassB(Integer userid, String username, Date birthday, InterfaceA ia) &#123;</span><br><span class="line">		super();</span><br><span class="line">		this.userid = userid;</span><br><span class="line">		this.username = username;</span><br><span class="line">		this.birthday = birthday;</span><br><span class="line">		this.ia = ia;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void methodB() &#123;</span><br><span class="line">		System.out.println(ia.getInfo());</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public InterfaceA getIa() &#123;</span><br><span class="line">		return ia;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setIa(InterfaceA ia) &#123;</span><br><span class="line">		this.ia = ia;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Integer getUserid() &#123;</span><br><span class="line">		return userid;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setUserid(Integer userid) &#123;</span><br><span class="line">		this.userid = userid;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public String getUsername() &#123;</span><br><span class="line">		return username;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setUsername(String username) &#123;</span><br><span class="line">		this.username = username;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Date getBirthday() &#123;</span><br><span class="line">		return birthday;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setBirthday(Date birthday) &#123;</span><br><span class="line">		this.birthday = birthday;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public String toString() &#123;</span><br><span class="line">		return &quot;ClassB [userid=&quot; + userid + &quot;, username=&quot; + username + &quot;, birthday=&quot; + birthday + &quot;, ia=&quot; + ia + &quot;]&quot;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个JavaBean中有四个属性，数据类型分别是Integer、String、Date(ps:为什么用Integer不直接用int呢？因为如果用int的话，jvm迟早会将int自动装箱，那我们为什么不一开始就用Integer来提高程序执行的效率呢。)和接口interfaceA<br>2、在配置文件中:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Setter注入 --&gt;</span><br><span class="line">&lt;bean id=&quot;classb&quot; class=&quot;com.aowin.testspring.di.ClassB&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;userid&quot; value=&quot;1810&quot;&gt;&lt;/property&gt;	</span><br><span class="line">	&lt;property name=&quot;username&quot; value=&quot;张三&quot;&gt;&lt;/property&gt;</span><br><span class="line">	&lt;property name=&quot;birthday&quot;&gt;</span><br><span class="line">		&lt;bean class=&quot;java.util.Date&quot;&gt;&lt;/bean&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在配置文件中，我们一一将ClassB对象所需的资源通过property标签注入进去。<br>3、测试方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test() &#123;</span><br><span class="line">	//如果放在了resource的根目录下 </span><br><span class="line">	ClassPathXmlApplicationContext context = </span><br><span class="line">			new ClassPathXmlApplicationContext(&quot;springDI.xml&quot;);</span><br><span class="line">	ClassB  classb = context.getBean(&quot;classb&quot;,ClassB.class);</span><br><span class="line">	System.out.println(classb.toString());</span><br><span class="line">	classb.methodB();</span><br><span class="line">	context.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ClassPathXmlApplicationContextl类是Spring提供的类，它有一个getBean()方法，我们只需要传入前面配置的id值，就可以得到对象。我们是将配置文件放在了src/main/resources下，所以直接用ClassPathXmlApplicationContextl来读取配置文件，如果你的配置文件放在别的路径下，可以使用FileSystemXmlApplicationContext类，然后通过绝对路径来读取配置文件。<br>4、执行结果：<br><img src="/images/IOC/result0.png" alt=""><br>可以看到程序并没有报空指针异常，并且对象的属性值也成功的被注入。</p>
+<h2 id="interface注入"><a href="#interface注入" class="headerlink" title="interface注入"></a>interface注入</h2><p>1、我们先写一个interfaceA接口的实现类ClassA:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package com.aowin.testspring.ioc;</span><br><span class="line"></span><br><span class="line">public class ClassA implements InterfaceA &#123;</span><br><span class="line"></span><br><span class="line">	public ClassA() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public String getInfo() &#123;</span><br><span class="line">		return &quot;企业管理系统的公告模块：实现公告发布、修改、删除、查询等操作&quot;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ClassB类不做改动。<br>2、在配置文件中:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- interface注入 --&gt;</span><br><span class="line">&lt;bean id=&quot;classa&quot; class=&quot;com.aowin.testspring.ioc.ClassA&quot;&gt;&lt;/bean&gt;</span><br><span class="line">&lt;bean id=&quot;classb2&quot; class=&quot;com.aowin.testspring.di.ClassB&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;ia&quot; ref=&quot;classa&quot;&gt;&lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<p>先配置一个interfaceA实现类，在配置ClassB的时候，将配置的ClassA通过ref属性注入进去。<br>3、测试方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test3() &#123;</span><br><span class="line">	//如果放在了resource的根目录下 </span><br><span class="line">	ClassPathXmlApplicationContext context = </span><br><span class="line">			new ClassPathXmlApplicationContext(&quot;springDI.xml&quot;);</span><br><span class="line">	ClassB  classb = context.getBean(&quot;classb3&quot;,ClassB.class);</span><br><span class="line">	System.out.println(classb.toString());</span><br><span class="line">	classb.methodB();</span><br><span class="line">	context.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>4、运行结果:<br><img src="/images/IOC/result1.png" alt=""><br>可以看到我们成功的将ClassA注入到了ClassB中。但是遗憾的是，接口注入和属性注入的功能差不多，但接口使得项目的类数量变多，现如今不推崇使用接口注入。</p>
+<h2 id="constructor注入"><a href="#constructor注入" class="headerlink" title="constructor注入"></a>constructor注入</h2><p>构造器注入。构造器注入需要JavaBean有对应的构造方法才能使用这种方式。<br>ClassB有一个带全部参数的构造方法，在这里我们不做改动。<br>1、在配置文件中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- constructor注入 --&gt;</span><br><span class="line">&lt;bean id=&quot;classb3&quot; class=&quot;com.aowin.testspring.di.ClassB&quot;&gt;</span><br><span class="line">	&lt;constructor-arg index=&quot;0&quot; value=&quot;1812&quot;&gt;&lt;/constructor-arg&gt;</span><br><span class="line">	&lt;constructor-arg index=&quot;1&quot; value=&quot;张三&quot;&gt;&lt;/constructor-arg&gt;</span><br><span class="line">	&lt;constructor-arg index=&quot;2&quot;&gt;</span><br><span class="line">		&lt;bean  class=&quot;java.util.Date&quot;&gt;&lt;/bean&gt;</span><br><span class="line">	&lt;/constructor-arg&gt;</span><br><span class="line">	&lt;constructor-arg index=&quot;3&quot; ref=&quot;classa&quot;&gt;&lt;/constructor-arg&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，在配置文件中，我们不再是像Setter注入一样，用property标签，而是使用constructor-arg标签来配置。在constructor-arg标签中，index表示的是构造方法参数的索引下标(从0开始)。<br>2、测试方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test3() &#123;</span><br><span class="line">	//如果放在了resource的根目录下 </span><br><span class="line">	ClassPathXmlApplicationContext context = </span><br><span class="line">			new ClassPathXmlApplicationContext(&quot;springDI.xml&quot;);</span><br><span class="line">	ClassB  classb = context.getBean(&quot;classb3&quot;,ClassB.class);</span><br><span class="line">	System.out.println(classb.toString());</span><br><span class="line">	classb.methodB();</span><br><span class="line">	context.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3、执行结果:<br><img src="/images/IOC/result2.png" alt=""><br>可以看到，我们通过构造方法配置方式将所有的属性值都成功注入。</p>
+<h2 id="AutoWire注解"><a href="#AutoWire注解" class="headerlink" title="AutoWire注解"></a>AutoWire注解</h2><p>AutoWired注入方式可以不用写set方法。我们写三个类来模拟Autowired注入。<br>ClassE:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.aowin.testspring.di;</span><br><span class="line"></span><br><span class="line">public class ClassC &#123;</span><br><span class="line"></span><br><span class="line">	public ClassC() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void methodC() &#123;</span><br><span class="line">		System.out.println(&quot;ClassC Method&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ClassD:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.aowin.testspring.di;</span><br><span class="line"></span><br><span class="line">public class ClassD &#123;</span><br><span class="line"></span><br><span class="line">	public ClassD() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void methodD() &#123;</span><br><span class="line">		System.out.println(&quot;ClassD Method&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ClassE:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">package com.aowin.testspring.di;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"></span><br><span class="line">public class ClassE &#123;</span><br><span class="line">	</span><br><span class="line">	@Autowired</span><br><span class="line">	private ClassC cc;</span><br><span class="line">	@Autowired</span><br><span class="line">	private ClassD cd;</span><br><span class="line">	</span><br><span class="line">	public ClassE() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void methodE() &#123;</span><br><span class="line">		cc.methodC();</span><br><span class="line">		cd.methodD();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public String toString() &#123;</span><br><span class="line">		return &quot;ClassE [cc=&quot; + cc + &quot;, cd=&quot; + cd + &quot;]&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ClassE中有两个属性分别是ClassC和ClassD。属性上都加了注解@Autowired这个注解是Spring提供的。<br>1、在配置文件中:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;context:annotation-config /&gt;</span><br><span class="line">&lt;!-- AutoWire注入 --&gt;</span><br><span class="line">&lt;bean id=&quot;cc&quot; class=&quot;com.aowin.testspring.di.ClassC&quot;&gt;&lt;/bean&gt;</span><br><span class="line">&lt;bean id=&quot;cd&quot; class=&quot;com.aowin.testspring.di.ClassD&quot;&gt;&lt;/bean&gt;</span><br><span class="line">&lt;bean id=&quot;classe&quot; class=&quot;com.aowin.testspring.di.ClassE&quot; autowire=&quot;byName&quot;&gt;&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<p>首先我们需要先开启Autowired模式，用context:annotation-config标签。然后直接配置bean，但是id值需要和属性名相同。autowire默认是安卓byType方式匹配。autowire的值可以是byName、byType、constructor、autodetect、no他们的功能如下:<br><img src="/images/IOC/autowire.png" alt=""><br>2、测试方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test4() &#123;</span><br><span class="line">	//如果放在了resource的根目录下 </span><br><span class="line">	ClassPathXmlApplicationContext context = </span><br><span class="line">			new ClassPathXmlApplicationContext(&quot;springDI.xml&quot;);</span><br><span class="line">	ClassE  classb = context.getBean(&quot;classe&quot;,ClassE.class);</span><br><span class="line">	System.out.println(classb.toString());</span><br><span class="line">	classb.methodE();</span><br><span class="line">	context.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3、运行结果:<br><img src="/images/IOC/result3.png" alt=""><br>可以看到程序并未报空指针异常。这种配置方式使我们不需要再写set方法了,节省了我们的时间。</p>
+<h2 id="Resource注解"><a href="#Resource注解" class="headerlink" title="Resource注解"></a>Resource注解</h2><p>@Resource并不是spring提供的，由J2EE提供，@Resource默认按照ByName自动注入，需要导入包javax.annotation.Resource。<br>@Resource有两个重要的属性：name和type，而Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以，如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不制定name也不制定type属性，这时将通过反射机制使用byName自动注入策略。<br>1、我们写一个新类ClassF：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package com.aowin.testspring.di;</span><br><span class="line"></span><br><span class="line">import javax.annotation.Resource;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.beans.factory.annotation.Qualifier;</span><br><span class="line"></span><br><span class="line">import com.aowin.testspring.ioc.InterfaceA;</span><br><span class="line"></span><br><span class="line">public class ClassF &#123;</span><br><span class="line"></span><br><span class="line">	@Resource(name = &quot;classA&quot;)</span><br><span class="line">	private InterfaceA ia1;</span><br><span class="line">	</span><br><span class="line">	@Resource(name = &quot;classa&quot;)</span><br><span class="line">	private InterfaceA ia2;</span><br><span class="line">	</span><br><span class="line">	public ClassF() &#123;</span><br><span class="line">		// TODO Auto-generated constructor stub</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void methodE() &#123;</span><br><span class="line">		System.out.println(ia1.getInfo());</span><br><span class="line">		System.out.println(ia2.getInfo());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public String toString() &#123;</span><br><span class="line">		return &quot;ClassF [ia1=&quot; + ia1 + &quot;, ia2=&quot; + ia2 + &quot;]&quot;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>@Resource注解设置了name属性，是为了后面匹配用。这里的InterfaceA类型是延用的前面的interfaceA接口。之前我们还写了它的实现类ClasssA。<br>2、配置文件中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;classa&quot; class=&quot;com.aowin.testspring.ioc.ClassA&quot;&gt;&lt;/bean&gt;</span><br><span class="line">&lt;bean id=&quot;classA&quot; class=&quot;com.aowin.testspring.ioc.ClassA&quot;&gt;&lt;/bean&gt;</span><br><span class="line">&lt;bean id=&quot;classf&quot; class=&quot;com.aowin.testspring.di.ClassF&quot;&gt;&lt;/bean&gt;</span><br><span class="line">&lt;!-- Annotation注入 --&gt;</span><br><span class="line">&lt;context:annotation-config /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>首先我们要开启注解，同样通过context:annotation-config标签来开启。id的值classa和classA需要和类中的name属性值对应。<br>3、测试方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test5() &#123;</span><br><span class="line">	//如果放在了resource的根目录下 </span><br><span class="line">	ClassPathXmlApplicationContext context = </span><br><span class="line">			new ClassPathXmlApplicationContext(&quot;springDIAnnotation.xml&quot;);</span><br><span class="line">	ClassF  classb = context.getBean(&quot;classf&quot;,ClassF.class);</span><br><span class="line">	System.out.println(classb.toString());</span><br><span class="line">	classb.methodE();</span><br><span class="line">	context.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>4、运行结果:<br><img src="/images/IOC/result4.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    <!--自定义-->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    <!--自定义-->
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/14/spring中AOP的三种方式/" rel="next" title="spring中AOP的实现">
+                <i class="fa fa-chevron-left"></i> spring中AOP的实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MTUyMC8xODA2Nw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar2.png" alt="张豪">
+            
+              <p class="site-author-name" itemprop="name">张豪</p>
+              <p class="site-description motion-element" itemprop="description">纵有疾风起，人生不言弃。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是IOC"><span class="nav-number">1.</span> <span class="nav-text">什么是IOC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IOC的优缺点"><span class="nav-number">2.</span> <span class="nav-text">IOC的优缺点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring中IOC的实现"><span class="nav-number">3.</span> <span class="nav-text">Spring中IOC的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Setter注入"><span class="nav-number">3.1.</span> <span class="nav-text">Setter注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interface注入"><span class="nav-number">3.2.</span> <span class="nav-text">interface注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#constructor注入"><span class="nav-number">3.3.</span> <span class="nav-text">constructor注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AutoWire注解"><span class="nav-number">3.4.</span> <span class="nav-text">AutoWire注解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Resource注解"><span class="nav-number">3.5.</span> <span class="nav-text">Resource注解</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张豪</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">19.6k</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ao8ulWHVQL8MoXaYC6Vdx83D-gzGzoHsz", "DOisvJRBttDNBED13TYDm3Gv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
