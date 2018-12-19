@@ -89,7 +89,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="集合,">
 
 
 
@@ -100,17 +100,18 @@
 
 
 
-<meta name="description" content="纵有疾风起，人生不言弃。">
+<meta name="description" content="List与Set区别List,Set都是继承自Collection接口List特点：元素有放入顺序，元素可重复Set特点：元素无放入顺序，元素不可重复，重复元素会覆盖注意：元素虽然无放入熟顺序，但是元素在Set中的位置是该元素的HashCode决定的，其位置其实是固定的，加入Set的Object必须定义equals()方法，另外List支持for循环，也就是通过下标来遍历，也可以用迭代器，但是Se">
+<meta name="keywords" content="集合">
 <meta property="og:type" content="article">
 <meta property="og:title" content="集合总结">
 <meta property="og:url" content="https://a929050566.coding.me/2018/12/18/集合总结/index.html">
 <meta property="og:site_name" content="个人博客">
-<meta property="og:description" content="纵有疾风起，人生不言弃。">
+<meta property="og:description" content="List与Set区别List,Set都是继承自Collection接口List特点：元素有放入顺序，元素可重复Set特点：元素无放入顺序，元素不可重复，重复元素会覆盖注意：元素虽然无放入熟顺序，但是元素在Set中的位置是该元素的HashCode决定的，其位置其实是固定的，加入Set的Object必须定义equals()方法，另外List支持for循环，也就是通过下标来遍历，也可以用迭代器，但是Se">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-18T14:43:41.815Z">
+<meta property="og:updated_time" content="2018-12-19T14:13:56.346Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="集合总结">
-<meta name="twitter:description" content="纵有疾风起，人生不言弃。">
+<meta name="twitter:description" content="List与Set区别List,Set都是继承自Collection接口List特点：元素有放入顺序，元素可重复Set特点：元素无放入顺序，元素不可重复，重复元素会覆盖注意：元素虽然无放入熟顺序，但是元素在Set中的位置是该元素的HashCode决定的，其位置其实是固定的，加入Set的Object必须定义equals()方法，另外List支持for循环，也就是通过下标来遍历，也可以用迭代器，但是Se">
 
 
 
@@ -313,6 +314,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/集合/" itemprop="url" rel="index">
+                    <span itemprop="name">集合</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -345,7 +368,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0字
+                  2,024字
                 </span>
               
 
@@ -361,7 +384,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1分钟
+                  8分钟
                 </span>
               
             </div>
@@ -382,7 +405,80 @@
       
 
       
-        
+        <h1 id="List与Set区别"><a href="#List与Set区别" class="headerlink" title="List与Set区别"></a>List与Set区别</h1><p>List,Set都是继承自Collection接口<br>List特点：元素有放入顺序，元素可重复<br>Set特点：元素无放入顺序，元素不可重复，重复元素会覆盖<br>注意：元素虽然无放入熟顺序，但是元素在Set中的位置是该元素的HashCode决定的，其位置其实是固定的，加入Set的Object必须定义equals()方法，另外List支持for循环，也就是通过下标来遍历，也可以用迭代器，但是Set只能用迭代，因为他无序，无法用下标来取得想要的值。<br>Set和List对比：<br>Set:检索元素效率低下，删除和插入效率高，插入和删除不会引起元素位置变化。<br>List:和数组类似，List可以动态增长，查找元素效率高，插入删除元素效率低，因为会引起其他元素位置改变。</p>
+<p><hr></p>
+<h1 id="List和Map区别"><a href="#List和Map区别" class="headerlink" title="List和Map区别"></a>List和Map区别</h1><p>List是对象集合，允许对象重复。<br>Map是键值对的集合，不允许键(key)重复。</p>
+<p><hr></p>
+<h1 id="ArrayList和LinkedList区别"><a href="#ArrayList和LinkedList区别" class="headerlink" title="ArrayList和LinkedList区别"></a>ArrayList和LinkedList区别</h1><p>ArrayList:</p>
+<blockquote>
+<p>优点：ArrayList是实现了基于动态数组的数据结构，因为地址连续，一旦数据存储好了，查询操作效率会比较高（在内存里是连着放的）。<br>缺点：因为地址连续，ArrayList要移动数据，所以插入和删除的操作效率比较低。  </p>
+</blockquote>
+<p>LinkedList:</p>
+<blockquote>
+<p>优点：LinkedList基于链表的数据结构，地址是任意的，所以在开辟内存空间的时候不需要等一个连续的地址，对于新增和删除操作add和remove，LinkedList比较占优势。LinkedList适合用于要头尾操作或插入指定位置的场景。<br>缺点：因为LinkedList要移动指针,所以查询操作性能比较低。</p>
+</blockquote>
+<p>比较来说：</p>
+<blockquote>
+<p>1.ArrayList是实现了基于动态数组的数据结构，LinkedList是基于链表结构。<br>2.对于随机访问的get和set方法，ArrayList要优于LinkedList，因为LinkedList要移动指针。<br>3.对于新增和删除操作add和remove，LinkedList比较占优势，因为ArrayList要移动数据。</p>
+</blockquote>
+<p>性能上:</p>
+<blockquote>
+<p>1.对ArrayList和LinkedList而言，在列表末尾增加一个元素所花的开销都是固定的。对 ArrayList而言，主要是在内部数组中增加一项，指向所添加的元素，偶尔可能会导致对数组重新进行分配；而对LinkedList而言，这个开销是 统一的，分配一个内部Entry对象。<br>2.在ArrayList集合中添加或者删除一个元素时，当前的列表中所有的元素都会被移动。而LinkedList集合中添加或者删除一个元素的开销是固定的。<br>3.LinkedList集合不支持 高效的随机随机访问（RandomAccess），因为可能产生二次项的行为。<br>4.ArrayList的空间浪费主要体现在在list列表的结尾预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗相当的空间 </p>
+</blockquote>
+<p> <hr></p>
+<h1 id="ArrayList与Vector区别"><a href="#ArrayList与Vector区别" class="headerlink" title="ArrayList与Vector区别"></a>ArrayList与Vector区别</h1><p>ArrayList构造方法：</p>
+<blockquote>
+<p>public ArrayList(int initialCapacity)//构造一个具有指定初始容量的空列表。<br>public ArrayList()//构造一个初始容量为10的空列表。<br>public ArrayList(Collection&lt;? extends E&gt; c)//构造一个包含指定collection 的元素的列表。</p>
+</blockquote>
+<p>Vector构造方法:</p>
+<blockquote>
+<p>public Vector()//使用指定的初始容量和等于零的容量增量构造一个空向量。<br>public Vector(int initialCapacity)//构造一个空向量，使其内部数据数组的大小，其标准容量增量为零。<br>public Vector(Collection&lt;? extends E&gt; c)//构造一个包含指定 collection 中的元素的向量<br>public Vector(int initialCapacity,int capacityIncrement)//使用指定的初始容量和容量增量构造一个空的向量</p>
+</blockquote>
+<p>ArrayList和Vector都是用数组实现的，主要有这么三个区别：</p>
+<blockquote>
+<ol>
+<li>Vector是多线程安全的，线程安全就是说多线程访问同一代码，不会产生不确定的结<br>果。而ArrayList不是，这个可以从源码中看出，Vector类中的方法很多有synchronized<br>进行修饰，这样就导致了Vector在效率上无法与ArrayList相比；</li>
+<li>两个都是采用的线性连续空间存储元素(底层是数组结构)，但是当空间不足的时候，两个类的增加方式是不同的。</li>
+<li>Vector可以设置增长因子(每次容量不够时，增加的长度，默认是增加一倍)，而ArrayList不可以。</li>
+<li>Vector是一种老的动态数组，是线程同步的，效率很低，一般不赞成使用。</li>
+</ol>
+</blockquote>
+<p>适用场景分析：</p>
+<blockquote>
+<ol>
+<li>Vector是线程同步的，所以它也是线程安全的，而ArrayList是线程异步的，是不安全的。如果不考虑到线程的安全因素，一般用ArrayList效率比较高。</li>
+<li>如果集合中的元素的数目大于目前集合数组的长度时，在集合中使用数据量比较大的数据，用Vector有一定的优势</li>
+</ol>
+</blockquote>
+<p><hr></p>
+<h1 id="HashMap和Hashtable区别"><a href="#HashMap和Hashtable区别" class="headerlink" title="HashMap和Hashtable区别"></a>HashMap和Hashtable区别</h1><p>HashMap和Hashtable区别:</p>
+<blockquote>
+<p>1.HashMap去掉了Hashtable 的contains方法，但是加上了containsValue（）和<br>containsKey（）方法。<br>2.Hashtable同步的，而HashMap是非同步的，效率上比Hashtable要高。<br>3.HashMap允许空键值，而HashTable不允许。  </p>
+</blockquote>
+<p>注意：</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/u014421556/article/details/52386035" target="_blank" rel="noopener">TreeMap</a>：非线程安全基于红黑树实现。TreeMap没有调优选项，因为该树总处于平衡状态。<br>Treemap：适用于按自然顺序或自定义顺序遍历键(key)。</p>
+</blockquote>
+<p><hr></p>
+<h1 id="HashSet-和-HashMap-区别"><a href="#HashSet-和-HashMap-区别" class="headerlink" title="HashSet 和 HashMap 区别"></a>HashSet 和 HashMap 区别</h1><p>HashSet:</p>
+<blockquote>
+<p>set是线性结构，set中的值不能重复，hashset是set的hash实现，HashSet使用成员对象来计算hashcode值，对于两个对象来说hashcode可能相同，所以equals()方法用来判断对象的相等性，如果两个对象不同的话，那么返回false。</p>
+</blockquote>
+<p>HashMap:</p>
+<blockquote>
+<p>map是键值对映射，可以空键空值。HashMap是Map接口的hash实现，key的唯一性是通过key值的hash值的唯一来确定，value值是则是链表结构。<br>他们的共同点s都是hash算法实现的唯一性，他们都不能持有基本类型，只能持有对象</p>
+</blockquote>
+<p><hr></p>
+<h1 id="HashMap-和-ConcurrentHashMap-的区别"><a href="#HashMap-和-ConcurrentHashMap-的区别" class="headerlink" title="HashMap 和 ConcurrentHashMap 的区别"></a>HashMap 和 ConcurrentHashMap 的区别</h1><p>ConcurrentHashMap是线程安全的HashMap的实现:</p>
+<blockquote>
+<p>ConcurrentHashMap对整个桶数组进行了分割分段(Segment)，然后在每一个分段上<br>都用lock锁进行保护，相对于HashTable的syn关键字锁的粒度更精细了一些，并发性能更好，而HashMap没有锁机制，不是线程安全的。<br>HashMap的键值对允许有null，但是ConCurrentHashMap都不允许。</p>
+</blockquote>
+<p>ConcurrentHashMap 的工作原理及代码实现:</p>
+<blockquote>
+<p>HashTable里使用的是synchronized关键字，这其实是对对象加锁，锁住的都是对象整体，当Hashtable的大小增加到一定的时候，性能会急剧下降，因为迭代时需要被锁定很长的时间。ConcurrentHashMap算是对上述问题的优化，其构造函数如下，默认传入的是16，0.75，16。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public ConcurrentHashMap(int paramInt1, float paramFloat, int paramInt2) &#123;</span><br><span class="line">	int i = 0;</span><br><span class="line">	int j = 1;</span><br><span class="line">	while (j &lt; paramInt2) &#123;</span><br><span class="line">		++i;</span><br><span class="line">		j &lt;&lt;= 1;</span><br><span class="line">	&#125;</span><br><span class="line">	this.segmentShift = (32 ‐ i);</span><br><span class="line">	this.segmentMask = (j ‐ 1);</span><br><span class="line">	this.segments = Segment.newArray(j);</span><br><span class="line">	int k = paramInt1 / j;</span><br><span class="line">	if (k * j &lt; paramInt1)</span><br><span class="line">		++k;</span><br><span class="line">	int l = 1;</span><br><span class="line">	while (l &lt; k)</span><br><span class="line">		l &lt;&lt;= 1;</span><br><span class="line">		for (int i1 = 0; i1 &lt; this.segments.length; ++i1)</span><br><span class="line">			this.segments[i1] = new Segment(l, paramFloat);</span><br><span class="line">&#125;</span><br><span class="line">public V put(K paramK, V paramV) &#123;</span><br><span class="line">	if (paramV == null)</span><br><span class="line">		throw new NullPointerException();</span><br><span class="line">	int i = hash(paramK.hashCode()); //这里的hash函数和HashMap中的不一样</span><br><span class="line">	return this.segments[(i &gt;&gt;&gt; this.segmentShift &amp;</span><br><span class="line">		this.segmentMask)].put(paramK, i, paramV, false);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>ConcurrentHashMap引入了分割(Segment)，上面代码中的最后一行其实就可以理解为把一个大的Map拆分成N个小的HashTable，在put方法中，会根据hash(paramK.hashCode())来决定具体存放进哪个Segment，如果查看Segment的put操作，我们会发现内部使用的同步机制是基于lock操作的，这样就可以对Map的一部分（Segment）进行上锁，这样影响的只是将要放入同一个Segment的元素的put操作，保证同步的时候，锁住的不是整个Map（HashTable就是这么做的），相对于HashTable提高了多线程环境下的性能，<strong>因此HashTable已经被淘汰了。</strong></p>
+
       
     </div>
     
@@ -408,6 +504,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/集合/" rel="tag"># 集合</a>
+          
+        </div>
       
 
       
@@ -487,8 +589,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -516,7 +627,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -527,7 +638,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -550,6 +661,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#List与Set区别"><span class="nav-number">1.</span> <span class="nav-text">List与Set区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#List和Map区别"><span class="nav-number">2.</span> <span class="nav-text">List和Map区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ArrayList和LinkedList区别"><span class="nav-number">3.</span> <span class="nav-text">ArrayList和LinkedList区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ArrayList与Vector区别"><span class="nav-number">4.</span> <span class="nav-text">ArrayList与Vector区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HashMap和Hashtable区别"><span class="nav-number">5.</span> <span class="nav-text">HashMap和Hashtable区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HashSet-和-HashMap-区别"><span class="nav-number">6.</span> <span class="nav-text">HashSet 和 HashMap 区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HashMap-和-ConcurrentHashMap-的区别"><span class="nav-number">7.</span> <span class="nav-text">HashMap 和 ConcurrentHashMap 的区别</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -578,7 +705,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">27.7k</span>
+    <span title="Site words total count">29.7k</span>
   
 </div>
 
