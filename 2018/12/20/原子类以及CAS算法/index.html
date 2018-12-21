@@ -100,18 +100,18 @@
 
 
 
-<meta name="description" content="纵有疾风起，人生不言弃。">
+<meta name="description" content="在并发编程中，为了防止多线程访问造成的不安全性，我们可以用到synchronized锁(悲观锁),ReentrantLock(重入锁)，和原子类(乐观锁)等技术来提高安全性。今天我们就来深入理解一下原子类的实现方式。  J.U.C下的Atomic*类atomic:原子的。代指不可再分割的意思，映射到Java代码中的意思是，这段代码中所执行的操作，要么都执行，要么都不执行。不存在一部分执行，一部分未">
 <meta name="keywords" content="CAS算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="原子类以及CAS算法">
 <meta property="og:url" content="https://a929050566.coding.me/2018/12/20/原子类以及CAS算法/index.html">
 <meta property="og:site_name" content="个人博客">
-<meta property="og:description" content="纵有疾风起，人生不言弃。">
+<meta property="og:description" content="在并发编程中，为了防止多线程访问造成的不安全性，我们可以用到synchronized锁(悲观锁),ReentrantLock(重入锁)，和原子类(乐观锁)等技术来提高安全性。今天我们就来深入理解一下原子类的实现方式。  J.U.C下的Atomic*类atomic:原子的。代指不可再分割的意思，映射到Java代码中的意思是，这段代码中所执行的操作，要么都执行，要么都不执行。不存在一部分执行，一部分未">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-20T14:10:36.258Z">
+<meta property="og:updated_time" content="2018-12-21T08:47:37.936Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="原子类以及CAS算法">
-<meta name="twitter:description" content="纵有疾风起，人生不言弃。">
+<meta name="twitter:description" content="在并发编程中，为了防止多线程访问造成的不安全性，我们可以用到synchronized锁(悲观锁),ReentrantLock(重入锁)，和原子类(乐观锁)等技术来提高安全性。今天我们就来深入理解一下原子类的实现方式。  J.U.C下的Atomic*类atomic:原子的。代指不可再分割的意思，映射到Java代码中的意思是，这段代码中所执行的操作，要么都执行，要么都不执行。不存在一部分执行，一部分未">
 
 
 
@@ -378,7 +378,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0字
+                  675字
                 </span>
               
 
@@ -394,7 +394,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1分钟
+                  3分钟
                 </span>
               
             </div>
@@ -415,7 +415,26 @@
       
 
       
-        
+        <p>在并发编程中，为了防止多线程访问造成的不安全性，我们可以用到synchronized锁(悲观锁),ReentrantLock(重入锁)，和原子类(乐观锁)等技术来提高安全性。今天我们就来深入理解一下原子类的实现方式。</p>
+<p><hr></p>
+<h1 id="J-U-C下的Atomic-类"><a href="#J-U-C下的Atomic-类" class="headerlink" title="J.U.C下的Atomic*类"></a>J.U.C下的Atomic*类</h1><p>atomic:原子的。代指不可再分割的意思，映射到Java代码中的意思是，这段代码中所执行的操作，要么都执行，要么都不执行。不存在一部分执行，一部分未执行的情况。<br>Java中的原子类是靠sun公司基于CAS实现的，Atomic类利用的是Unsafe类，是在sun.misc包下，不属于Java标准。<br>在这里我们模拟一下AtomicInteger类的实现方式。</p>
+<p><hr></p>
+<h1 id="AtomicInteger类源码分析"><a href="#AtomicInteger类源码分析" class="headerlink" title="AtomicInteger类源码分析"></a>AtomicInteger类源码分析</h1><p>AtomicInteger 是一个支持原子操作的 Integer 类，就是保证在增加或者减少这个共享数据的时候，这个数据不会被重复加减或者被重复覆盖加减操作。我们来看一下他的源码实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public final int incrementAndGet() &#123;</span><br><span class="line">        for (;;) &#123;</span><br><span class="line">            int current = get();</span><br><span class="line">            int next = current + 1;</span><br><span class="line">            if (compareAndSet(current, next))</span><br><span class="line">                return next;</span><br><span class="line">        &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这是AtomicInteger中自增的方法源码，步长为1。<br>current：是原来内存中值。<br>next:是新值。<br>compareAndSet(current, next)方法源码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public final boolean compareAndSet(int expect, int update) &#123;</span><br><span class="line">        return unsafe.compareAndSwapInt(this, valueOffset, expect, update);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>compareAndSwapInt()是一个本地方法(非Java语言实现)，里边执行的是CAS操作。整个过程就是先获取value的值，再加1，然后进行CAS操作，如果在读取value值和加1的过程中value的值被其他线程改变了，那么CAS失败，一直循环到成功为止。至于其他getAndAdd之类的方法也都差不多，读者可以自行分析。在这里其实我们已经可以想到compareAndSwapInt()方法应该是同步的，或者里边实现的代码有部分是同步，要不然多线程下依旧是不安全的。至于具体是如何实现的，笔者能力有限读者可以参考<a href="https://blog.csdn.net/ls5718/article/details/52563959" target="_blank" rel="noopener">https://blog.csdn.net/ls5718/article/details/52563959</a>。  </p>
+<p><hr></p>
+<h1 id="CAS算法"><a href="#CAS算法" class="headerlink" title="CAS算法"></a>CAS算法</h1><p>CAS（Compare-And-Swap）比较和交互，该方法保证了数据操作的原子性。CAS算法的实现，并不是在软件层面上的，该算法是硬件对并发操作共享数据的支持。<br>CAS中包含三个操作数：  </p>
+<ol>
+<li>内存实际值V。</li>
+<li>预估值A(就是你更改之前，需要改变的量的估计值)。</li>
+<li>更新值B。  </li>
+</ol>
+<p>在一个原子操作里面：比较V和A的值，如果V=A则将B值赋给V。</p>
+<p>参考：</p>
+<blockquote>
+<p><a href="https://www.cnblogs.com/zhengbin/p/5657707.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhengbin/p/5657707.html</a><br><a href="https://blog.csdn.net/ls5718/article/details/52563959" target="_blank" rel="noopener">https://blog.csdn.net/ls5718/article/details/52563959</a></p>
+</blockquote>
+
       
     </div>
     
@@ -522,8 +541,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -586,6 +614,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#J-U-C下的Atomic-类"><span class="nav-number">1.</span> <span class="nav-text">J.U.C下的Atomic*类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AtomicInteger类源码分析"><span class="nav-number">2.</span> <span class="nav-text">AtomicInteger类源码分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CAS算法"><span class="nav-number">3.</span> <span class="nav-text">CAS算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -613,7 +657,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">29.8k</span>
+    <span title="Site words total count">30.5k</span>
   
 </div>
 
