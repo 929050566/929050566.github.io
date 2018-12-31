@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+<meta name="baidu-site-verification" content="mrSaJ4uJ8z">
+<meta name="baidu-site-verification" content="owvyVcpZUx">
+<meta name="google-site-verification" content="oy_lPgdf5gdUpaAESj7zkW7PjVrWce205YLBq4hgA5w">
+<meta name="google-site-verification" content="iTtZMlLeGbbsRl-GNQFoHAhSbTfdSN_ZNfBotJgueV0">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+  <style>
+      .pace .pace-progress {
+          background: #1E92FB; /*进度条颜色*/
+          height: 3px;
+      }
+      .pace .pace-progress-inner {
+           box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+      }
+      .pace .pace-activity {
+          border-top-color: #1E92FB;    /*上边框颜色*/
+          border-left-color: #1E92FB;    /*左边框颜色*/
+      }
+  </style>
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="redis,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="redis是什么Redis是完全开源免费的，高性能的key-value数据库。Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。Redis不仅仅支持简单的key-value类型的数据，同时还提供list、set、zset、hash等数据结构的存储。 为什么使用redis 性能高。Redis读的速度是110000次/s,写的速度是81000次/s。 丰富的数">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis">
+<meta property="og:url" content="https://a929050566.coding.me/2018/12/31/redis/index.html">
+<meta property="og:site_name" content="个人博客">
+<meta property="og:description" content="redis是什么Redis是完全开源免费的，高性能的key-value数据库。Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。Redis不仅仅支持简单的key-value类型的数据，同时还提供list、set、zset、hash等数据结构的存储。 为什么使用redis 性能高。Redis读的速度是110000次/s,写的速度是81000次/s。 丰富的数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-31T14:15:35.146Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis">
+<meta name="twitter:description" content="redis是什么Redis是完全开源免费的，高性能的key-value数据库。Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。Redis不仅仅支持简单的key-value类型的数据，同时还提供list、set、zset、hash等数据结构的存储。 为什么使用redis 性能高。Redis读的速度是110000次/s,写的速度是81000次/s。 丰富的数">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://a929050566.coding.me/2018/12/31/redis/">
+
+
+
+
+
+  <title>redis | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">张豪</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-简历">
+          <a href="/resume/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://a929050566.coding.me/2018/12/31/redis/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张豪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar2.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">redis</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-31T17:27:46+08:00">
+                2018-12-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/31/redis/" class="leancloud_visitors" data-flag-title="redis">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,027字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="redis是什么"><a href="#redis是什么" class="headerlink" title="redis是什么"></a>redis是什么</h1><p>Redis是完全开源免费的，高性能的key-value数据库。Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。Redis不仅仅支持简单的key-value类型的数据，同时还提供list、set、zset、hash等数据结构的存储。</p>
+<h1 id="为什么使用redis"><a href="#为什么使用redis" class="headerlink" title="为什么使用redis"></a>为什么使用redis</h1><ol>
+<li>性能高。Redis读的速度是110000次/s,写的速度是81000次/s。</li>
+<li>丰富的数据类型。Redis支持String,List,Hash,Set,ZSet数据类型操作。</li>
+<li>原子性。Redis的所有操作都是原子性的，意思就是要么成功执行，要么失败完全不执行。单个操作是原子性的。多个操作也支持事务，及原子行为通过MULTI和EXEC指令包起来。</li>
+<li>丰富的特性。Redis还支持public/subscribe，通知，key过期等等特性。</li>
+</ol>
+<h1 id="Linxu上redis的配置"><a href="#Linxu上redis的配置" class="headerlink" title="Linxu上redis的配置"></a>Linxu上redis的配置</h1><p>配置文件一般放在/etc/redis/6379.conf<br>在配置文件中：<br>设置密码：搜索requirepass, 去除注释之后在requirepass之后加上你想设置的客户端登录密码。<br>设置端口:搜索port，默认端口号为6379,如果要修改，直接在port后面加上你想要配置的端口号。<br>允许远程连接:搜索bind,在127.0.0.1之后加上连接外网的本地网卡地址。</p>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><p>在Redis中，命令是不区分大小写的，但是键是严格区分大小写的。并且redis是键值数据库，键是唯一的。</p>
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><p>操作字符串数据类型：<br>增加|修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set key value [ex seconds | px ms] :不存在就新增。存在就修改。ex：设置过期秒数，px设置过期毫秒数</span><br><span class="line">setnx ket value: 不存在则新增 存在不修改</span><br></pre></td></tr></table></figure></p>
+<p>查询:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">get key:获得key对应的value</span><br><span class="line">getrange key start end ：截取字符串</span><br><span class="line">strlen key ：获取字符串的长度</span><br></pre></td></tr></table></figure></p>
+<p>删除:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">del key [key2..key3..]返回删除成功的个数</span><br></pre></td></tr></table></figure></p>
+<p>递增和递减:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INCR key [ increment]:递增,增量为increment默认为1。</span><br><span class="line">DECRBY key [decrement]:递减,减少量为decrement,默认为1。</span><br></pre></td></tr></table></figure></p>
+<p>追加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">APPEND key value：如果 key 已经存在并且是一个字符串， APPEND 命令将指定的 value 追加到该 key 原来值（value）的末尾。</span><br></pre></td></tr></table></figure></p>
+<h2 id="Hash类型"><a href="#Hash类型" class="headerlink" title="Hash类型"></a>Hash类型</h2><p>适合于存储对象：<br>类型名+分隔符(:|,|_|&amp;|@)+对象的标识内容<br>例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">User:1</span><br><span class="line">Student:zhangsan</span><br></pre></td></tr></table></figure></p>
+<p>新增：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HSET key field value:将哈希表 key 中的字段 field 的值设为 value 。</span><br><span class="line">HMSET key field value[field value...]：同时将多个 field-value (域-值)对设置到哈希表 key 中。</span><br></pre></td></tr></table></figure></p>
+<p>查询:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HGET key field:获取存储在哈希表中指定字段的值。</span><br><span class="line">HMGET key field [field]:获取所有给定字段的值。</span><br></pre></td></tr></table></figure></p>
+<h2 id="List类型"><a href="#List类型" class="headerlink" title="List类型"></a>List类型</h2><p>插入的元素 按照顺序存储的，可以重复。<br>新增：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">从左边插入： LPUSH key value1 [value2 ...]：数据顺序为 value2 value1  </span><br><span class="line">从右边插入：RPUSH key value1 [value2 ...]:数据顺序为 value1 value2</span><br></pre></td></tr></table></figure></p>
+<p>查询：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LRANGE key start stop ：从左往右查询,如果stop为-1则是查询所有</span><br><span class="line">LINDEX key index ：查询指定索引的值 （从0开始，从左往右|或者从-1开始，从右往左）</span><br></pre></td></tr></table></figure></p>
+<p>插入:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LINSERT key BEFORE|AFTER pivot value :在指定元素的前面或后面插入新的元素</span><br><span class="line">例子：LINSERT china before NO.2 NO.1.5  在NO.2的前面插入NO.1.5</span><br></pre></td></tr></table></figure></p>
+<p>修改:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LSET key index value:修改指定索引位置的元素</span><br></pre></td></tr></table></figure></p>
+<p>删除:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LREM key count value:删除 count个数的值为value的元素 返回移除的个数</span><br></pre></td></tr></table></figure></p>
+<p>出栈:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LPOP key :移除最左边元素 返回移除的元素 娶(取)不到返回空</span><br><span class="line">RPOP key :移除最右边元素 返回移除的元素 娶(取)不到返回空</span><br><span class="line"></span><br><span class="line">BLPOP key timeout:阻塞式的 timeout设置等待时间</span><br><span class="line">BRPOP key timeout:阻塞式的</span><br></pre></td></tr></table></figure></p>
+<h2 id="Set类型"><a href="#Set类型" class="headerlink" title="Set类型"></a>Set类型</h2><p>Set类型的特点：无序，不可重复<br>增加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SADD key member [member ...]</span><br></pre></td></tr></table></figure></p>
+<p>获取：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SMEMBERS key</span><br></pre></td></tr></table></figure></p>
+<p>求差级:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SDIFF key [key]:求差级</span><br><span class="line">SDIFFSTORE destination key [key..]:求差级并保存在destination中</span><br></pre></td></tr></table></figure></p>
+<p>求交集:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SINTER key [key]:求交集</span><br><span class="line">SINTERSTORE destination key [key ...]:请交集并且保存到destination中</span><br></pre></td></tr></table></figure></p>
+<p>移除等:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SMOVE source destination member 将 member 元素从 source 集合移动到 destination 集合。</span><br><span class="line">SPOP key 移除并返回集合中的一个随机元素。	</span><br><span class="line">SSCAN key cursor [MATCH pattern] [COUNT count] 迭代集合中的元素。</span><br><span class="line">SRANDMEMBER key [count] 返回集合中一个或多个随机。</span><br><span class="line">SREM key member1 [member2] 移除集合中一个或多个成员。</span><br><span class="line">SUNION key1 [key2] 返回所有给定集合的并集。</span><br><span class="line">SUNIONSTORE destination key1 [key2] 所有给定集合的并集存储在destination 集合中。</span><br></pre></td></tr></table></figure></p>
+<h2 id="ZSET类型"><a href="#ZSET类型" class="headerlink" title="ZSET类型"></a>ZSET类型</h2><p>ZSET是有序集合<br>增加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZADD key score1 member1 [score2 member2] 向有序集合添加一个或多个成员，或者更新已存在成员的分数</span><br></pre></td></tr></table></figure></p>
+<p>查看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ZRANGE key start stop [WITHSCORES] :withscores：是否显示分数</span><br><span class="line">ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count] :和mysql中的limit相似</span><br></pre></td></tr></table></figure></p>
+<p>删除<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZREM key member [member ...]</span><br></pre></td></tr></table></figure></p>
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>Redis 事务可以一次执行多个命令， 并且带有以下两个重要的保证：</p>
+<ol>
+<li>批量操作再发送 EXEC 命令前被放入队列缓存。收到 EXEC 命令后进入事务执行，事务中任意命令执行失败，其余的命令依然被执行。</li>
+<li>在事务执行过程，其他客户端提交的命令请求不会插入到事务执行命令序列中。  </li>
+</ol>
+<p>一个事务从开始到执行会经历以下三个阶段：1.开始事务 2.命令入队 3.执行事务<br>事务有关的命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MULTI  标记一个事务块的开始。</span><br><span class="line">EXEC  执行所有事务块内的命令。</span><br><span class="line">DISCARD  取消事务，放弃执行事务块内的所有命令。</span><br><span class="line">UNWATCH  取消 WATCH 命令对所有 key 的监视。</span><br><span class="line">WATCH key [key ...] 监视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断。</span><br></pre></td></tr></table></figure></p>
+<h1 id="Java中使用redis"><a href="#Java中使用redis" class="headerlink" title="Java中使用redis"></a>Java中使用redis</h1><h2 id="pom-xml中配置jar包"><a href="#pom-xml中配置jar包" class="headerlink" title="pom.xml中配置jar包"></a>pom.xml中配置jar包</h2><p>Java连接redis数据库当然少不了jar包了：<br>需要导入的有:</p>
+<ol>
+<li>jedis-2.9.0 .jar</li>
+<li>commons-pool2-2.4.2.jar  </li>
+</ol>
+<p>在pom.xml文件中:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">	&lt;groupId&gt;com.ali&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;redis&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span><br><span class="line">	&lt;dependencies&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;redis.clients&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;jedis&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;3.0.1&lt;/version&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">	&lt;/dependencies&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="在测试类中"><a href="#在测试类中" class="headerlink" title="在测试类中"></a>在测试类中</h2><p>Java中使用redis其实非常简单，连接上redis数据库之后直接调用相应的方法即可，并且方法名和redis命令高度匹配。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">package com.ali.redis;</span><br><span class="line"></span><br><span class="line">import static org.hamcrest.CoreMatchers.instanceOf;</span><br><span class="line"></span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.Set;</span><br><span class="line"></span><br><span class="line">import org.junit.Test;</span><br><span class="line"></span><br><span class="line">import redis.clients.jedis.Jedis;</span><br><span class="line">import redis.clients.jedis.Transaction;</span><br><span class="line">import redis.clients.jedis.Tuple;</span><br><span class="line"></span><br><span class="line">public class RedisTest &#123;</span><br><span class="line">	</span><br><span class="line">	@Test</span><br><span class="line">	public void test() &#123;</span><br><span class="line">		Jedis jedis = new Jedis(&quot;192.168.233.132&quot;,6379);//输入ip地址和 端口号</span><br><span class="line">		jedis.auth(&quot;123456&quot;); //输入密码</span><br><span class="line">		</span><br><span class="line">		//操作String类型的值</span><br><span class="line">		jedis.set(&quot;name&quot;, &quot;豪仔&quot;); </span><br><span class="line">		String name = jedis.get(&quot;name&quot;);</span><br><span class="line">		System.out.println(name);</span><br><span class="line">		</span><br><span class="line">		//Hash</span><br><span class="line">		Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">		map.put(&quot;username&quot;, &quot;Tom&quot;);</span><br><span class="line">		map.put(&quot;age&quot;, &quot;19&quot;);</span><br><span class="line">		jedis.hset(&quot;User:&quot;+map.get(&quot;username&quot;), map);</span><br><span class="line">		List&lt;String&gt; list = jedis.hmget(&quot;User:Tom&quot;, &quot;username&quot;,&quot;age&quot;);</span><br><span class="line">		System.out.println(list);</span><br><span class="line">		</span><br><span class="line">		//list 参考队列</span><br><span class="line">		</span><br><span class="line">		//set 集合  无序且不可重复</span><br><span class="line">		jedis.sadd(&quot;set&quot;, new String[] &#123;&quot;a&quot;,&quot;b&quot;,&quot;c&quot;&#125;);//新增</span><br><span class="line">		//查询</span><br><span class="line">		Set&lt;String&gt; set =jedis.smembers(&quot;set&quot;);</span><br><span class="line">		System.out.println(set);</span><br><span class="line">		</span><br><span class="line">		//3.5 zset</span><br><span class="line">		Map&lt;String, Double&gt; map2 = new HashMap&lt;&gt;();</span><br><span class="line">		map2.put(&quot;shenda_shengao&quot;, 190.0);</span><br><span class="line">		map2.put(&quot;shenda_tizhong&quot;, 220.0);</span><br><span class="line">		jedis.zadd(&quot;shenda&quot;, map2);</span><br><span class="line">		</span><br><span class="line">		//查询</span><br><span class="line">		Set&lt;Tuple&gt; tuples = jedis.zrangeWithScores(&quot;shenda&quot;, 0, -1);</span><br><span class="line">		System.out.println(tuples);</span><br><span class="line">		for (Tuple tuple : tuples) &#123;</span><br><span class="line">			System.out.println(tuple.getElement());</span><br><span class="line">			System.out.println(tuple.getScore());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		//开启事务</span><br><span class="line">		Transaction trans = jedis.multi();//返回一个事务对象</span><br><span class="line">		trans.get(&quot;myKey&quot;);//插入队列</span><br><span class="line">		trans.set(&quot;youkey2&quot;, &quot;hello&quot;);//</span><br><span class="line">		trans.get(&quot;youkey2&quot;);//</span><br><span class="line">		//执行事务种的命令</span><br><span class="line">		List&lt;Object&gt; result = trans.exec();</span><br><span class="line">		for (Object object : result) &#123;</span><br><span class="line">			System.out.println(object);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    <!--自定义-->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    <!--自定义-->
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/25/SpringMVC/" rel="next" title="SpringMVC">
+                <i class="fa fa-chevron-left"></i> SpringMVC
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MTUyMC8xODA2Nw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar2.png" alt="张豪">
+            
+              <p class="site-author-name" itemprop="name">张豪</p>
+              <p class="site-description motion-element" itemprop="description">纵有疾风起，人生不言弃。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis是什么"><span class="nav-number">1.</span> <span class="nav-text">redis是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么使用redis"><span class="nav-number">2.</span> <span class="nav-text">为什么使用redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linxu上redis的配置"><span class="nav-number">3.</span> <span class="nav-text">Linxu上redis的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据类型"><span class="nav-number">4.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#String"><span class="nav-number">4.1.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash类型"><span class="nav-number">4.2.</span> <span class="nav-text">Hash类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List类型"><span class="nav-number">4.3.</span> <span class="nav-text">List类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set类型"><span class="nav-number">4.4.</span> <span class="nav-text">Set类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZSET类型"><span class="nav-number">4.5.</span> <span class="nav-text">ZSET类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">5.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java中使用redis"><span class="nav-number">6.</span> <span class="nav-text">Java中使用redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pom-xml中配置jar包"><span class="nav-number">6.1.</span> <span class="nav-text">pom.xml中配置jar包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在测试类中"><span class="nav-number">6.2.</span> <span class="nav-text">在测试类中</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张豪</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">34.5k</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ao8ulWHVQL8MoXaYC6Vdx83D-gzGzoHsz", "DOisvJRBttDNBED13TYDm3Gv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
