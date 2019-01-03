@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://a929050566.coding.me/resume/index.html</loc>
+    
+    <lastmod>2019-01-01T13:00:50.598Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://a929050566.coding.me/2018/12/31/redis/</loc>
     
     <lastmod>2018-12-31T14:15:35.146Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://a929050566.coding.me/2018/12/20/%E5%8E%9F%E5%AD%90%E7%B1%BB%E4%BB%A5%E5%8F%8ACAS%E7%AE%97%E6%B3%95/</loc>
     
     <lastmod>2018-12-21T08:47:37.936Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://a929050566.coding.me/resume/index.html</loc>
-    
-    <lastmod>2018-12-20T14:58:05.348Z</lastmod>
     
   </url>
   
