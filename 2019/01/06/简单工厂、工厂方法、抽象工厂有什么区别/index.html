@@ -93,7 +93,7 @@
 
 
 
-  <meta name="keywords" content="JavaSE,">
+  <meta name="keywords" content="设计模式,">
 
 
 
@@ -104,20 +104,18 @@
 
 
 
-<meta name="description" content="初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。 成员变量成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。我们简单用下列代码测试一下，不同的数据类">
-<meta name="keywords" content="JavaSE">
+<meta name="description" content="工厂模式的作用刚接触和使用工厂模式的时候，我心中一直有个疑惑，工厂模式有什么用？不使用的工厂模式的时候，我们需要知道具体类名字，使用了工厂模式之后我们仍然需要知道工厂类，最多是吧new对象时的构造函数和参数屏蔽了而已，为什么要做这样一步吃力而不讨好的工作？带着这个疑惑我查阅了网上大量的资料，对工厂模式的作用有了更深的认识。首先我们需要设置模式的一个重要的原则：开放封闭原则(Open Closed">
+<meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="类的初始化">
-<meta property="og:url" content="https://a929050566.coding.me/2018/12/05/类的初始化顺序/index.html">
+<meta property="og:title" content="简单工厂、工厂方法、抽象工厂有什么区别?">
+<meta property="og:url" content="https://a929050566.coding.me/2019/01/06/简单工厂、工厂方法、抽象工厂有什么区别/index.html">
 <meta property="og:site_name" content="个人博客">
-<meta property="og:description" content="初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。 成员变量成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。我们简单用下列代码测试一下，不同的数据类">
+<meta property="og:description" content="工厂模式的作用刚接触和使用工厂模式的时候，我心中一直有个疑惑，工厂模式有什么用？不使用的工厂模式的时候，我们需要知道具体类名字，使用了工厂模式之后我们仍然需要知道工厂类，最多是吧new对象时的构造函数和参数屏蔽了而已，为什么要做这样一步吃力而不讨好的工作？带着这个疑惑我查阅了网上大量的资料，对工厂模式的作用有了更深的认识。首先我们需要设置模式的一个重要的原则：开放封闭原则(Open Closed">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://929050566.github.io/images/init/result.PNG">
-<meta property="og:updated_time" content="2018-12-09T14:17:21.488Z">
+<meta property="og:updated_time" content="2019-01-06T13:49:51.928Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="类的初始化">
-<meta name="twitter:description" content="初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。 成员变量成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。我们简单用下列代码测试一下，不同的数据类">
-<meta name="twitter:image" content="https://929050566.github.io/images/init/result.PNG">
+<meta name="twitter:title" content="简单工厂、工厂方法、抽象工厂有什么区别?">
+<meta name="twitter:description" content="工厂模式的作用刚接触和使用工厂模式的时候，我心中一直有个疑惑，工厂模式有什么用？不使用的工厂模式的时候，我们需要知道具体类名字，使用了工厂模式之后我们仍然需要知道工厂类，最多是吧new对象时的构造函数和参数屏蔽了而已，为什么要做这样一步吃力而不讨好的工作？带着这个疑惑我查阅了网上大量的资料，对工厂模式的作用有了更深的认识。首先我们需要设置模式的一个重要的原则：开放封闭原则(Open Closed">
 
 
 
@@ -147,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="https://a929050566.coding.me/2018/12/05/类的初始化顺序/">
+  <link rel="canonical" href="https://a929050566.coding.me/2019/01/06/简单工厂、工厂方法、抽象工厂有什么区别/">
 
 
 
 
 
-  <title>类的初始化 | 个人博客</title>
+  <title>简单工厂、工厂方法、抽象工厂有什么区别? | 个人博客</title>
   
 
 
@@ -290,7 +288,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://a929050566.coding.me/2018/12/05/类的初始化顺序/">
+    <link itemprop="mainEntityOfPage" href="https://a929050566.coding.me/2019/01/06/简单工厂、工厂方法、抽象工厂有什么区别/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张豪">
@@ -307,7 +305,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">类的初始化</h1>
+          <h1 class="post-title" itemprop="name headline">简单工厂、工厂方法、抽象工厂有什么区别?</h1>
         
 
         <div class="post-meta">
@@ -319,8 +317,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-05T14:14:46+08:00">
-                2018-12-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-06T20:05:12+08:00">
+                2019-01-06
               </time>
             
 
@@ -342,8 +340,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/javase/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaSE</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -359,7 +357,7 @@
 
           
           
-             <span id="/2018/12/05/类的初始化顺序/" class="leancloud_visitors" data-flag-title="类的初始化">
+             <span id="/2019/01/06/简单工厂、工厂方法、抽象工厂有什么区别/" class="leancloud_visitors" data-flag-title="简单工厂、工厂方法、抽象工厂有什么区别?">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -384,7 +382,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  500字
+                  1,504字
                 </span>
               
 
@@ -400,7 +398,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2分钟
+                  6分钟
                 </span>
               
             </div>
@@ -421,56 +419,17 @@
       
 
       
-        <p>初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。</p>
-<h1 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h1><p>成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变量在声明了之后，如果没有赋初始值会自动赋予一个默认的初始值。<br>我们简单用下列代码测试一下，不同的数据类型的默认初始化值是什么。</p>
-<pre><code>import java.util.List;
-
-public class Test {
-
-    private short s;
-    private int a;
-    private long l;
-    private float f;
-    private boolean b;
-    private double d;
-    private char c;
-    private List list;
-
-    public Test() {
-        // TODO Auto-generated constructor stub
-    }
-
-    @Override
-    public String toString() {
-        return &quot;Test [s=&quot; + s + &quot;, a=&quot; + a + &quot;, l=&quot; + l + &quot;, f=&quot; + f + &quot;, b=&quot; + b + &quot;, d=&quot; + d + &quot;, c=&quot; + c + &quot;, list=&quot;
-                + list + &quot;]&quot;;
-    }
-
-    public static void main(String[] args) {
-        Test t = new Test();
-        System.out.println(t.toString());
-        System.out.println((short) (t.c));
-    }
-}
-</code></pre><p>可以得出一下结果：<br><img src="https://929050566.github.io/images/init/result.PNG" alt="程序运行结果"><br>我们可以得出结论，基本数据类型的默认初始化的值为：</p>
-<ul>
-<li>short=0</li>
-<li>int=0</li>
-<li>long=0</li>
-<li>float=0.0</li>
-<li>double=0.0</li>
-<li>boolean=false</li>
-<li>char=(char)0  </li>
-</ul>
-<p>复杂数据类型默认初始值为：null。</p>
-<h1 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h1><p>布局变量：在被使用之前就必须给它赋值，要不然程序编译就会报错！</p>
-<h1 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h1><p>类的初始化顺序是：<br>1、父类静态变量<br>2、父类静态代码块<br>3、子类静态变量<br>4、子类静态代码块<br>5、父类非静态变量<br>6、父类非静态代码块<br>7、父类构造器<br>8、子类非静态变量<br>9、子类非静态代码块<br>10、子类构造器<br>Java程序初始化一般遵循四个原则:  </p>
-<ul>
-<li>先属性后方法</li>
-<li>先静态后非静态</li>
-<li>先声明后赋值</li>
-<li>先父类后子类</li>
-</ul>
+        <h1 id="工厂模式的作用"><a href="#工厂模式的作用" class="headerlink" title="工厂模式的作用"></a>工厂模式的作用</h1><p>刚接触和使用工厂模式的时候，我心中一直有个疑惑，工厂模式有什么用？不使用的工厂模式的时候，我们需要知道具体类名字，使用了工厂模式之后我们仍然需要知道工厂类，最多是吧new对象时的构造函数和参数屏蔽了而已，为什么要做这样一步吃力而不讨好的工作？<br>带着这个疑惑我查阅了网上大量的资料，对工厂模式的作用有了更深的认识。<br>首先我们需要设置模式的一个重要的原则：<strong>开放封闭原则</strong>(Open Closed Principle)，具体的解释是，对程序的扩展是开放的，对程序的修改是关闭的，如果需要增加功能，则只能以添加的形式修改，并不能改变原有的代码。</p>
+<h1 id="简单工厂"><a href="#简单工厂" class="headerlink" title="简单工厂"></a>简单工厂</h1><p><strong>我们经常会遇到一些功能类似的类，所以我们的思路是对其进行抽象，使用接口暴露公共的地方，使用抽象类来提供公共的实现。</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">//接口的命令 建议以I开头</span><br><span class="line">public interface IProduct &#123;</span><br><span class="line">    void print(); // 这是要暴露的方法</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public abstract class AbstractProduct implements IProduct &#123;</span><br><span class="line">    protected void printBefore()&#123;</span><br><span class="line">        System.out.println(&quot;before print&quot;); // 这里所公共的实现</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class AProduct extends AbstractProduct &#123;</span><br><span class="line">    private String name;</span><br><span class="line">    public AProduct(String name)&#123; </span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void print() &#123;</span><br><span class="line">        this.printBefore();</span><br><span class="line">        System.out.println(&quot;print A &gt;&gt;&gt;&quot;+name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class BProduct extends AbstractProduct &#123;</span><br><span class="line">    private String name;</span><br><span class="line">    public BProduct(String name)&#123; </span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void print() &#123;</span><br><span class="line">        this.printBefore();</span><br><span class="line">        System.out.println(&quot;print B &gt;&gt;&gt;&quot;+name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>此时有一个问题，如果这些类似的类非常多会导致这些类的实例化成了一个问题，每个类的构造参数还不一样，每次new对象非常的麻烦，我们此时就可以把它封装成简单工厂。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class SimpleFactory &#123;</span><br><span class="line">    public static IProduct getProduct(String name)&#123;</span><br><span class="line">        if(&quot;A&quot;.equals(name))&#123;</span><br><span class="line">            return new AProduct(name);</span><br><span class="line">        &#125;else if(&quot;B&quot;.equals(name))&#123;</span><br><span class="line">            return new BProduct(name);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            throw new IllegalArgumentException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运用简单工厂模式，小伙伴有没有发现一个优点。假如你的项目中new了几十次某个对象，有些new的操作还比较隐蔽，几个月之后，这个类的构造方法被修改了，多了一个参数，那你是不是得找到这几十个地方修改，重复劳动了几十次，如果你使用了工厂模式，你只需要改一次就行了。</p>
+<h1 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h1><p>看到简单工厂的实现，我们可以发现，简单工厂其实并不符合<strong>开闭原则</strong>，每次添加新的实现类的时候，需要修改简单工厂里面的代码（如果是工厂类和业务类是两个小伙伴分开写的，那不是要花很多时间来沟通…）,所以就有工厂方法模式,其原理就是对简单工厂也进行抽象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public interface IFactory &#123;</span><br><span class="line">    IProduct getProduct();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class AFactory implements IFactory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public IProduct getProduct() &#123;</span><br><span class="line">        return new AProduct(AProduct.class.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class BFactory implements IFactory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public IProduct getProduct() &#123;</span><br><span class="line">        return new BProduct(BProduct.class.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="抽象工厂"><a href="#抽象工厂" class="headerlink" title="抽象工厂"></a>抽象工厂</h1><p>看了工厂方法模式，突然发现有些糟糕了，因为代码变得很多了，因为功能类似的产品我们进行 2 层抽象，针对每个产品我们还抽象出了 2 层的工厂类。但是我们在某个具体的业务场景中，不单单是只实例化一个类啊。举一个例子，在游戏中，我们要一个战士配装备，首先我们需要配一把枪械（枪械有很多，步枪，狙击枪等，使用问题 1 进行抽象），但是配了枪械之后，我们还需要配子弹啊（继续使用问题 1 的方法进行抽象），好了，现在可以抽象出 2 层的工厂类了，针对现在的情况我们是不是可以让一个工厂既生产枪械，又生产子弹呢？ 这就是抽象工厂模式。简单来说，可以把有一些有联系或者相近的产品，放到一个工厂去生产，没有必要单独再开一个工厂了。<br>假设前面所例举的AProduct类是手枪子弹。BProduct类是步枪子弹。<br>现在新增了，A2Product类手枪，B2Peoduct类步枪，他们都实现同一接口。<br>此时我们就可以吧AProduct和A2Product放在一个工厂中创建。同理B也是。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//抽象工厂类</span><br><span class="line">public abstract class AbstractCreator &#123;</span><br><span class="line">     //枪产品家族</span><br><span class="line">     public abstract AbstractProductA createProductA(); </span><br><span class="line">     //子弹产品家族</span><br><span class="line">     public abstract AbstractProductB createProductB();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>有N个产品族，在抽象工厂类中就应该有N个创建方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">手枪的实现类</span><br><span class="line">public class Creator1 extends AbstractCreator &#123;    </span><br><span class="line">     //手枪子弹</span><br><span class="line">     public AbstractProductA createProductA() &#123; </span><br><span class="line">             return new ProductA1();</span><br><span class="line">     &#125;</span><br><span class="line">     //手枪</span><br><span class="line">     public AbstractProductA2 createProductA2() &#123;</span><br><span class="line">             return new ProductA2();</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">步枪的实现类</span><br><span class="line">public class Creator2 extends AbstractCreator &#123;    </span><br><span class="line">     //步枪子弹</span><br><span class="line">     public AbstractProductB createProductB() &#123; </span><br><span class="line">             return new ProductB1();</span><br><span class="line">     &#125;</span><br><span class="line">     //步枪</span><br><span class="line">     public AbstractProductB2 createProductB2() &#123;</span><br><span class="line">             return new ProductB2();</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>抽象工厂仅仅是工厂方法的复杂化，保存了多个new，只有在大工程才用的上。</p>
+<p>我们在学习设计模式的时候，不能过分的套用设计模式去编码，很多设计模式是有缺陷的，我们要做到取长补短，不能过分的设计。在不适当的场景运用设计模式势必发挥不了他的作用，一般模式都是用来解耦 、便于扩展、便于维护的，我觉得不必拘泥于哪一种模式，只要能处理好业务的模式就是好模式，借用某位大神的话：模式本天成，妙手偶得之。粹然无疵瑕，岂复须人为。</p>
+<p>参考:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://www.zhihu.com/question/24843188</span><br><span class="line">https://blog.csdn.net/qq_25827845/article/details/52503884</span><br><span class="line">https://blog.csdn.net/singwhatiwanna/article/details/17428923</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -500,7 +459,7 @@ public class Test {
       
         <div class="post-tags">
           
-            <a href="/tags/JavaSE/" rel="tag"># JavaSE</a>
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
           
         </div>
       
@@ -513,15 +472,15 @@ public class Test {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/12/31/redis/" rel="next" title="redis">
+                <i class="fa fa-chevron-left"></i> redis
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/05/java基础/" rel="prev" title="java基础">
-                java基础 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -660,7 +619,7 @@ public class Test {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#成员变量"><span class="nav-number">1.</span> <span class="nav-text">成员变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#局部变量"><span class="nav-number">2.</span> <span class="nav-text">局部变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化顺序"><span class="nav-number">3.</span> <span class="nav-text">初始化顺序</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#工厂模式的作用"><span class="nav-number">1.</span> <span class="nav-text">工厂模式的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单工厂"><span class="nav-number">2.</span> <span class="nav-text">简单工厂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工厂方法"><span class="nav-number">3.</span> <span class="nav-text">工厂方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#抽象工厂"><span class="nav-number">4.</span> <span class="nav-text">抽象工厂</span></a></li></ol></div>
             
 
           </div>
