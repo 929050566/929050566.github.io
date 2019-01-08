@@ -93,7 +93,7 @@
 
 
 
-  <meta name="keywords" content="MyBatis,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -104,18 +104,16 @@
 
 
 
-<meta name="description" content="上一篇文章剩下的MyBatis的核心接口是SqlSession。它的方法有：123456789101.数据更新insert() update() delete()2.数据查询selectOne() selectList() selectMap()3.事务处理commit() rollback()4.Mapper接口使用getMapper()5.管理操作close() clearCache() 一般">
-<meta name="keywords" content="MyBatis">
-<meta property="og:type" content="article">
-<meta property="og:title" content="MybatisSqlSessionFactory工具类">
-<meta property="og:url" content="https://a929050566.coding.me/2018/12/07/MybatisSqlSessionFactory工具类/index.html">
+<meta name="description" content="纵有疾风起，人生不言弃。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="个人博客">
+<meta property="og:url" content="https://a929050566.coding.me/page/3/index.html">
 <meta property="og:site_name" content="个人博客">
-<meta property="og:description" content="上一篇文章剩下的MyBatis的核心接口是SqlSession。它的方法有：123456789101.数据更新insert() update() delete()2.数据查询selectOne() selectList() selectMap()3.事务处理commit() rollback()4.Mapper接口使用getMapper()5.管理操作close() clearCache() 一般">
+<meta property="og:description" content="纵有疾风起，人生不言弃。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-20T13:35:38.815Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MybatisSqlSessionFactory工具类">
-<meta name="twitter:description" content="上一篇文章剩下的MyBatis的核心接口是SqlSession。它的方法有：123456789101.数据更新insert() update() delete()2.数据查询selectOne() selectList() selectMap()3.事务处理commit() rollback()4.Mapper接口使用getMapper()5.管理操作close() clearCache() 一般">
+<meta name="twitter:title" content="个人博客">
+<meta name="twitter:description" content="纵有疾风起，人生不言弃。">
 
 
 
@@ -145,13 +143,13 @@
 
 
 
-  <link rel="canonical" href="https://a929050566.coding.me/2018/12/07/MybatisSqlSessionFactory工具类/">
+  <link rel="canonical" href="https://a929050566.coding.me/page/3/">
 
 
 
 
 
-  <title>MybatisSqlSessionFactory工具类 | 个人博客</title>
+  <title>个人博客</title>
   
 
 
@@ -170,7 +168,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -273,9 +272,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -288,7 +287,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://a929050566.coding.me/2018/12/07/MybatisSqlSessionFactory工具类/">
+    <link itemprop="mainEntityOfPage" href="https://a929050566.coding.me/2018/12/05/类的初始化顺序/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张豪">
@@ -305,7 +304,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MybatisSqlSessionFactory工具类</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/05/类的初始化顺序/" itemprop="url">类的初始化</a></h1>
         
 
         <div class="post-meta">
@@ -317,8 +318,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-07T14:40:01+08:00">
-                2018-12-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-05T14:14:46+08:00">
+                2018-12-05
               </time>
             
 
@@ -340,8 +341,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/框架/" itemprop="url" rel="index">
-                    <span itemprop="name">框架</span>
+                  <a href="/categories/javase/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaSE</span>
                   </a>
                 </span>
 
@@ -357,7 +358,7 @@
 
           
           
-             <span id="/2018/12/07/MybatisSqlSessionFactory工具类/" class="leancloud_visitors" data-flag-title="MybatisSqlSessionFactory工具类">
+             <span id="/2018/12/05/类的初始化顺序/" class="leancloud_visitors" data-flag-title="类的初始化">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -382,7 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  551字
+                  500字
                 </span>
               
 
@@ -398,7 +399,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3分钟
+                  2分钟
                 </span>
               
             </div>
@@ -419,9 +420,19 @@
       
 
       
-        <p><a href="https://929050566.github.io/2018/12/06/MyBatis/" target="_blank" rel="noopener">上一篇文章</a>剩下的MyBatis的核心接口是SqlSession。它的方法有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1.数据更新</span><br><span class="line">insert() update() delete()</span><br><span class="line">2.数据查询</span><br><span class="line">selectOne() selectList() selectMap()</span><br><span class="line">3.事务处理</span><br><span class="line">commit() rollback()</span><br><span class="line">4.Mapper接口使用</span><br><span class="line">getMapper()</span><br><span class="line">5.管理操作</span><br><span class="line">close() clearCache()</span><br></pre></td></tr></table></figure></p>
-<p>一般我们运用MyBatis框的时候，都会编写一个工具来获取SqlSession,并且我们可以将SqlSession和线程绑定，这样我们可以达到节省资源的目的。<br>要获取SqlSession我们需要用SqlSessionFacotry的openSqlSession()方法，得到SqlSessionFactory我们要用到SqlSessionFactoryBulider的build()方法。并且我们的工具类需要两个核心方法，一个获得SqlSession，一个关闭资源。下面代码已经做详细注释，有不懂的地方可以在留言板块留言，作者会及时回复！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 获取SqlSession工具类</span><br><span class="line"> * @author haozai</span><br><span class="line"> * @date 2018年12月6日 上午9:39:56</span><br><span class="line"> */</span><br><span class="line">public class MybatisSqlSessionFactory &#123;</span><br><span class="line">	</span><br><span class="line">	//通过工厂类得到SqlSession</span><br><span class="line">	private static SqlSessionFactory factory;</span><br><span class="line">	//用于sqlSession和线程绑定</span><br><span class="line">	private static ThreadLocal&lt;SqlSession&gt; tl = new ThreadLocal&lt;&gt;();</span><br><span class="line">	</span><br><span class="line">	static &#123;</span><br><span class="line">		//因为我们的工厂类一般只需要得到一次就够了，所以我们将得到工厂类的代码放在静态代码块中</span><br><span class="line">		buildSqlSessionFactory();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	protected MybatisSqlSessionFactory() &#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	private static void buildSqlSessionFactory() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			//build我们的mybatisconfig.xml配置文件</span><br><span class="line">			factory = new SqlSessionFactoryBuilder().</span><br><span class="line">					build(Resources.getResourceAsReader(&quot;mybatisconfig.xml&quot;));</span><br><span class="line">		&#125; catch (IOException e) &#123;</span><br><span class="line">			// TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	/**</span><br><span class="line">	 * 获取SqlSession的实例 默认自动提交事务</span><br><span class="line">	 * @return SqlSession对象</span><br><span class="line">	 */</span><br><span class="line">	public static SqlSession getSqlSession() &#123;</span><br><span class="line">		SqlSession ss = tl.get();</span><br><span class="line">		if(ss == null) &#123;</span><br><span class="line">			if(factory == null) &#123;</span><br><span class="line">				//如果工厂丢失 则再创建一个</span><br><span class="line">				buildSqlSessionFactory();</span><br><span class="line">			&#125;</span><br><span class="line">			ss = factory.openSession(true);</span><br><span class="line">			tl.set(ss);</span><br><span class="line">		&#125;</span><br><span class="line">		return ss;</span><br><span class="line">	&#125;</span><br><span class="line">	/**</span><br><span class="line">	 * 获取SqlSession的实例 自己设定是否自动提交事务</span><br><span class="line">	 * @param falg:是否自动提交事务 false:否 true:是</span><br><span class="line">	 * @return SqlSession对象</span><br><span class="line">	 */</span><br><span class="line">	public static SqlSession getSqlSession(boolean flag) &#123;</span><br><span class="line">		SqlSession ss = tl.get();</span><br><span class="line">		if(ss == null) &#123;</span><br><span class="line">			if(factory == null) &#123;</span><br><span class="line">				//如果工厂丢失 则再创建一个</span><br><span class="line">				buildSqlSessionFactory();</span><br><span class="line">			&#125;</span><br><span class="line">			ss = factory.openSession(flag);</span><br><span class="line">			tl.set(ss);</span><br><span class="line">		&#125;</span><br><span class="line">		return ss;</span><br><span class="line">	&#125;	</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * SqlSession的资源释放</span><br><span class="line">	 */</span><br><span class="line">	public static void closeSqlSession() &#123;</span><br><span class="line">		SqlSession ss = tl.get();</span><br><span class="line">		if(ss != null) &#123;</span><br><span class="line">			tl.remove();</span><br><span class="line">			ss.close();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
+        
+          
+          初始化和清理是程序设计安全性的两个最重要的问题。下面我们就总结一下和初始化有关的知识。
+成员变量成员变量：由于任何方法都可以初始化或使用成员变量数据，所以在正式使用数据前，若还是强迫程序员将其一一初始化成一个适当的值，就可能不够实际。因此，一个类的所有数据成员都会保证获得一个确定的值。也就是说成员变
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/05/类的初始化顺序/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
     
@@ -430,12 +441,6 @@
 
     <!--自定义-->
     <div>
-      
-        <div>
-    
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
-    
-</div>
       
     </div>
     <!--自定义-->
@@ -448,40 +453,14 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/MyBatis/" rel="tag"># MyBatis</a>
-          
-        </div>
+
+      
+
       
 
       
       
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/12/06/MyBatis/" rel="next" title="MyBatis">
-                <i class="fa fa-chevron-left"></i> MyBatis
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/07/MyBatis之DQL/" rel="prev" title="MyBatis之DQL">
-                MyBatis之DQL <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -491,11 +470,14 @@
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
 
 
           </div>
@@ -503,15 +485,6 @@
 
 
           
-
-  
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80MTUyMC8xODA2Nw"></div>
-    </div>
-
-  
-
-
 
         </div>
         
@@ -759,10 +732,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
@@ -791,17 +760,6 @@
 
 
 
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
   
 
 
