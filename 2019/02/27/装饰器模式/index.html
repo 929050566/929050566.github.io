@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+<meta name="baidu-site-verification" content="mrSaJ4uJ8z">
+<meta name="baidu-site-verification" content="owvyVcpZUx">
+<meta name="google-site-verification" content="oy_lPgdf5gdUpaAESj7zkW7PjVrWce205YLBq4hgA5w">
+<meta name="google-site-verification" content="iTtZMlLeGbbsRl-GNQFoHAhSbTfdSN_ZNfBotJgueV0">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+  <style>
+      .pace .pace-progress {
+          background: #1E92FB; /*进度条颜色*/
+          height: 3px;
+      }
+      .pace .pace-progress-inner {
+           box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+      }
+      .pace .pace-activity {
+          border-top-color: #1E92FB;    /*上边框颜色*/
+          border-left-color: #1E92FB;    /*左边框颜色*/
+      }
+  </style>
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="设计模式,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是装饰器模式？顾名思义，装饰模式就是给一个对象增加一些新的功能，而且是动态的，要求装饰对象和被装饰对象实现同一个接口，装饰对象持有被装饰对象的实例，关系图如下：  Component为统一接口，也是装饰类和被装饰类的基本类型。 ConcreteComponent为具体实现类，也是被装饰类，他本身是个具有一些功能的完整的类。 Decorator是装饰类，实现了Component接口的同时还在内部">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="装饰器模式">
+<meta property="og:url" content="https://a929050566.coding.me/2019/02/27/装饰器模式/index.html">
+<meta property="og:site_name" content="个人博客">
+<meta property="og:description" content="什么是装饰器模式？顾名思义，装饰模式就是给一个对象增加一些新的功能，而且是动态的，要求装饰对象和被装饰对象实现同一个接口，装饰对象持有被装饰对象的实例，关系图如下：  Component为统一接口，也是装饰类和被装饰类的基本类型。 ConcreteComponent为具体实现类，也是被装饰类，他本身是个具有一些功能的完整的类。 Decorator是装饰类，实现了Component接口的同时还在内部">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://a929050566.coding.me/images/装饰器模式/Decorator0.png">
+<meta property="og:updated_time" content="2019-02-28T01:19:35.213Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="装饰器模式">
+<meta name="twitter:description" content="什么是装饰器模式？顾名思义，装饰模式就是给一个对象增加一些新的功能，而且是动态的，要求装饰对象和被装饰对象实现同一个接口，装饰对象持有被装饰对象的实例，关系图如下：  Component为统一接口，也是装饰类和被装饰类的基本类型。 ConcreteComponent为具体实现类，也是被装饰类，他本身是个具有一些功能的完整的类。 Decorator是装饰类，实现了Component接口的同时还在内部">
+<meta name="twitter:image" content="https://a929050566.coding.me/images/装饰器模式/Decorator0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://a929050566.coding.me/2019/02/27/装饰器模式/">
+
+
+
+
+
+  <title>装饰器模式 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">张豪</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-简历">
+          <a href="/resume/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://a929050566.coding.me/2019/02/27/装饰器模式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张豪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar2.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">装饰器模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-27T20:42:38+08:00">
+                2019-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/02/27/装饰器模式/" class="leancloud_visitors" data-flag-title="装饰器模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,633字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么是装饰器模式？"><a href="#什么是装饰器模式？" class="headerlink" title="什么是装饰器模式？"></a>什么是装饰器模式？</h1><p>顾名思义，装饰模式就是给一个对象增加一些新的功能，而且是动态的，要求装饰对象和被装饰对象实现同一个接口，装饰对象持有被装饰对象的实例，关系图如下：<br><img src="/images/装饰器模式/Decorator0.png" alt=""></p>
+<ul>
+<li>Component为统一接口，也是装饰类和被装饰类的基本类型。</li>
+<li>ConcreteComponent为具体实现类，也是被装饰类，他本身是个具有一些功能的完整的类。</li>
+<li>Decorator是装饰类，实现了Component接口的同时还在内部维护了一个ConcreteComponent的实例，并可以通过构造函数初始化。而Decorator本身，通常采用默认实现，他的存在仅仅是一个声明：我要生产出一些用于装饰的子类了。而其子类才是赋有具体装饰效果的装饰产品类。</li>
+<li>ConcreteDecorator是具体的装饰产品类，每一种装饰产品都具有特定的装饰效果。可以通过构造器声明装饰哪种类型的ConcreteComponent，从而对其进行装饰。</li>
+</ul>
+<p><hr></p>
+<h1 id="简单实现装饰器模式"><a href="#简单实现装饰器模式" class="headerlink" title="简单实现装饰器模式"></a>简单实现装饰器模式</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">//基础接口</span><br><span class="line">public interface Component &#123;</span><br><span class="line">    </span><br><span class="line">    public void biu();</span><br><span class="line">&#125;</span><br><span class="line">//具体实现类</span><br><span class="line">public class ConcretComponent implements Component &#123;</span><br><span class="line"></span><br><span class="line">    public void biu() &#123;</span><br><span class="line">        </span><br><span class="line">        System.out.println(&quot;biubiubiu&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//装饰类</span><br><span class="line">public class Decorator implements Component &#123;</span><br><span class="line"></span><br><span class="line">    public Component component;</span><br><span class="line">    </span><br><span class="line">    public Decorator(Component component) &#123;</span><br><span class="line">        </span><br><span class="line">        this.component = component;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void biu() &#123;</span><br><span class="line">        </span><br><span class="line">        this.component.biu();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//具体装饰类</span><br><span class="line">public class ConcreteDecorator extends Decorator &#123;</span><br><span class="line"></span><br><span class="line">    public ConcreteDecorator(Component component) &#123;</span><br><span class="line"></span><br><span class="line">        super(component);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void biu() &#123;</span><br><span class="line">        </span><br><span class="line">        System.out.println(&quot;ready?go!&quot;);</span><br><span class="line">        this.component.biu();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样一个基本的装饰器体系就出来了，当我们想让Component在打印之前都有一个ready？go！的提示时，就可以使用ConcreteDecorator类了。具体方式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//使用装饰器</span><br><span class="line">Component component = new ConcreteDecorator(new ConcretComponent());</span><br><span class="line">component.biu();</span><br><span class="line"></span><br><span class="line">//console：</span><br><span class="line">ready?go!</span><br><span class="line">biubiubiu</span><br></pre></td></tr></table></figure></p>
+<p><hr></p>
+<h1 id="为何使用装饰器模式"><a href="#为何使用装饰器模式" class="headerlink" title="为何使用装饰器模式"></a>为何使用装饰器模式</h1><p>一个设计模式的出现一定有他特殊的价值。仅仅看见上面的结构图你可能会想，为何要兜这么一圈来实现？仅仅是想要多一行输出，我直接继承ConcretComponent，或者直接在另一个Component的实现类中实现不是一样吗？</p>
+<p><strong>首先，装饰器的价值在于装饰，他并不影响被装饰类本身的核心功能。</strong>在一个继承的体系中，子类通常是互斥的。比如一辆车，品牌只能要么是奥迪、要么是宝马，不可能同时属于奥迪和宝马，而品牌也是一辆车本身的重要属性特征。但当你想要给汽车喷漆，换坐垫，或者更换音响时，这些功能是互相可能兼容的，并且他们的存在不会影响车的核心属性：那就是他是一辆什么车。这时你就可以定义一个装饰器：喷了漆的车。不管他装饰的车是宝马还是奥迪，他的喷漆效果都可以实现。</p>
+<p>再回到这个例子中，我们看到的仅仅是一个ConcreteComponent类。在复杂的大型项目中，同一级下的兄弟类通常有很多。当你有五个甚至十个ConcreteComponent时，再想要为每个类都加上“ready？go！”的效果，就要写出五个子类了。毫无疑问这是不合理的。<strong>装饰器模式在不影响各个ConcreteComponent核心价值的同时，添加了他特有的装饰效果，具备非常好的通用性，这也是他存在的最大价值。</strong></p>
+<p><hr></p>
+<h1 id="实战中使用装饰器模式"><a href="#实战中使用装饰器模式" class="headerlink" title="实战中使用装饰器模式"></a>实战中使用装饰器模式</h1><p>写这篇博客的初衷也是恰好在工作中使用到了这个模式，觉得非常好用。需求大致是这样：采用sls服务监控项目日志，以Json的格式解析，所以需要将项目中的日志封装成json格式再打印。现有的日志体系采用了log4j + slf4j框架搭建而成。调用起来是这样的:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">private static final Logger logger = LoggerFactory.getLogger(Component.class);</span><br><span class="line">logger.error(string);</span><br></pre></td></tr></table></figure></p>
+<p>这样打印出来的是毫无规范的一行行字符串。在考虑将其转换成json格式时，我采用了装饰器模式。目前有的是统一接口Logger和其具体实现类，我要加的就是一个装饰类和真正封装成Json格式的装饰产品类。具体实现代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * logger decorator for other extension </span><br><span class="line"> * this class have no specific implementation</span><br><span class="line"> * just for a decorator definition</span><br><span class="line"> * @author jzb</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class DecoratorLogger implements Logger &#123;</span><br><span class="line"></span><br><span class="line">    public Logger logger;</span><br><span class="line"></span><br><span class="line">    public DecoratorLogger(Logger logger) &#123;</span><br><span class="line"></span><br><span class="line">        this.logger = logger;</span><br><span class="line">    &#125;</span><br><span class="line">　　　　</span><br><span class="line">    @Override</span><br><span class="line">    public void error(String str) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void info(String str) &#123;&#125;</span><br><span class="line">        </span><br><span class="line">    //省略其他默认实现</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * json logger for formatted output </span><br><span class="line"> * @author jzb</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class JsonLogger extends DecoratorLogger &#123;</span><br><span class="line">public JsonLogger(Logger logger) &#123;</span><br><span class="line">        </span><br><span class="line">        super(logger);</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    @Override</span><br><span class="line">    public void info(String msg) &#123;</span><br><span class="line"></span><br><span class="line">        JSONObject result = composeBasicJsonResult();</span><br><span class="line">        result.put(&quot;MESSAGE&quot;, msg);</span><br><span class="line">        logger.info(result.toString());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public void error(String msg) &#123;</span><br><span class="line">        </span><br><span class="line">        JSONObject result = composeBasicJsonResult();</span><br><span class="line">        result.put(&quot;MESSAGE&quot;, msg);</span><br><span class="line">        logger.error(result.toString());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void error(Exception e) &#123;</span><br><span class="line"></span><br><span class="line">        JSONObject result = composeBasicJsonResult();</span><br><span class="line">        result.put(&quot;EXCEPTION&quot;, e.getClass().getName());</span><br><span class="line">        String exceptionStackTrace = ExceptionUtils.getStackTrace(e);    </span><br><span class="line">        result.put(&quot;STACKTRACE&quot;, exceptionStackTrace);</span><br><span class="line">        logger.error(result.toString());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public static class JsonLoggerFactory &#123;</span><br><span class="line">        </span><br><span class="line">        @SuppressWarnings(&quot;rawtypes&quot;)</span><br><span class="line">        public static JsonLogger getLogger(Class clazz) &#123;</span><br><span class="line"></span><br><span class="line">            Logger logger = LoggerFactory.getLogger(clazz);</span><br><span class="line">            return new JsonLogger(logger);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private JSONObject composeBasicJsonResult() &#123;</span><br><span class="line">        //拼装了一些运行时信息</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，在JsonLogger中，对于Logger的各种接口，我都用JsonObject对象进行一层封装。在打印的时候，最终还是调用原生接口logger.error(string)，只是这个string参数已经被我们装饰过了。如果有额外的需求，我们也可以再写一个函数去实现。比如error(Exception e)，只传入一个异常对象，这样在调用时就非常方便了。</p>
+<p>另外，为了在新老交替的过程中尽量不改变太多的代码和使用方式。我又在JsonLogger中加入了一个内部的工厂类JsonLoggerFactory（这个类转移到DecoratorLogger中可能更好一些），他包含一个静态方法，用于提供对应的JsonLogger实例。最终在新的日志体系中，使用方式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">private static final Logger logger = JsonLoggerFactory.getLogger(Component.class);</span><br><span class="line">logger.error(string);</span><br></pre></td></tr></table></figure></p>
+<p>他唯一与原先不同的地方，就是LoggerFactory -&gt; JsonLoggerFactory，这样的实现，也会被更快更方便的被其他开发者接受和习惯。</p>
+<p>参考:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://www.cnblogs.com/jzb-blog/p/6717349.html</span><br><span class="line">http://www.runoob.com/design-pattern/decorator-pattern.html</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    <!--自定义-->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    <!--自定义-->
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/24/Vue-vuex/" rel="next" title="[Vue]--vuex">
+                <i class="fa fa-chevron-left"></i> [Vue]--vuex
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MTUyMC8xODA2Nw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar2.png" alt="张豪">
+            
+              <p class="site-author-name" itemprop="name">张豪</p>
+              <p class="site-description motion-element" itemprop="description">纵有疾风起，人生不言弃。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是装饰器模式？"><span class="nav-number">1.</span> <span class="nav-text">什么是装饰器模式？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单实现装饰器模式"><span class="nav-number">2.</span> <span class="nav-text">简单实现装饰器模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为何使用装饰器模式"><span class="nav-number">3.</span> <span class="nav-text">为何使用装饰器模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实战中使用装饰器模式"><span class="nav-number">4.</span> <span class="nav-text">实战中使用装饰器模式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张豪</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">70.2k</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ao8ulWHVQL8MoXaYC6Vdx83D-gzGzoHsz", "DOisvJRBttDNBED13TYDm3Gv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
