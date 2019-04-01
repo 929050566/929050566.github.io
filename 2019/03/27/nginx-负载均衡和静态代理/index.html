@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+<meta name="baidu-site-verification" content="mrSaJ4uJ8z">
+<meta name="baidu-site-verification" content="owvyVcpZUx">
+<meta name="google-site-verification" content="oy_lPgdf5gdUpaAESj7zkW7PjVrWce205YLBq4hgA5w">
+<meta name="google-site-verification" content="iTtZMlLeGbbsRl-GNQFoHAhSbTfdSN_ZNfBotJgueV0">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+  <style>
+      .pace .pace-progress {
+          background: #1E92FB; /*进度条颜色*/
+          height: 3px;
+      }
+      .pace .pace-progress-inner {
+           box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+      }
+      .pace .pace-activity {
+          border-top-color: #1E92FB;    /*上边框颜色*/
+          border-left-color: #1E92FB;    /*左边框颜色*/
+      }
+  </style>
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="nginx,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="nginx是什么Nginx(engine x)是一个高性能的HTTP和反向代理服务，也是一个IMAP/POP3/SMTP服务。Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。Nginx代码完全用C语言从头写成，已经移植到许多体系结构和操作系统，包括：Linux、FreeBSD、Solari">
+<meta name="keywords" content="nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[nginx]-负载均衡和静态代理">
+<meta property="og:url" content="https://a929050566.coding.me/2019/03/27/nginx-负载均衡和静态代理/index.html">
+<meta property="og:site_name" content="个人博客">
+<meta property="og:description" content="nginx是什么Nginx(engine x)是一个高性能的HTTP和反向代理服务，也是一个IMAP/POP3/SMTP服务。Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。Nginx代码完全用C语言从头写成，已经移植到许多体系结构和操作系统，包括：Linux、FreeBSD、Solari">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/construction.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/grammar.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/direct.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/command.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/static_proxy.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/autoindex.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/zip.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/end_server.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/reverse_proxy.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/reverse_proxy2.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/reverse_proxy3.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/cache.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/nginx/log_format.png">
+<meta property="og:updated_time" content="2019-04-01T10:53:41.810Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[nginx]-负载均衡和静态代理">
+<meta name="twitter:description" content="nginx是什么Nginx(engine x)是一个高性能的HTTP和反向代理服务，也是一个IMAP/POP3/SMTP服务。Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。Nginx代码完全用C语言从头写成，已经移植到许多体系结构和操作系统，包括：Linux、FreeBSD、Solari">
+<meta name="twitter:image" content="https://a929050566.coding.me/images/nginx/construction.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://a929050566.coding.me/2019/03/27/nginx-负载均衡和静态代理/">
+
+
+
+
+
+  <title>[nginx]-负载均衡和静态代理 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">张豪</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-简历">
+          <a href="/resume/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://a929050566.coding.me/2019/03/27/nginx-负载均衡和静态代理/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张豪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar2.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[nginx]-负载均衡和静态代理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-27T21:14:11+08:00">
+                2019-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/27/nginx-负载均衡和静态代理/" class="leancloud_visitors" data-flag-title="[nginx]-负载均衡和静态代理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,139字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="nginx是什么"><a href="#nginx是什么" class="headerlink" title="nginx是什么"></a>nginx是什么</h1><p><strong>Nginx(engine x)是一个高性能的HTTP和反向代理服务，也是一个IMAP/POP3/SMTP服务。</strong>Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。<br>Nginx代码完全用C语言从头写成，已经移植到许多体系结构和操作系统，包括：Linux、FreeBSD、Solaris、Mac OS X、AIX以及Microsoft Windows。Nginx有自己的函数库，并且除了zlib、PCRE和OpenSSL之外，标准模块只使用系统C库函数。而且，如果不需要或者考虑到潜在的授权冲突，可以不使用这些第三方库。</p>
+<p><hr></p>
+<h1 id="nginx的组成"><a href="#nginx的组成" class="headerlink" title="nginx的组成"></a>nginx的组成</h1><p><img src="/images/nginx/construction.png" alt=""><br>我们将nginx四个组成部分做一个生动的比较</p>
+<ol>
+<li>二进制可执行文件：汽车</li>
+<li>配置文件：驾驶员</li>
+<li>access.log：GPS轨迹</li>
+<li>error.log：黑匣子</li>
+</ol>
+<p><hr></p>
+<h1 id="nginx的安装"><a href="#nginx的安装" class="headerlink" title="nginx的安装"></a>nginx的安装</h1><p>nginx在Linux下编译安装：</p>
+<ol>
+<li>先解压tar文件</li>
+<li>运行： ./configure —prefix=/usr/local/nginx(填写你自己的安装目录)</li>
+<li>make</li>
+<li>make install</li>
+</ol>
+<p><hr></p>
+<h1 id="配置文件的基本语法"><a href="#配置文件的基本语法" class="headerlink" title="配置文件的基本语法"></a>配置文件的基本语法</h1><p><img src="/images/nginx/grammar.png" alt=""><br>配置文件conf/nginx.conf里有四种指令块：<br><img src="/images/nginx/direct.png" alt=""></p>
+<p><hr></p>
+<h1 id="nginx命令"><a href="#nginx命令" class="headerlink" title="nginx命令"></a>nginx命令</h1><p><img src="/images/nginx/command.png" alt=""></p>
+<p><hr></p>
+<h1 id="nginx可以做什么？"><a href="#nginx可以做什么？" class="headerlink" title="nginx可以做什么？"></a>nginx可以做什么？</h1><p>nginx的两大作用：</p>
+<ol>
+<li>做为静态代理服务器 </li>
+<li>做为反向代理服务器。</li>
+</ol>
+<p><hr></p>
+<h1 id="静态代理服务器"><a href="#静态代理服务器" class="headerlink" title="静态代理服务器"></a>静态代理服务器</h1><h2 id="配置静态代理服务器"><a href="#配置静态代理服务器" class="headerlink" title="配置静态代理服务器"></a>配置静态代理服务器</h2><p>用vim/vi命令打开conf目录下的nginx.conf文件<br><img src="/images/nginx/static_proxy.png" alt=""><br>这个配置文件的意思是：</p>
+<p>nginx服务启动端口为8080，名字为geet.taohui.pub。</p>
+<p>静态代理的方式有两种：<br><strong>1.alias</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /request_path/image/ &#123;</span><br><span class="line">    alias /local_path/image/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这时候，当客户端请求 /request_path/image/cat.png 的时候，<br>Nginx把请求映射为/local_path/image/cat.png<br>对比root就可以知道怎么用了吧~~ :)</p>
+<p><strong>2.root</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /request_path/image/ &#123;</span><br><span class="line">    root /local_path/image/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样配置的结果就是当客户端请求 /request_path/image/cat.png 的时候，<br>Nginx把请求映射为/local_path/image/request_path/image/cat.png</p>
+<p><hr></p>
+<h2 id="使用autoindex"><a href="#使用autoindex" class="headerlink" title="使用autoindex"></a>使用autoindex</h2><p>在server指令块中添加autoindex on;指令，表示开启autoindex功能。<br>该功能可以查看静态服务器中的资源目录如<strong>（访问路径以/结尾）</strong>：<br><img src="/images/nginx/autoindex.png" alt=""></p>
+<p><hr></p>
+<h2 id="资源压缩"><a href="#资源压缩" class="headerlink" title="资源压缩"></a>资源压缩</h2><p>静态资源服务器可以先将文件压缩，再传输，对于大文件可以提高传输效率，但是如果对于过小的文件，再进行压缩的话可能会耗时更多。</p>
+<p>开启文件压缩：<br><img src="/images/nginx/zip.png" alt=""></p>
+<p>配置参数含义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">gzip</span><br><span class="line">语法: gzip on|off</span><br><span class="line">默认值: gzip off</span><br><span class="line">作用域: http, server, location, if (x) location</span><br><span class="line">开启或者关闭gzip模块</span><br><span class="line"></span><br><span class="line">gzip_buffers</span><br><span class="line">语法: gzip_buffers number size</span><br><span class="line">默认值: gzip_buffers 4 4k/8k</span><br><span class="line">作用域: http, server, location</span><br><span class="line">设置系统获取几个单位的缓存用于存储gzip的压缩结果数据流。 例如 4 4k 代表以4k为单位，按照原始数据大小以4k为单位的4倍申请内存。 4 8k 代表以8k为单位，按照原始数据大小以8k为单位的4倍申请内存。</span><br><span class="line">如果没有设置，默认值是申请跟原始数据相同大小的内存空间去存储gzip压缩结果。</span><br><span class="line"></span><br><span class="line">gzip_comp_level</span><br><span class="line">语法: gzip_comp_level 1..9</span><br><span class="line">默认值: gzip_comp_level 1</span><br><span class="line">作用域: http, server, location</span><br><span class="line">gzip压缩比，1 压缩比最小处理速度最快，9 压缩比最大但处理最慢（传输快但比较消耗cpu）。</span><br><span class="line"></span><br><span class="line">gzip_min_length</span><br><span class="line">语法: gzip_min_length length</span><br><span class="line">默认值: gzip_min_length 0</span><br><span class="line">作用域: http, server, location</span><br><span class="line">设置允许压缩的页面最小字节数，页面字节数从header头中的Content-Length中进行获取。</span><br><span class="line">默认值是0，不管页面多大都压缩。</span><br><span class="line">建议设置成大于1k的字节数，小于1k可能会越压越大。 即: gzip_min_length 1024</span><br><span class="line"></span><br><span class="line">gzip_http_version</span><br><span class="line">语法: gzip_http_version 1.0|1.1</span><br><span class="line">默认值: gzip_http_version 1.1</span><br><span class="line">作用域: http, server, location</span><br><span class="line">识别http的协议版本。由于早期的一些浏览器或者http客户端，可能不支持gzip自解压，用户就会看到乱码，所以做一些判断还是有必要的。 注：21世纪都来了，现在除了类似于百度的蜘蛛之类的东西不支持自解压（百度就是SX，我就不说了），99.99%的浏览器基本上都支持gzip解压了，所以可以不用设这个值,保持系统默认即可。</span><br><span class="line"></span><br><span class="line">gzip_proxied</span><br><span class="line">语法: gzip_proxied [off|expired|no-cache|no-store|private|no_last_modified|no_etag|auth|any] ...</span><br><span class="line">默认值: gzip_proxied off</span><br><span class="line">作用域: http, server, location</span><br><span class="line">Nginx作为反向代理的时候启用，开启或者关闭后端服务器返回的结果，匹配的前提是后端服务器必须要返回包含&quot;Via&quot;的 header头。</span><br><span class="line">off - 关闭所有的代理结果数据的压缩</span><br><span class="line">expired - 启用压缩，如果header头中包含 &quot;Expires&quot; 头信息</span><br><span class="line">no-cache - 启用压缩，如果header头中包含 &quot;Cache-Control:no-cache&quot; 头信息</span><br><span class="line">no-store - 启用压缩，如果header头中包含 &quot;Cache-Control:no-store&quot; 头信息</span><br><span class="line">private - 启用压缩，如果header头中包含 &quot;Cache-Control:private&quot; 头信息</span><br><span class="line">no_last_modified - 启用压缩,如果header头中不包含 &quot;Last-Modified&quot; 头信息</span><br><span class="line">no_etag - 启用压缩 ,如果header头中不包含 &quot;ETag&quot; 头信息</span><br><span class="line">auth - 启用压缩 , 如果header头中包含 &quot;Authorization&quot; 头信息</span><br><span class="line">any - 无条件启用压缩</span><br><span class="line"></span><br><span class="line">gzip_types</span><br><span class="line">语法: gzip_types mime-type [mime-type ...]</span><br><span class="line">默认值: gzip_types text/html</span><br><span class="line">作用域: http, server, location</span><br><span class="line">匹配MIME类型进行压缩，（无论是否指定）&quot;text/html&quot;类型总是会被压缩的。</span><br></pre></td></tr></table></figure></p>
+<p>如果你希望压缩常规的文件类型，可以写成这个样子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gzip on;</span><br><span class="line">gzip_min_length  1000;</span><br><span class="line">gzip_buffers     4 8k;   </span><br><span class="line">gzip_http_version 1.1; </span><br><span class="line">gzip_types       text/plain application/x-javascript text/css text/html application/xml;</span><br></pre></td></tr></table></figure></p>
+<p><hr></p>
+<h1 id="反向代理实现负载均衡"><a href="#反向代理实现负载均衡" class="headerlink" title="反向代理实现负载均衡"></a>反向代理实现负载均衡</h1><p>nginx中可以配置多台虚拟主机，在nginx中可以配置多个虚拟主机，也就是配置多个server指令块。<br>我们这里配置一台虚拟主机为上游服务，另外台主机作为代理服务器。</p>
+<p>上游服务的配置：<br><img src="/images/nginx/end_server.png" alt=""></p>
+<p>将配置服务器设置为代理服务器的上游服务：<br><img src="/images/nginx/reverse_proxy.png" alt=""></p>
+<p>配置代理服务器:<br><img src="/images/nginx/reverse_proxy2.png" alt=""><br>重启一下nginx服务器，之后去访问8000端口，代理服务器会转发请求到上游服务器。这时候有一个问题出现了，我们去访问代理服务器，代理服务器再去访问上游服务器，那么我们实际要传递给上游服务器的请求头数据，并不会被上游服务器接受到，如remote_addr等参数，这时候我们可以在代理服务器中设置代理请求头来将参数传递给上有服务器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">proxy_set_header Host $host:$server_port;</span><br><span class="line">proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">proxy_set_header X-Real-PORT $remote_port;</span><br><span class="line">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br></pre></td></tr></table></figure></p>
+<p>proxy_set_header 就是可设置请求头-并将头信息传递到服务器端，不属于请求头的参数中也需要传递时，重定义下即可！</p>
+<p>这样我们就配好了反向代理服务了。如果被代理的服务有多台（实现集群），那么其运行的原理就如下图：<br><img src="/images/nginx/reverse_proxy3.png" alt=""></p>
+<p><hr></p>
+<h2 id="轮询"><a href="#轮询" class="headerlink" title="轮询"></a>轮询</h2><p>nginx的反向代理服务默认使用轮询的分配方式，即每个请求按照时间顺序轮流分配到不同的后端服务器，如果某个后端服务器down掉后，能自动剔除。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream backend &#123;</span><br><span class="line">    server 192.168.1.101:8888;</span><br><span class="line">    server 192.168.1.102:8888;</span><br><span class="line">    server 192.168.1.103:8888;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><hr></p>
+<h2 id="Weighted-Round-Robin"><a href="#Weighted-Round-Robin" class="headerlink" title="Weighted Round Robin"></a>Weighted Round Robin</h2><p>轮询的加强版，即可以指定轮询比率，weight和访问几率成正比，主要应用于后端服务器异质的场景下。weight和访问比率成正比。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream backend &#123;</span><br><span class="line">    server 192.168.1.101 weight=1;</span><br><span class="line">    server 192.168.1.102 weight=2;</span><br><span class="line">    server 192.168.1.103 weight=3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><hr></p>
+<h2 id="ip-hash"><a href="#ip-hash" class="headerlink" title="ip_hash"></a>ip_hash</h2><p>每个请求按照访问ip（即Nginx的前置服务器或者客户端IP）的hash结果分配，这样每个访客会固定访问一个后端服务器，可以解决session一致问题(这种解决方案并不完美)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">upstream backend &#123;</span><br><span class="line">    ip_hash;</span><br><span class="line">    server 192.168.1.101:7777;</span><br><span class="line">    server 192.168.1.102:8888;</span><br><span class="line">    server 192.168.1.103:9999;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：<br>1、当负载调度算法为ip_hash时，后端服务器在负载均衡调度中的状态不能是weight和backup。<br>2、导致负载不均衡。</p>
+<p><hr></p>
+<h2 id="fair"><a href="#fair" class="headerlink" title="fair"></a>fair</h2><p>fair顾名思义，公平地按照后端服务器的响应时间（rt）来分配请求，响应时间短即rt小的后端服务器优先分配请求。如果需要使用这种调度算法，必须下载Nginx的upstr_fair模块。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">upstream backend &#123;</span><br><span class="line">    server 192.168.1.101;</span><br><span class="line">    server 192.168.1.102;</span><br><span class="line">    server 192.168.1.103;</span><br><span class="line">    fair;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><hr></p>
+<h2 id="url-hash"><a href="#url-hash" class="headerlink" title="url_hash"></a>url_hash</h2><p>目前用consistent_hash替代url_hash,与ip_hash类似，但是按照访问url的hash结果来分配请求，使得每个url定向到同一个后端服务器，主要应用于后端服务器为缓存时的场景下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">upstream backend &#123;</span><br><span class="line">    server 192.168.1.101;</span><br><span class="line">    server 192.168.1.102;</span><br><span class="line">    server 192.168.1.103;</span><br><span class="line">    hash $request_uri;</span><br><span class="line">    hash_method crc32;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中，hash_method为使用的hash算法，需要注意的是：此时，server语句中不能加weight等参数。<br>提示：url_hash用途cache服务业务，memcached，squid，varnish。特点：每个rs都是不同的。</p>
+<h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><p>因为nginx的性能远远领先于上游服务器的性能。我们可以给实时性要求不高的服务添加缓存，这样可以大大提高性能。<br>在localhost指令块里面配置：<br><img src="/images/nginx/cache.png" alt=""><br><strong>1、proxy_cache_path</strong><br>proxy_cache_path定义一个完整的缓存空间，指定缓存数据的磁盘路径、索引存放的内存空间以及一些其他参数，如缓存删除策略。</p>
+<p>注意，该选项只能定义在http块上下文中。</p>
+<p>如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_cache_path /data/cache levels=1:2 keys_zone=web:10m max_size=1G inactive=10;</span><br></pre></td></tr></table></figure></p>
+<p>缓存数据存储在/data/cache目录中；</p>
+<p><strong>levels</strong>：配置在该目录下再分两层目录，一层1个随机字符作为名称，二层2个随机字符作为名称，levels最多三层，每层最多两个字符，这是为了加快访问文件的速度；最后使用代理url的哈希值作为关键字与文件名，一个缓存数据如下：/data/nginx/cache/c/29/b7f54b2df7773722d382f4809d65029c；</p>
+<p><strong>keys_zone</strong>：用来为这个缓存区起名，并设置大小。指定名称为web，这个名称后面proxy_cache需要</p>
+<p>引用；而10m就是内存空间的大小；</p>
+<p><strong>max_size</strong>：指定最大缓存数据磁盘空间的大小,最多缓存的数据大小，如果超过这个大小，就开始清理缓存数据，使用lru算法将最近最少使用的缓存数据清理掉。</p>
+<p><strong>inactive</strong>：在inactive指定的时间内，未被访问的缓存数据将从缓存中删除。</p>
+<p><strong>2、proxy_cache</strong><br>proxy_cache用来引用上面proxy_cache_path定义的缓存空间，实现打开缓存功能，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_cache web； #引用上面定义上的缓存空间，同一缓存空间可以在几个地方使用</span><br></pre></td></tr></table></figure></p>
+<p><strong>3、proxy_cache_valid</strong><br>proxy_cache_valid设置不同响应代码的缓存时间，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_cache_valid 200 302 10m;</span><br></pre></td></tr></table></figure></p>
+<p>响应状态码为200 302的数据缓存住到失效的时间为10分钟，不管有没有人来访问这些数据，10分钟后都将失效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_cache_valid 404 1m;</span><br></pre></td></tr></table></figure></p>
+<h1 id="配置日志输出格式"><a href="#配置日志输出格式" class="headerlink" title="配置日志输出格式"></a>配置日志输出格式</h1><p>日志输出是我们查找错误和记录数据的重要手段，nginx可以自己配置输出的日志格式。<br><img src="/images/nginx/log_format.png" alt=""><br>上图中注释的就是日志格式配置。我们先声明一个格式 log_format 取名为main 。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">相关说明解释</span><br><span class="line"> 1.$remote_addr 与$http_x_forwarded_for 用以记录客户端的ip地址；</span><br><span class="line"> 2.$remote_user ：用来记录客户端用户名称；</span><br><span class="line"> 3.$time_local ： 用来记录访问时间与时区；</span><br><span class="line"> 4.$request ： 用来记录请求的url与http协议；</span><br><span class="line"> 5.$status ： 用来记录请求状态；成功是200，</span><br><span class="line"> 6.$body_bytes_s ent ：记录发送给客户端文件主体内容大小；</span><br><span class="line"> 7.$http_referer ：用来记录从那个页面链接访问过来的；</span><br><span class="line"> 8.$http_user_agent ：记录客户端浏览器的相关信息；</span><br></pre></td></tr></table></figure></p>
+<p>根据需求，也可以设置成JSON格式的输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">log_format json &apos;&#123;&quot;@timestamp&quot;:&quot;$time_iso8601&quot;,&apos;</span><br><span class="line">                 &apos;&quot;host&quot;:&quot;$server_addr&quot;,&apos;</span><br><span class="line">                 &apos;&quot;clientip&quot;:&quot;$remote_addr&quot;,&apos;</span><br><span class="line">                 &apos;&quot;size&quot;:$body_bytes_sent,&apos;</span><br><span class="line">                 &apos;&quot;responsetime&quot;:$request_time,&apos;</span><br><span class="line">                 &apos;&quot;upstreamtime&quot;:&quot;$upstream_response_time&quot;,&apos;</span><br><span class="line">                 &apos;&quot;upstreamhost&quot;:&quot;$upstream_addr&quot;,&apos;</span><br><span class="line">                 &apos;&quot;http_host&quot;:&quot;$host&quot;,&apos;</span><br><span class="line">                 &apos;&quot;url&quot;:&quot;$uri&quot;,&apos;</span><br><span class="line">                 &apos;&quot;referer&quot;:&quot;$http_referer&quot;,&apos;</span><br><span class="line">                 &apos;&quot;agent&quot;:&quot;$http_user_agent&quot;,&apos;</span><br><span class="line">                 &apos;&quot;status&quot;:&quot;$status&quot;&#125;&apos;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>配置日志输出地址和格式:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">access_log logs/access.log main;</span><br></pre></td></tr></table></figure></p>
+<p>语法：access_log [地址] [格式]</p>
+<p><hr></p>
+<h1 id="Goaccess日志监听工具"><a href="#Goaccess日志监听工具" class="headerlink" title="Goaccess日志监听工具"></a>Goaccess日志监听工具</h1><p>Goaccess是一个工具 需要安装，功能很强大。（具体配置以后再做研究）</p>
+
+      
+    </div>
+    
+    
+    
+
+    <!--自定义-->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    <!--自定义-->
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/08/MySQL-主从同步/" rel="next" title="[MySQL]--主从同步">
+                <i class="fa fa-chevron-left"></i> [MySQL]--主从同步
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MTUyMC8xODA2Nw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar2.png" alt="张豪">
+            
+              <p class="site-author-name" itemprop="name">张豪</p>
+              <p class="site-description motion-element" itemprop="description">纵有疾风起，人生不言弃。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx是什么"><span class="nav-number">1.</span> <span class="nav-text">nginx是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx的组成"><span class="nav-number">2.</span> <span class="nav-text">nginx的组成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx的安装"><span class="nav-number">3.</span> <span class="nav-text">nginx的安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置文件的基本语法"><span class="nav-number">4.</span> <span class="nav-text">配置文件的基本语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx命令"><span class="nav-number">5.</span> <span class="nav-text">nginx命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx可以做什么？"><span class="nav-number">6.</span> <span class="nav-text">nginx可以做什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态代理服务器"><span class="nav-number">7.</span> <span class="nav-text">静态代理服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置静态代理服务器"><span class="nav-number">7.1.</span> <span class="nav-text">配置静态代理服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用autoindex"><span class="nav-number">7.2.</span> <span class="nav-text">使用autoindex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源压缩"><span class="nav-number">7.3.</span> <span class="nav-text">资源压缩</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反向代理实现负载均衡"><span class="nav-number">8.</span> <span class="nav-text">反向代理实现负载均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#轮询"><span class="nav-number">8.1.</span> <span class="nav-text">轮询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Weighted-Round-Robin"><span class="nav-number">8.2.</span> <span class="nav-text">Weighted Round Robin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ip-hash"><span class="nav-number">8.3.</span> <span class="nav-text">ip_hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fair"><span class="nav-number">8.4.</span> <span class="nav-text">fair</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#url-hash"><span class="nav-number">8.5.</span> <span class="nav-text">url_hash</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缓存"><span class="nav-number">9.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置日志输出格式"><span class="nav-number">10.</span> <span class="nav-text">配置日志输出格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Goaccess日志监听工具"><span class="nav-number">11.</span> <span class="nav-text">Goaccess日志监听工具</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张豪</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">79.6k</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ao8ulWHVQL8MoXaYC6Vdx83D-gzGzoHsz", "DOisvJRBttDNBED13TYDm3Gv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
