@@ -125,7 +125,7 @@
 <meta property="og:image" content="https://a929050566.coding.me/images/nginx/reverse_proxy3.png">
 <meta property="og:image" content="https://a929050566.coding.me/images/nginx/cache.png">
 <meta property="og:image" content="https://a929050566.coding.me/images/nginx/log_format.png">
-<meta property="og:updated_time" content="2019-04-01T10:53:41.810Z">
+<meta property="og:updated_time" content="2019-04-01T11:10:20.639Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[nginx]-负载均衡和静态代理">
 <meta name="twitter:description" content="nginx是什么Nginx(engine x)是一个高性能的HTTP和反向代理服务，也是一个IMAP/POP3/SMTP服务。Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。Nginx代码完全用C语言从头写成，已经移植到许多体系结构和操作系统，包括：Linux、FreeBSD、Solari">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,139字
+                  3,218字
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  12分钟
+                  13分钟
                 </span>
               
             </div>
@@ -493,6 +493,7 @@
 <p><hr></p>
 <h2 id="url-hash"><a href="#url-hash" class="headerlink" title="url_hash"></a>url_hash</h2><p>目前用consistent_hash替代url_hash,与ip_hash类似，但是按照访问url的hash结果来分配请求，使得每个url定向到同一个后端服务器，主要应用于后端服务器为缓存时的场景下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">upstream backend &#123;</span><br><span class="line">    server 192.168.1.101;</span><br><span class="line">    server 192.168.1.102;</span><br><span class="line">    server 192.168.1.103;</span><br><span class="line">    hash $request_uri;</span><br><span class="line">    hash_method crc32;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>其中，hash_method为使用的hash算法，需要注意的是：此时，server语句中不能加weight等参数。<br>提示：url_hash用途cache服务业务，memcached，squid，varnish。特点：每个rs都是不同的。</p>
+<p><hr></p>
 <h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><p>因为nginx的性能远远领先于上游服务器的性能。我们可以给实时性要求不高的服务添加缓存，这样可以大大提高性能。<br>在localhost指令块里面配置：<br><img src="/images/nginx/cache.png" alt=""><br><strong>1、proxy_cache_path</strong><br>proxy_cache_path定义一个完整的缓存空间，指定缓存数据的磁盘路径、索引存放的内存空间以及一些其他参数，如缓存删除策略。</p>
 <p>注意，该选项只能定义在http块上下文中。</p>
 <p>如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_cache_path /data/cache levels=1:2 keys_zone=web:10m max_size=1G inactive=10;</span><br></pre></td></tr></table></figure></p>
@@ -505,12 +506,15 @@
 <p><strong>2、proxy_cache</strong><br>proxy_cache用来引用上面proxy_cache_path定义的缓存空间，实现打开缓存功能，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_cache web； #引用上面定义上的缓存空间，同一缓存空间可以在几个地方使用</span><br></pre></td></tr></table></figure></p>
 <p><strong>3、proxy_cache_valid</strong><br>proxy_cache_valid设置不同响应代码的缓存时间，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_cache_valid 200 302 10m;</span><br></pre></td></tr></table></figure></p>
 <p>响应状态码为200 302的数据缓存住到失效的时间为10分钟，不管有没有人来访问这些数据，10分钟后都将失效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_cache_valid 404 1m;</span><br></pre></td></tr></table></figure></p>
+<p><hr></p>
 <h1 id="配置日志输出格式"><a href="#配置日志输出格式" class="headerlink" title="配置日志输出格式"></a>配置日志输出格式</h1><p>日志输出是我们查找错误和记录数据的重要手段，nginx可以自己配置输出的日志格式。<br><img src="/images/nginx/log_format.png" alt=""><br>上图中注释的就是日志格式配置。我们先声明一个格式 log_format 取名为main 。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">相关说明解释</span><br><span class="line"> 1.$remote_addr 与$http_x_forwarded_for 用以记录客户端的ip地址；</span><br><span class="line"> 2.$remote_user ：用来记录客户端用户名称；</span><br><span class="line"> 3.$time_local ： 用来记录访问时间与时区；</span><br><span class="line"> 4.$request ： 用来记录请求的url与http协议；</span><br><span class="line"> 5.$status ： 用来记录请求状态；成功是200，</span><br><span class="line"> 6.$body_bytes_s ent ：记录发送给客户端文件主体内容大小；</span><br><span class="line"> 7.$http_referer ：用来记录从那个页面链接访问过来的；</span><br><span class="line"> 8.$http_user_agent ：记录客户端浏览器的相关信息；</span><br></pre></td></tr></table></figure></p>
 <p>根据需求，也可以设置成JSON格式的输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">log_format json &apos;&#123;&quot;@timestamp&quot;:&quot;$time_iso8601&quot;,&apos;</span><br><span class="line">                 &apos;&quot;host&quot;:&quot;$server_addr&quot;,&apos;</span><br><span class="line">                 &apos;&quot;clientip&quot;:&quot;$remote_addr&quot;,&apos;</span><br><span class="line">                 &apos;&quot;size&quot;:$body_bytes_sent,&apos;</span><br><span class="line">                 &apos;&quot;responsetime&quot;:$request_time,&apos;</span><br><span class="line">                 &apos;&quot;upstreamtime&quot;:&quot;$upstream_response_time&quot;,&apos;</span><br><span class="line">                 &apos;&quot;upstreamhost&quot;:&quot;$upstream_addr&quot;,&apos;</span><br><span class="line">                 &apos;&quot;http_host&quot;:&quot;$host&quot;,&apos;</span><br><span class="line">                 &apos;&quot;url&quot;:&quot;$uri&quot;,&apos;</span><br><span class="line">                 &apos;&quot;referer&quot;:&quot;$http_referer&quot;,&apos;</span><br><span class="line">                 &apos;&quot;agent&quot;:&quot;$http_user_agent&quot;,&apos;</span><br><span class="line">                 &apos;&quot;status&quot;:&quot;$status&quot;&#125;&apos;;</span><br></pre></td></tr></table></figure></p>
 <p><strong>配置日志输出地址和格式:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">access_log logs/access.log main;</span><br></pre></td></tr></table></figure></p>
 <p>语法：access_log [地址] [格式]</p>
 <p><hr></p>
 <h1 id="Goaccess日志监听工具"><a href="#Goaccess日志监听工具" class="headerlink" title="Goaccess日志监听工具"></a>Goaccess日志监听工具</h1><p>Goaccess是一个工具 需要安装，功能很强大。（具体配置以后再做研究）</p>
+<p><hr></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>缓存：<a href="https://www.cnblogs.com/meng6/p/7827827.html" target="_blank" rel="noopener">https://www.cnblogs.com/meng6/p/7827827.html</a><br>静态代理压缩：<a href="https://blog.csdn.net/jessonlv/article/details/8016284" target="_blank" rel="noopener">https://blog.csdn.net/jessonlv/article/details/8016284</a><br>日志输出格式:<a href="https://blog.csdn.net/zhangruizhou001/article/details/53072174" target="_blank" rel="noopener">https://blog.csdn.net/zhangruizhou001/article/details/53072174</a><br>alias与root区别：<a href="https://www.cnblogs.com/kevingrace/p/6187482.html" target="_blank" rel="noopener">https://www.cnblogs.com/kevingrace/p/6187482.html</a><br>负载均衡策略：<a href="https://www.cnblogs.com/linjiqin/p/5494783.html" target="_blank" rel="noopener">https://www.cnblogs.com/linjiqin/p/5494783.html</a><br>proxy_set_header:<a href="https://www.cnblogs.com/jsonhc/p/7199295.html?utm_source=itdadao&amp;utm_medium=referral" target="_blank" rel="noopener">https://www.cnblogs.com/jsonhc/p/7199295.html?utm_source=itdadao&amp;utm_medium=referral</a></p>
 
       
     </div>
@@ -562,6 +566,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/15/编码与解码/" rel="prev" title="编码与解码">
+                编码与解码 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -645,7 +653,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -656,7 +664,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -667,7 +675,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -700,7 +708,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx是什么"><span class="nav-number">1.</span> <span class="nav-text">nginx是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx的组成"><span class="nav-number">2.</span> <span class="nav-text">nginx的组成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx的安装"><span class="nav-number">3.</span> <span class="nav-text">nginx的安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置文件的基本语法"><span class="nav-number">4.</span> <span class="nav-text">配置文件的基本语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx命令"><span class="nav-number">5.</span> <span class="nav-text">nginx命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx可以做什么？"><span class="nav-number">6.</span> <span class="nav-text">nginx可以做什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态代理服务器"><span class="nav-number">7.</span> <span class="nav-text">静态代理服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置静态代理服务器"><span class="nav-number">7.1.</span> <span class="nav-text">配置静态代理服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用autoindex"><span class="nav-number">7.2.</span> <span class="nav-text">使用autoindex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源压缩"><span class="nav-number">7.3.</span> <span class="nav-text">资源压缩</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反向代理实现负载均衡"><span class="nav-number">8.</span> <span class="nav-text">反向代理实现负载均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#轮询"><span class="nav-number">8.1.</span> <span class="nav-text">轮询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Weighted-Round-Robin"><span class="nav-number">8.2.</span> <span class="nav-text">Weighted Round Robin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ip-hash"><span class="nav-number">8.3.</span> <span class="nav-text">ip_hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fair"><span class="nav-number">8.4.</span> <span class="nav-text">fair</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#url-hash"><span class="nav-number">8.5.</span> <span class="nav-text">url_hash</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缓存"><span class="nav-number">9.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置日志输出格式"><span class="nav-number">10.</span> <span class="nav-text">配置日志输出格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Goaccess日志监听工具"><span class="nav-number">11.</span> <span class="nav-text">Goaccess日志监听工具</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx是什么"><span class="nav-number">1.</span> <span class="nav-text">nginx是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx的组成"><span class="nav-number">2.</span> <span class="nav-text">nginx的组成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx的安装"><span class="nav-number">3.</span> <span class="nav-text">nginx的安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置文件的基本语法"><span class="nav-number">4.</span> <span class="nav-text">配置文件的基本语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx命令"><span class="nav-number">5.</span> <span class="nav-text">nginx命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx可以做什么？"><span class="nav-number">6.</span> <span class="nav-text">nginx可以做什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态代理服务器"><span class="nav-number">7.</span> <span class="nav-text">静态代理服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置静态代理服务器"><span class="nav-number">7.1.</span> <span class="nav-text">配置静态代理服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用autoindex"><span class="nav-number">7.2.</span> <span class="nav-text">使用autoindex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源压缩"><span class="nav-number">7.3.</span> <span class="nav-text">资源压缩</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反向代理实现负载均衡"><span class="nav-number">8.</span> <span class="nav-text">反向代理实现负载均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#轮询"><span class="nav-number">8.1.</span> <span class="nav-text">轮询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Weighted-Round-Robin"><span class="nav-number">8.2.</span> <span class="nav-text">Weighted Round Robin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ip-hash"><span class="nav-number">8.3.</span> <span class="nav-text">ip_hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fair"><span class="nav-number">8.4.</span> <span class="nav-text">fair</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#url-hash"><span class="nav-number">8.5.</span> <span class="nav-text">url_hash</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缓存"><span class="nav-number">9.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置日志输出格式"><span class="nav-number">10.</span> <span class="nav-text">配置日志输出格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Goaccess日志监听工具"><span class="nav-number">11.</span> <span class="nav-text">Goaccess日志监听工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">12.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
@@ -734,7 +742,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">79.6k</span>
+    <span title="Site words total count">82.4k</span>
   
 </div>
 
