@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+<meta name="baidu-site-verification" content="mrSaJ4uJ8z">
+<meta name="baidu-site-verification" content="owvyVcpZUx">
+<meta name="google-site-verification" content="oy_lPgdf5gdUpaAESj7zkW7PjVrWce205YLBq4hgA5w">
+<meta name="google-site-verification" content="iTtZMlLeGbbsRl-GNQFoHAhSbTfdSN_ZNfBotJgueV0">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+  <style>
+      .pace .pace-progress {
+          background: #1E92FB; /*进度条颜色*/
+          height: 3px;
+      }
+      .pace .pace-progress-inner {
+           box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+      }
+      .pace .pace-activity {
+          border-top-color: #1E92FB;    /*上边框颜色*/
+          border-left-color: #1E92FB;    /*左边框颜色*/
+      }
+  </style>
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="IO,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="零拷贝传统的IO操作，拷贝一个文件：  数据需要从磁盘拷贝到内核空间，再从内核空间拷到用户空间（JVM）。 程序可能进行数据修改等操作 再将数据拷贝到内核空间，内核空间再拷贝到网卡内存，通过网络发送出去（或拷贝到磁盘）。  即数据的读写（这里用户空间发到网络也算作写），都至少需要两次拷贝。为什么要拷贝出来？这里涉及到jvm的GC机制，当垃圾被回收之后，jvm中的堆内存，可能会被压缩，这时候如果去进">
+<meta name="keywords" content="IO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[NIO]-零拷贝和内存映射">
+<meta property="og:url" content="https://a929050566.coding.me/2019/04/21/NIO-零拷贝和内存映射/index.html">
+<meta property="og:site_name" content="个人博客">
+<meta property="og:description" content="零拷贝传统的IO操作，拷贝一个文件：  数据需要从磁盘拷贝到内核空间，再从内核空间拷到用户空间（JVM）。 程序可能进行数据修改等操作 再将数据拷贝到内核空间，内核空间再拷贝到网卡内存，通过网络发送出去（或拷贝到磁盘）。  即数据的读写（这里用户空间发到网络也算作写），都至少需要两次拷贝。为什么要拷贝出来？这里涉及到jvm的GC机制，当垃圾被回收之后，jvm中的堆内存，可能会被压缩，这时候如果去进">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://a929050566.coding.me/images/IO/NIO0.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/IO/NIO1.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/IO/NIO2.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/IO/NIO3.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/IO/NIO4.png">
+<meta property="og:updated_time" content="2019-04-21T13:02:45.852Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[NIO]-零拷贝和内存映射">
+<meta name="twitter:description" content="零拷贝传统的IO操作，拷贝一个文件：  数据需要从磁盘拷贝到内核空间，再从内核空间拷到用户空间（JVM）。 程序可能进行数据修改等操作 再将数据拷贝到内核空间，内核空间再拷贝到网卡内存，通过网络发送出去（或拷贝到磁盘）。  即数据的读写（这里用户空间发到网络也算作写），都至少需要两次拷贝。为什么要拷贝出来？这里涉及到jvm的GC机制，当垃圾被回收之后，jvm中的堆内存，可能会被压缩，这时候如果去进">
+<meta name="twitter:image" content="https://a929050566.coding.me/images/IO/NIO0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://a929050566.coding.me/2019/04/21/NIO-零拷贝和内存映射/">
+
+
+
+
+
+  <title>[NIO]-零拷贝和内存映射 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">张豪</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-简历">
+          <a href="/resume/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://a929050566.coding.me/2019/04/21/NIO-零拷贝和内存映射/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张豪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar2.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[NIO]-零拷贝和内存映射</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-21T20:51:09+08:00">
+                2019-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/IO/" itemprop="url" rel="index">
+                    <span itemprop="name">IO</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/21/NIO-零拷贝和内存映射/" class="leancloud_visitors" data-flag-title="[NIO]-零拷贝和内存映射">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,063字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="零拷贝"><a href="#零拷贝" class="headerlink" title="零拷贝"></a>零拷贝</h1><p>传统的IO操作，拷贝一个文件：<br><img src="/images/IO/NIO0.png" alt=""></p>
+<ol>
+<li>数据需要从磁盘拷贝到内核空间，再从内核空间拷到用户空间（JVM）。</li>
+<li>程序可能进行数据修改等操作</li>
+<li>再将数据拷贝到内核空间，内核空间再拷贝到网卡内存，通过网络发送出去（或拷贝到磁盘）。</li>
+</ol>
+<p>即数据的读写（这里用户空间发到网络也算作写），都至少需要两次拷贝。<br><strong>为什么要拷贝出来？这里涉及到jvm的GC机制，当垃圾被回收之后，jvm中的堆内存，可能会被压缩，这时候如果去进行IO操作，数据可能就出现紊乱。所以，需要将数据拷贝一份出来，再进行操作（拷贝的时候jvm确保GC关闭）</strong><br>当然磁盘到内核空间属于DMA拷贝（DMA即直接内存存取，原理是外部设备不通过CPU而直接与系统内存交换数据）。而内核空间到用户空间则需要CPU的参与进行拷贝，既然需要CPU参与，也就涉及到了内核态和用户态的相互切换，如下图：<br><img src="/images/IO/NIO1.png" alt=""></p>
+<ol>
+<li><p>对于操作系统而言，JVM只是一个用户进程，处于用户态空间中。而处于用户态空间的进程是不能直接操作底层的硬件的。而IO操作就需要操作底层的硬件，比如磁盘。因此，IO操作必须得借助内核的帮助才能完成(中断)，即：会有用户态到内核态的切换。  </p>
+</li>
+<li><p>我们写代码 new byte[] 数组时，一般是都是“随意” 创建一个“任意大小”的数组。比如，new byte[128]、new byte[1024]、new byte[4096]….但是，对于磁盘块的读取而言，每次访问磁盘读数据时，并不是读任意大小的数据的，而是：每次读一个磁盘块或者若干个磁盘块(这是因为访问磁盘操作代价是很大的，而且我们也相信局部性原理) 因此，就需要有一个“中间缓冲区”—即内核缓冲区。  </p>
+</li>
+<li><p>先把数据从磁盘读到内核缓冲区中，然后再把数据从内核缓冲区搬到用户缓冲区。 这也是为什么我们总感觉到第一次read操作很慢，而后续的read操作却很快的原因吧。因为，对于后续的read操作而言，它所需要读的数据很可能已经在内核缓冲区了，此时只需将内核缓冲区中的数据拷贝到用户缓冲区即可，并未涉及到底层的读取磁盘操作，当然就快了。</p>
+</li>
+</ol>
+<p><strong>那我们可能会说：DMA为什么不直接将磁盘上的数据读入到用户缓冲区呢？</strong></p>
+<ol>
+<li>一方面是：前面提到的内核缓冲区作为一个中间缓冲区。用来“适配”用户缓冲区的“任意大小”和每次读磁盘块的固定大小。</li>
+<li>另一方面则是，用户缓冲区位于用户态空间，而DMA读取数据这种操作涉及到底层的硬件，硬件一般是不能直接访问用户态空间的。<br>综上，由于DMA不能直接访问用户空间(用户缓冲区)，普通IO操作需要将数据来回地在 用户缓冲区 和 内核缓冲区移动，这在一定程序上影响了IO的速度。那有没有相应的解决方案呢？</li>
+</ol>
+<p><strong>零拷贝的数据拷贝如下图：</strong><br><img src="/images/IO/NIO2.png" alt=""><br>内核态与用户态切换如下图：<br><img src="/images/IO/NIO3.png" alt=""></p>
+<p><strong>改进的地方：</strong> </p>
+<ol>
+<li>我们已经将上下文切换次数从4次减少到了2次；  </li>
+<li>将数据拷贝次数从4次减少到了3次（其中只有1次涉及了CPU，另外2次是DMA直接存取）。   </li>
+</ol>
+<p>但这还没有达到我们零拷贝的目标。如果底层NIC（网络接口卡）支持gather操作，我们能进一步减少内核中的数据拷贝。在Linux 2.4以及更高版本的内核中，socket缓冲区描述符已被修改用来适应这个需求。这种方式不但减少多次的上下文切换，同时消除了需要CPU参与的重复的数据拷贝。用户这边的使用方式不变，而内部已经有了质的改变：<br><img src="/images/IO/NIO4.png" alt=""><br>NIO的零拷贝由transferTo()方法实现。transferTo()方法将数据从FileChannel对象传送到可写的字节通道（如Socket Channel等）。在内部实现中，由native方法transferTo0()来实现，它依赖底层操作系统的支持。在UNIX和Linux系统中，调用这个方法将会引起sendfile()系统调用。</p>
+<p>NIO的直接内存是由MappedByteBuffer实现的。核心即是map()方法，该方法把文件映射到内存中，获得内存地址addr，然后通过这个addr构造MappedByteBuffer类，以暴露各种文件操作API。</p>
+<h1 id="NIO的直接内存映射"><a href="#NIO的直接内存映射" class="headerlink" title="NIO的直接内存映射"></a>NIO的直接内存映射</h1><p>首先，它的作用位置处于传统IO（BIO）与零拷贝之间，为何这么说？、</p>
+<ol>
+<li>传统IO，可以把磁盘的文件经过内核空间，读到JVM空间，然后进行各种操作，最后再写到磁盘或是发送到网络，效率较慢但支持数据文件操作。</li>
+<li>零拷贝则是直接在内核空间完成文件读取并转到磁盘（或发送到网络）。由于它没有读取文件数据到JVM这一环，因此程序无法操作该文件数据，尽管效率很高！</li>
+</ol>
+<p>而直接内存则介于两者之间，效率一般且可操作文件数据。直接内存（mmap技术）将文件直接映射到内核空间的内存，返回一个操作地址（address），它解决了文件数据需要拷贝到JVM才能进行操作的窘境。而是直接在内核空间直接进行操作，省去了内核空间拷贝到用户空间这一步操作。</p>
+<p>NIO中一个重要的类：<strong>MappedByteBuffer。</strong><br>MappedByteBuffer是java nio引入的文件内存映射方案，读写性能极高。它是一个内存映射文件。MappedByteBuffer 将文件直接映射到内存（这里的内存指的是虚拟内存，并不是物理内存）。通常，可以映射整个文件，如果文件比较大的话可以分段进行映射，只要指定文件的那个部分就可以。<br><strong>FileChannel.map()</strong>方法返回。不需要跟磁盘打交道，只需要跟内存交到。因为这个内存映射文件，是可以直接从Java访问的文件，读写的操作会被同时映射到硬盘中。<br>FileChannel提供了map方法来把文件影射为内存映像文件： MappedByteBuffer map(int mode,long position,long size); 可以把文件的从position开始的size大小的区域映射为内存映像文件，mode指出了 可访问该内存映像文件的方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">READ_ONLY,READ_WRITE,PRIVATE.                    </span><br><span class="line">a. READ_ONLY,（只读）： 试图修改得到的缓冲区将导致抛出 ReadOnlyBufferException.(MapMode.READ_ONLY)</span><br><span class="line">b. READ_WRITE（读/写）： 对得到的缓冲区的更改最终将传播到文件；该更改对映射到同一文件的其他程序不一定是可见的。 (MapMode.READ_WRITE)</span><br><span class="line">c. PRIVATE（专用）： 对得到的缓冲区的更改不会传播到文件，并且该更改对映射到同一文件的其他程序也不是可见的；相反，会创建缓冲区已修改部分的专用副本。 (MapMode.PRIVATE)</span><br></pre></td></tr></table></figure></p>
+<h1 id="Scattering和Gathering"><a href="#Scattering和Gathering" class="headerlink" title="Scattering和Gathering"></a>Scattering和Gathering</h1><p>Scattering:散射-&gt;将读取的数据放到ByteBuffer数组里面<br>Gathering:聚集-&gt;将ByteBuffer数组里面的数据读出</p>
+<p>有了Scattering和Gathering技术的实现，才能真正的实现零拷贝，因为文件的存储（大文件）往往是分段存储的，而如果没有这两个技术，那么就必须先要将分片存储的数据拷贝到一个缓冲区，再从缓冲区读取到socketBuffer中，这样又损耗了性能了。</p>
+<h1 id="FileLock"><a href="#FileLock" class="headerlink" title="FileLock"></a>FileLock</h1><p>文件加锁，通过FileChannel的lock方法，就可以给文件加锁了。通过设置shared属性的值，可以分为共享锁(读锁)和排他锁(写锁)</p>
+
+      
+    </div>
+    
+    
+    
+
+    <!--自定义-->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    <!--自定义-->
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IO/" rel="tag"># IO</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/21/IO-BIO与NIO/" rel="next" title="[IO]-BIO、NIO、AIO">
+                <i class="fa fa-chevron-left"></i> [IO]-BIO、NIO、AIO
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MTUyMC8xODA2Nw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar2.png" alt="张豪">
+            
+              <p class="site-author-name" itemprop="name">张豪</p>
+              <p class="site-description motion-element" itemprop="description">纵有疾风起，人生不言弃。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#零拷贝"><span class="nav-number">1.</span> <span class="nav-text">零拷贝</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NIO的直接内存映射"><span class="nav-number">2.</span> <span class="nav-text">NIO的直接内存映射</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Scattering和Gathering"><span class="nav-number">3.</span> <span class="nav-text">Scattering和Gathering</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FileLock"><span class="nav-number">4.</span> <span class="nav-text">FileLock</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张豪</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">87.6k</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ao8ulWHVQL8MoXaYC6Vdx83D-gzGzoHsz", "DOisvJRBttDNBED13TYDm3Gv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
