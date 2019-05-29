@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+<meta name="baidu-site-verification" content="mrSaJ4uJ8z">
+<meta name="baidu-site-verification" content="owvyVcpZUx">
+<meta name="google-site-verification" content="oy_lPgdf5gdUpaAESj7zkW7PjVrWce205YLBq4hgA5w">
+<meta name="google-site-verification" content="iTtZMlLeGbbsRl-GNQFoHAhSbTfdSN_ZNfBotJgueV0">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+  <style>
+      .pace .pace-progress {
+          background: #1E92FB; /*进度条颜色*/
+          height: 3px;
+      }
+      .pace .pace-progress-inner {
+           box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+      }
+      .pace .pace-activity {
+          border-top-color: #1E92FB;    /*上边框颜色*/
+          border-left-color: #1E92FB;    /*左边框颜色*/
+      }
+  </style>
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MQ,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="其实rabbitMQ的官网的使用文档已经写的非常好了，有各种语言使用的举例，以及各种使用方式。 rabbitMQ是什么RabbitMQ是一个由erlang开发的AMQP（Advanced Message Queue ）的开源实现，官网地址：http://www.rabbitmq.com。RabbitMQ作为一个消息代理，主要负责接收、存储和转发消息，    它提供了可靠的消息机制和灵活的消息路由，">
+<meta name="keywords" content="MQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[rabbitMQ]-基础知识">
+<meta property="og:url" content="https://a929050566.coding.me/2019/05/29/rabbitMQ-基础知识/index.html">
+<meta property="og:site_name" content="个人博客">
+<meta property="og:description" content="其实rabbitMQ的官网的使用文档已经写的非常好了，有各种语言使用的举例，以及各种使用方式。 rabbitMQ是什么RabbitMQ是一个由erlang开发的AMQP（Advanced Message Queue ）的开源实现，官网地址：http://www.rabbitmq.com。RabbitMQ作为一个消息代理，主要负责接收、存储和转发消息，    它提供了可靠的消息机制和灵活的消息路由，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://a929050566.coding.me/images/rabbitMQ/rabbitMQ0.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/rabbitMQ/simpleQueue0.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/rabbitMQ/wordQueue0.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/rabbitMQ/exchange0.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/rabbitMQ/fanoutexchange.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/rabbitMQ/directexchange0.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/rabbitMQ/directexchange1.png">
+<meta property="og:image" content="https://a929050566.coding.me/images/rabbitMQ/topicexchange0.png">
+<meta property="og:updated_time" content="2019-05-29T13:09:34.424Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[rabbitMQ]-基础知识">
+<meta name="twitter:description" content="其实rabbitMQ的官网的使用文档已经写的非常好了，有各种语言使用的举例，以及各种使用方式。 rabbitMQ是什么RabbitMQ是一个由erlang开发的AMQP（Advanced Message Queue ）的开源实现，官网地址：http://www.rabbitmq.com。RabbitMQ作为一个消息代理，主要负责接收、存储和转发消息，    它提供了可靠的消息机制和灵活的消息路由，">
+<meta name="twitter:image" content="https://a929050566.coding.me/images/rabbitMQ/rabbitMQ0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://a929050566.coding.me/2019/05/29/rabbitMQ-基础知识/">
+
+
+
+
+
+  <title>[rabbitMQ]-基础知识 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">张豪</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-简历">
+          <a href="/resume/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://a929050566.coding.me/2019/05/29/rabbitMQ-基础知识/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张豪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar2.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[rabbitMQ]-基础知识</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-29T20:00:01+08:00">
+                2019-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MQ/" itemprop="url" rel="index">
+                    <span itemprop="name">MQ</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/29/rabbitMQ-基础知识/" class="leancloud_visitors" data-flag-title="[rabbitMQ]-基础知识">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,192字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>其实rabbitMQ的官网的使用文档已经写的非常好了，有各种语言使用的举例，以及各种使用方式。</p>
+<h1 id="rabbitMQ是什么"><a href="#rabbitMQ是什么" class="headerlink" title="rabbitMQ是什么"></a>rabbitMQ是什么</h1><p>RabbitMQ是一个由<strong>erlang</strong>开发的AMQP（Advanced Message Queue ）的开源实现，官网地址：<a href="http://www.rabbitmq.com" target="_blank" rel="noopener">http://www.rabbitmq.com</a>。RabbitMQ作为一个消息代理，主要负责接收、存储和转发消息，    它提供了可靠的消息机制和灵活的消息路由，并支持消息集群和分布式部署，常用于<strong>应用解耦，耗时任务队列，流量削锋</strong>等场景。本系列文章将系统介绍RabbitMQ的工作机制，代码驱动和集群配置，本篇主要介绍RabbitMQ中一些基本概念:<br><img src="/images/rabbitMQ/rabbitMQ0.png" alt=""><br>上图是RabbitMQ的一个基本结构，生产者Producer和消费者Consumer都是RabbitMQ的客户端，Producer负责发送消息，Consumer负责消费消息。</p>
+<p><em>**</em>接下来我们结合这张图来理解RabbitMQ的一些概念：</p>
+<ol>
+<li><strong>Broker</strong>（Server）：接受客户端连接，实现AMQP消息队列和路由功能的进程，我们可以把Broker叫做RabbitMQ服务器。</li>
+<li><strong>Virtual Host</strong>：一个虚拟概念，一个Virtual Host里面可以有若干个Exchange和Queue，主要用于权限控制，隔离应用。如应用程序A使用VhostA，应用程序B使用VhostB，那么我们在VhostA中只存放应用程序A的exchange，queue和消息，应用程序A的用户只能访问VhostA，不能访问VhostB中的数据。</li>
+<li><strong>Exchange</strong>：接受生产者发送的消息，并根据Binding规则将消息路由给服务器中的队列。ExchangeType决定了Exchange路由消息的行为，例如，在RabbitMQ中，ExchangeType有<strong>Direct、Fanout、Topic和Header</strong>四种，不同类型的Exchange路由规则是不一样的（这些以后会详细介绍）。</li>
+<li><strong>Queue</strong>：消息队列，用于存储还未被消费者消费的消息，队列是先进先出的，默认情况下先存储的消息先被处理。</li>
+<li><strong>Message</strong>：就是消息，由Header和Body组成，Header是由生产者添加的各种属性的集合，包括Message是否被持久化、由哪个Message Queue接受、优先级是多少等，Body是真正传输的数据，内容格式为byte[]。</li>
+<li><strong>Connection</strong>：连接，对于RabbitMQ而言，其实就是一个位于客户端和Broker之间的TCP连接。</li>
+<li><strong>Channel</strong>：信道，仅仅创建了客户端到Broker之间的连接Connection后，客户端还是不能发送消息的。需要在Connection的基础上创建Channel，AMQP协议规定只有通过Channel才能执行AMQP的命令，一个Connection可以包含多个Channel。之所以需要Channel，是因为TCP连接的建立和释放都是十分昂贵的。</li>
+</ol>
+<h1 id="安装注意"><a href="#安装注意" class="headerlink" title="安装注意"></a>安装注意</h1><p>安装rabbitMQ之前需要先安装erlang。</p>
+<p>rabbit的默认管理地址是15672</p>
+<p>rabbit的访问地址是5672</p>
+<p>centos下安装rabbitMQ:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#安装socat</span><br><span class="line">yum install socat</span><br><span class="line"></span><br><span class="line">#安装erlang</span><br><span class="line">　　curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | sudo bash</span><br><span class="line">　　yum -y install erlang</span><br><span class="line"></span><br><span class="line">#安装rabbitmq-server</span><br><span class="line">　　curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash</span><br><span class="line">　　yum -y install rabbitmq-server</span><br><span class="line"></span><br><span class="line">#启动rabbitmq服务</span><br><span class="line">　　systemctl start rabbitmq-server</span><br><span class="line">#添加web管理插件</span><br><span class="line">　　rabbitmq-plugins enable rabbitmq_management</span><br></pre></td></tr></table></figure></p>
+<p>操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#启动RabbitMQ服务</span><br><span class="line">　　systemctl start rabbitmq-server</span><br><span class="line">#停止RabbitMQ服务</span><br><span class="line">　　systemctl stop rabbitmq-server</span><br><span class="line">#查看RabbitMQ运行状态</span><br><span class="line">　　systemctl status rabbitmq-server</span><br><span class="line">#重启RabbitMQ服务</span><br><span class="line">　　systemctl restart rabbitmq-server</span><br></pre></td></tr></table></figure></p>
+<h1 id="SpringBoot中使用RabbitMQ"><a href="#SpringBoot中使用RabbitMQ" class="headerlink" title="SpringBoot中使用RabbitMQ"></a>SpringBoot中使用RabbitMQ</h1><p>pom.xml:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-amqp&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">    &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">    &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<p>application.properties:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">spring.application.name=springboot-rabbitmq</span><br><span class="line">spring.rabbitmq.host=127.0.0.1</span><br><span class="line">spring.rabbitmq.port=5672</span><br><span class="line">spring.rabbitmq.username=guest</span><br><span class="line">spring.rabbitmq.password=guest</span><br><span class="line">spring.rabbitmq.publisher-confirms=true</span><br><span class="line">spring.rabbitmq.virtual-host=/</span><br></pre></td></tr></table></figure></p>
+<h1 id="简单队列"><a href="#简单队列" class="headerlink" title="简单队列"></a>简单队列</h1><p>简单队列：创建两个Console应用，一个作为发送消息的生产者(Producer)，一个作为接受消息的消费者(Consumer)，生产者向队列写入消息，消费者接受这条消息，结构如下：<br><img src="/images/rabbitMQ/simpleQueue0.png" alt=""><br>一个生产者生产消息，如果有新的消息在队列中，消费者就会监听到并且可以拿到消息内容，从而消费消息</p>
+<h1 id="工作队列"><a href="#工作队列" class="headerlink" title="工作队列"></a>工作队列</h1><p>而且我们实际开发，生产者发送消息是毫不费力的，而消费者一般是要跟业务相结合，消费者接收到消息之后需要处理，可能需要花费比较多的时间，这时候队列就会积压很多消息。所以我们可以让一个消息队列有多个消费者。<br><img src="/images/rabbitMQ/wordQueue0.png" alt=""><br>工作队列可以有多种消费模式：</p>
+<h2 id="轮询"><a href="#轮询" class="headerlink" title="轮询"></a>轮询</h2><p>顾名思义就是多个消费者逐一消费</p>
+<h2 id="公平分发"><a href="#公平分发" class="headerlink" title="公平分发"></a>公平分发</h2><p>能者多劳，消费者每次处理完一个消息，才反馈给队列，然后队列才允许它消费下一个下消息。使用公布分发，必须关闭ack设置</p>
+<h1 id="exchange-交换器"><a href="#exchange-交换器" class="headerlink" title="exchange(交换器)"></a>exchange(交换器)</h1><p>在消费者到产生的消息到队列中间，为了更好的分发消息可以加一层exchange(交换器)：<br><img src="/images/rabbitMQ/exchange0.png" alt=""><br>解读：<br>1.一个生成者，多个消费者<br>2.每个消费者，都有自己的队列<br>3.生成者没有直接把消息发送到队列，而是发到了交换机，转发器（exchange）<br>4.每个队列都要绑定到交换机上，需要指定一个routerKey<br>5.生产者发送的消息，经过交换机，到达队列，就能实现一个消息被多个消费者消费</p>
+<p>而交换机可以有多种工作方式</p>
+<h2 id="fanout"><a href="#fanout" class="headerlink" title="fanout"></a>fanout</h2><p>1.一方面接收生产者的消息，另一方面是向队列推送消息</p>
+<p>fanout:不处理路由建<br><img src="/images/rabbitMQ/fanoutexchange.png" alt=""></p>
+<h2 id="direct"><a href="#direct" class="headerlink" title="direct"></a>direct</h2><p>direct:完全匹配路由键<br>生产者生产一个消息需要指定路由键：<br><img src="/images/rabbitMQ/directexchange0.png" alt=""><br>路由模式：<br><img src="/images/rabbitMQ/directexchange1.png" alt=""><br>如果生产者发送的消息带有error建 则会发送消息到队列C1和C2<br>如果生产者发送的消息带有info\warning建 则会发送消息到队列 C2</p>
+<h2 id="topic"><a href="#topic" class="headerlink" title="topic"></a>topic</h2><p>topic:将路由建和某个模式匹配</p>
+<p>此时队列需要绑定要一个模式上。符号“#”匹配一个或多个词，符号“<em>”匹配一个词。<br>因此“audit.#”能够匹配到 “audit.irs.corporate”，但是“audit.</em>” 只会匹配到“audit.irs”。<br><img src="/images/rabbitMQ/topicexchange0.png" alt=""></p>
+<h1 id="RabbitMQ消息确认机制（事务-confirm）"><a href="#RabbitMQ消息确认机制（事务-confirm）" class="headerlink" title="RabbitMQ消息确认机制（事务+confirm）"></a>RabbitMQ消息确认机制（事务+confirm）</h1><p>在rabbitmq中我们可以通过持久化数据解决rabbitMQ服务器异常的数据丢包问题，(即 Rabbit 服务器不会反馈任何消息给生产者),也就是默认的情况下是不知道消息有没有 正确到达:</p>
+<p>问题：<strong>生产者将消息发送出去之后，消息到底有没有到达rabbitMQ服务器，默认情况是不知道的</strong></p>
+<h2 id="AMQP协议实现了事务机制"><a href="#AMQP协议实现了事务机制" class="headerlink" title="AMQP协议实现了事务机制"></a>AMQP协议实现了事务机制</h2><p>AMQP事务机制：<br>txSelect        txCommit     txRollback<br>txSelect:用户将当前channel设置成transation模式<br>txCommit:用于提交事务<br>txRollback:回滚事务</p>
+<p>上面我们介绍了 RabbitMQ 可能会遇到的一个问题，即生成者不知道消息是否真正到达 broker，随后通过 AMQP 协议层面为我们提供了事务机制解决了这个问题，但是采用事务机制实现会降低 RabbitMQ 的消息吞吐量，那么有没有更加高效的解决方式呢？答案是采用 Confirm 模式。</p>
+<h2 id="Confirm模式（异步的）"><a href="#Confirm模式（异步的）" class="headerlink" title="Confirm模式（异步的）"></a>Confirm模式（异步的）</h2><p><strong>producer 端 confirm 模式的实现原理 </strong></p>
+<p>生产者将信道设置成 confirm 模式，一旦信道进入 confirm 模式，所有在该信道上面发布的消息都会被指派一个唯 一的 ID(从 1 开始)，一旦消息被投递到所有匹配的队列之后，broker 就会发送一个确认给生产者（包含消息的唯一 ID） ,这就使得生产者知道消息已经正确到达目的队列了，如果消息和队列是可持久化的，那么确认消息会将消息写 入磁盘之后发出，broker 回传给生产者的确认消息中 deliver-tag 域包含了确认消息的序列号，此外 broker 也可以设 置 basic.ack 的 multiple 域，表示到这个序列号之前的所有消息都已经得到了处理。 </p>
+<p>confirm模式最大的好处在于他是异步的，一旦发布一条消息，生产者应用程序就可以在等信道返回确认的同时继 续发送下一条消息，当消息最终得到确认之后，生产者应用便可以通过回调方法来处理该确认消息，如果 RabbitMQ 因为自身内部错误导致消息丢失，就会发送一条 nack 消息，生产者应用程序同样可以在回调方法中处 理该 nack 消息。 </p>
+
+      
+    </div>
+    
+    
+    
+
+    <!--自定义-->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    <!--自定义-->
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MQ/" rel="tag"># MQ</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/06/cookie、token、session/" rel="next" title="cookie、token、session">
+                <i class="fa fa-chevron-left"></i> cookie、token、session
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MTUyMC8xODA2Nw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar2.png" alt="张豪">
+            
+              <p class="site-author-name" itemprop="name">张豪</p>
+              <p class="site-description motion-element" itemprop="description">纵有疾风起，人生不言弃。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#rabbitMQ是什么"><span class="nav-number">1.</span> <span class="nav-text">rabbitMQ是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装注意"><span class="nav-number">2.</span> <span class="nav-text">安装注意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot中使用RabbitMQ"><span class="nav-number">3.</span> <span class="nav-text">SpringBoot中使用RabbitMQ</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单队列"><span class="nav-number">4.</span> <span class="nav-text">简单队列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工作队列"><span class="nav-number">5.</span> <span class="nav-text">工作队列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#轮询"><span class="nav-number">5.1.</span> <span class="nav-text">轮询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公平分发"><span class="nav-number">5.2.</span> <span class="nav-text">公平分发</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#exchange-交换器"><span class="nav-number">6.</span> <span class="nav-text">exchange(交换器)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fanout"><span class="nav-number">6.1.</span> <span class="nav-text">fanout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#direct"><span class="nav-number">6.2.</span> <span class="nav-text">direct</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#topic"><span class="nav-number">6.3.</span> <span class="nav-text">topic</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RabbitMQ消息确认机制（事务-confirm）"><span class="nav-number">7.</span> <span class="nav-text">RabbitMQ消息确认机制（事务+confirm）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AMQP协议实现了事务机制"><span class="nav-number">7.1.</span> <span class="nav-text">AMQP协议实现了事务机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Confirm模式（异步的）"><span class="nav-number">7.2.</span> <span class="nav-text">Confirm模式（异步的）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张豪</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">104.2k</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ao8ulWHVQL8MoXaYC6Vdx83D-gzGzoHsz", "DOisvJRBttDNBED13TYDm3Gv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
